@@ -1,0 +1,47 @@
+---
+title: "Dataset: screentime"
+sidebar: false
+---
+## Paper
+
+-   Przybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. *Psychological Science*, 28(2), 204-215. [link](https://doi.org/10.1177/0956797616678438)
+
+## Open data
+
+Data can be downloaded from the Open Science Framework - [Download](https://osf.io/49rmq/files/osfstorage/5846cc6f9ad5a101fed9a052)
+
+Dataset includes usable data from 120,115 participants.
+
+## Key variables
+
+Variables are described in the paper, analysis files, as well as in the [registered analysis plan](https://osf.io/c535z).
+
+### Mental Well-Being
+
+-   `mwbi`: Mental well-being (with imputed values) - from the [WEMWBS scale](https://www2.uwe.ac.uk/services/Marketing/students/pdf/Wellbeing-resources/well-being-scale-wemwbs.pdf)
+-   Responses to individual questions are also included but not listed here.
+
+### Demographics
+
+-   `male`: Is the participant male? (1=male, 0=no)
+-   `minority`: Is the participant a minority? (1=yes, 0=no)
+-   `deprived`: Does the participant live in a deprived area? (1=yes, 0=no)
+
+### Summary screentime
+
+-   `weekday_screen`: Linear digital screen time (week days)
+-   `weekend_screen`: Linear digital screen time (weekend days)
+
+### Screentime by type
+
+-   `watch_wd`: Linear Streaming/Watching (week days)
+-   `watch_we`: Linear StreamIng/Watching (weekend days)
+-   `play_wd`: Linear Playing (week days)
+-   `play_we`: Linear Playing (weekend days)
+-   `comp_wd`: Linear Computing (week days)
+-   `comp_we`: Linear Computing (weekend days)
+-   `sp_wd`: Linear Smartphone (week days)
+-   `sp_we`: Linear Smartphone (weekend days)
+
+## Analysis
+[Download](../files/screentime-starter.Rmd) our starter script for working with this dataset in R.

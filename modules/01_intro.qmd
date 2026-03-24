@@ -1,0 +1,34 @@
+---
+title: "Introduction to R and RStudio"
+---
+
+## Objectives
+
+This week, we'll get started with familiarizing ourselves with R and RStudio. You should come to class with software already installed on your laptop (see below for instructions). During class, we will learn how to interact the RStudio interface. We'll also talk about what reproducible scientific programming is, and how R markdown reports can be used to make your work reproducible, shareable, and one might even say, beautiful.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+R vs RStudio, base-R, package, function, argument, objects, environment (workspace), help, R markdown, script, knit, chunk, comments, project
+:::
+
+## Readings and other preparation
+
+You should install R and RStudio before class. If you already have them installed, please update to the latest versions. Here are some directions on how to [install](https://psyteachr.github.io/ads-v3/app-installing-r.html) (or [update](https://psyteachr.github.io/ads-v3/app-updating-r.html)) these software packages.
+
+While you're at it, you should go ahead and install git too. See instructions on [Happy Git](https://happygitwithr.com/install-git), sections 4, 6, and 7.
+
+For our first week, you do not to read ahead of the class period. But you should read these chapters afterward to solidify what we've discussed in class:
+
+-   *Applied Data Skills -* [Chapter 1: Intro to R and RStudio](https://psyteachr.github.io/ads-v3/01-intro.html)
+-   *Applied Data Skills -* [Chapter 2: Reports with R Markdown](https://psyteachr.github.io/ads-v3/02-reports.html)
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. In addition, we will make sure everyone is set up with the software and with Canvas.
+
+## Weekly assignment
+
+Create the `demo_report` project following the instructions in the textbook under [Exercises](https://psyteachr.github.io/ads-v3/02-reports.html#sec-exercises-reports) (2.8.1-2.8.7), with one modification: Focus on a job you might like to have *in the future*. In your description, include any ideas about how programming might be able to help you in that job. Include the rest of the information that is requested in the instructions.
+
+Once you are done, you will zip the `demo_report` folder (instructions: [mac](https://support.apple.com/guide/mac-help/zip-and-unzip-files-and-folders-on-mac-mchlp2528/mac), [windows](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5)) containing your R project, html file, and Rmd file and upload it through the link provided.

@@ -1,0 +1,45 @@
+---
+title: "Programming Foundations Part 1"
+---
+
+## Objectives
+
+This week, we'll learn the building blocks of programming: How do we represent text, numbers, and vectors in a way that a machine can understand? How do we tell the computer what to do with those variables? In other words, we're going to learn how to "speak" the computer's language. Although here we'll focus specifically on the R language, many of these concepts are shared across programming languages.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+character, numeric, combine, vector, element, logical, logical indexing, `<-`, !`=` vs `==`, flow control, while loop, for loop, conditional statements, if statement
+:::
+
+## Readings
+
+You should read these chapters before you come to class:
+
+-   *R for Psychological Science -* [Variables](https://psyr.djnavarro.net/variables.html)
+-   *R for Psychological Science -* [Vectors](https://psyr.djnavarro.net/vectors.html)
+-   *R for Psychological Science -* [Loops](https://psyr.djnavarro.net/loops.html)
+-   *R for Psychological Science -* [Branches](https://psyr.djnavarro.net/branches.html)
+
+Don't worry, each chapter is short!
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. Create an R project called `programming-foundations` for this section of the course, and save today's work in an R markdown report called `part-1.Rmd`.
+
+## Weekly assignment
+
+First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.
+
+As always, your R markdown report should be organized with headings and comments explaining your work.
+
+1.  Find the sum of all the integer numbers from 1 to 100.
+    -   You can use the `sum()` function on a vector of numbers.
+    -   How would you do this without using the sum function? Show how you would use a while-loop to accomplish this task.
+2.  List all of the odd numbers from 1 to 100.
+    -   Consider using the mod function `%%`, which evaluates whether or not there is a remainder when dividing one number by another.
+3.  Count the number of words in a string variable. You can use the `strsplit()` function to help.
+4.  Write code that will place the numbers 1 to 100 separately into a variable using a for-loop. Then, look up the `seq()` function and use this function to do the same thing.
+5.  If we list all of the natural numbers between 1 and 10 that are divisible by 3 or 5, we get 3, 5, 6, and 9. The sum of these numbers is 23. Find the sum of all the multiples of 3 and 5 between 1 and 1000.
+
+Some of these problems were adapted from this [website](https://www.crumplab.com/rstatsforpsych/practice-problems.html) and from [Project Euler](https://projecteuler.net/).

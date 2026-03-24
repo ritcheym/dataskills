@@ -1,0 +1,30 @@
+---
+title: "Statistical Analysis in R"
+---
+
+## Objectives
+
+We've made a lot of progress on working with data in R. Now what? In scientific research, we are interested in testing *hypotheses* and seeing whether the data are consistent with our hypotheses. In order to do this, we need to know how likely it is that we would have seen this pattern of data by chance (i.e., if our hypothesis wasn't true). That's what statistics are for! This week we will go over a few basic statistical tests that are commonly used in psychology and neuroscience research, and see how to implement them in R.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+descriptive statistics, inferential statistics, null hypothesis, effect size, dependent variable, independent variable, p-value, t-test, ANOVA, within-subjects, between-subjects, main effect, interaction
+:::
+
+## Readings
+
+There are no readings, but you can look at the [slides](../files/stats_slides.pdf) ahead of time.
+
+## In-class exercises
+
+We will review basic statistical concepts and learn how to implement statistical tests in R. We will then apply these skills to an open-access psychology dataset. [Download](../files/stats.Rmd) the `stats.Rmd` file to get started.
+
+## Weekly assignment
+
+Using the `stats.Rmd` file we used in class, complete the following:
+
+1.  Using the `df.avg` dataframe, determine whether there was a significant difference in mean vividness for negative and neutral trials. Run the appropriate statistical test and interpret the results. Use `ggplot` to visualize the results.
+2.  Using the `df.avg` dataframe, determine whether there was a significant interaction between emotion and age group on mean vividness. Run the appropriate statistical test and interpret the results. Use `ggplot` to visualize results.
+3.  Do some internet research to find out how to test whether there is a significant relationship between two continuous variables. Determine whether there was a significant relationship between age and scores on the BDI. Use `ggplot` to visualize the results.
+4.  Come up with another research question that you could answer with this dataset, and run the appropriate statistical test. Use `ggplot` to visualize the results.

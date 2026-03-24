@@ -1,0 +1,25 @@
+---
+title: "Datasets"
+sidebar: false
+---
+
+## Datasets used in this course
+
+-   [`screentime`](/datasets/screentime.html)
+-   [`haxby01`](/datasets/haxby01.html)
+-   [`vivid`](/datasets/vivid.html)
+
+## Searching for other datasets
+
+-   Psychology datasets published on the [Open Science Framework](https://osf.io/)
+-   Articles with open data published in [Psychological Science](https://journals.sagepub.com/home/pss)
+-   [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) multi-purpose datasets
+
+## Other options
+
+Previous students have been successful in working with data from the following papers:
+
+-   Brady, W. J., McLoughlin, K., Doan, T. N., & Crockett, M. J. (2021). How social learning amplifies moral outrage expression in online social networks. *Science Advances*, 7(33). [link](https://doi.org/10.1126/sciadv.abe5641) - [data from Study 3 & 4](https://osf.io/9ubgq/files/osfstorage)
+-   James, E. L., Bonsall, M. B., Hoppitt, L., Tunbridge, E. M., Geddes, J. R., Milton, A. L., & Holmes, E. A. (2015). Computer game play reduces intrusive memories of experimental trauma via reconsolidation-update mechanisms. *Psychological Science*, 26(8), 1201–1215. [link](https://doi.org/10.1177/0956797615583071) - [data](https://osf.io/g3f9v)
+-   Porter, T., Catalán Molina, D., Cimpian, A., Roberts, S., Fredericks, A., Blackwell, L. S., & Trzesniewski, K. (2022). Growth-mindset intervention delivered by teachers boosts achievement in early adolescence. *Psychological Science*, 33(7), 1086–1096. [link](https://doi.org/10.1177/09567976211061109) - [data](https://osf.io/z2nvy/)
+-   Scullin, M. K., Gao, C., & Fillmore, P. (2021). Bedtime music, involuntary musical imagery, and sleep. *Psychological Science*, 32(7), 985–997. [link](https://doi.org/10.1177/0956797621989724) - [data](https://osf.io/7tfqz/)

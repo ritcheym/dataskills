@@ -1,0 +1,132 @@
+---
+title: "Digital Screentime and Mental Well-Being"
+author: "Maureen Ritchey"
+date: "January 16, 2025"
+output:
+  html_document: 
+    df_print: kable
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: cosmo
+---
+
+# Getting started
+
+In order to run this script, you will need to first [download the data](https://osf.io/49rmq/files/osfstorage/5846cc6f9ad5a101fed9a052) from OSF. Save it to the project directory containing this script.
+
+You will also want to download the corresponding [paper](https://doi.org/10.1177/0956797616678438).
+
+More information about the `screentime` dataset can be found on the course website [here](https://ritcheym.github.io/ppn/datasets/screentime.html).
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(tidyverse)
+```
+
+# Load data
+```{r}
+df <- read.csv('data.csv')
+```
+
+# Process data
+Keep only the rows that have data for well-being scores and aggregate screentime measures. 
+```{r}
+df <- df %>%
+  filter(!is.na(mwbi) & !is.na(weekday_screen) & !is.na(weekend_screen)) 
+```
+
+There are `r nrow(df)` observations in the dataset.
+
+# Reproduce part of Figure 1
+For this plot, we need the mental well-being measure (here, `mwbi`) and the screentime measures for each type of screentime, split by screentime type and weekday vs weekend
+
+In practical terms, this involves making the data "tidy" by converting the dataframe from its current wide format into long format. We want to gather the screentime variables and create new variables that index the day type (weekday or weekend) as well as the screentime type (watch, play, computer, smartphone).
+
+## Tidy the data
+
+Because the different screentime measures are in different columns, we need to gather them together into a single column-- in other words, we need to make our data tidy. 
+
+To do so, we will use the `pivot_longer` command, which is designed to convert wide data to long data.
+
+```{r}
+# use the pivot_longer function to gather the variables
+df.tidy <- df %>%
+  pivot_longer(
+    cols = c(watch_wd, play_wd, comp_wd, sp_wd, watch_we, play_we, comp_we, sp_we),         
+    names_to = "type_day",       
+    values_to = "screentime"
+  )
+
+# clean up the resulting dataframe
+df.tidy <- df.tidy %>%
+  select(male, minority, deprived, mwbi, type_day, screentime) %>%
+  filter(!is.na(screentime))
+```
+
+This gets us most of the way there, but it'd be nice to have additional variables that separate out the screentime type from the day. Let's create those next. 
+
+## Recode the variables
+```{r}
+# use the separate function to separate the type_day variable into two
+df.tidy <- df.tidy %>%
+  separate(col = type_day, into = c("type", "day"), sep = "_")
+
+# finally, turn type, day, and male into factors, which will be useful for plotting
+df.tidy$male <- factor(df.tidy$male)
+df.tidy$type <- factor(df.tidy$type,levels=c("watch","play","comp","sp"))
+df.tidy$day <- factor(df.tidy$day)
+```
+
+## Calculate the summary statistics
+Finally, we need to calculate the summary statistics that will go into our plot, including the means and the 95% confidence intervals for each combination of conditions.
+
+```{r}
+# average data
+df.tidy.avg_mwbi <- df.tidy %>%
+  group_by(type,day,screentime) %>%
+  summarize(mwbi_avg = mean(mwbi,na.rm=TRUE),
+            mwbi_se = sd(mwbi,na.rm=TRUE) / sqrt(n()),
+            mwbi_ci_lower = mwbi_avg - 1.96 * mwbi_se,
+            mwbi_ci_upper = mwbi_avg + 1.96 * mwbi_se)
+
+# take a peek at the first 6 rows
+head(df.tidy.avg_mwbi)
+```
+
+The `df.tidy.avg_mwbi` dataframe contains all of the data that we will use to reproduce Figure 1.
+
+## Plot the data
+
+ADD YOUR CODE FOR FIGURE 1 HERE
+
+# Reproduce Figure 2
+For this plot, we can use the `df.tidy` variable that we created before. But this time, we need to average the screentime measures for each type of screentime, separately for weekdays and weekend days, and separately for males and females.
+
+## Calculate the summary statistics
+First we calculate the summary statistics that will go into our plot, including the means and confidence intervals for each combination of conditions.
+
+```{r}
+# average data
+df.tidy.avg_screen <- df.tidy %>%
+  group_by(male,type,day) %>%
+  summarize(screen_avg = mean(screentime,na.rm=TRUE),
+            screen_se = sd(screentime,na.rm=TRUE) / sqrt(n()),
+            screen_ci_lower = screen_avg - 1.96 * screen_se,
+            screen_ci_upper = screen_avg + 1.96 * screen_se)
+
+# take a peek at the first 6 rows
+head(df.tidy.avg_screen)
+```
+The `df.tidy.avg_screen` dataframe contains all of the data that we will use to reproduce Figure 1.
+
+## Plot the data
+
+ADD YOUR CODE FOR FIGURE 2 HERE
+
+# Create your own figure
+
+Create your own figure using a different geom than the ones used in Figures 1 and 2. You can use either of the two dataframes we created, or you can generate your own if you wish.
+
+# Notes
+This notebook was produced with `r version$version.string`.

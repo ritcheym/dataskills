@@ -1,0 +1,37 @@
+---
+title: "Data Visualization"
+---
+
+## Objectives
+
+Now that we have our programming foundation in place, let's revisit our goal of making our work reproducible, shareable, and beautiful. This week, we'll discuss how to make data visualizations in R using the `{ggplot2}` package. This package will allow you to make a large variety of plots, which are useful for exploratory data analysis as well as for generating publication-quality figures. We'll go over the most common types of data visualizations, as well as principles for when you should use one type of plot versus another.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+categorical, continuous, ordinal, nominal, numeric, observation, factor, geom, mapping, scales, themes, tidy data
+:::
+
+## Readings
+
+You should read this chapter before you come to class:
+
+-   *Applied Data Skills -* [Chapter 3: Data Visualization](https://psyteachr.github.io/ads-v3/03-viz.html)
+
+We will also discuss content from this chapter:
+
+-   *Applied Data Skills -* [Chapter 10: Customizing Visualizations](https://psyteachr.github.io/ads-v3/10-custom.html)
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. Create an R project called `visualization`, and save today's work in an R markdown report called `plots.Rmd`. We will also go over the dataset that you'll use for your assignment this week.
+
+## Weekly assignment
+
+This week, you will recreate figures from the following paper:
+
+-   Przybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. *Psychological Science*, 28(2), 204-215. [link](https://doi.org/10.1177/0956797616678438)
+
+Your goal is to use `ggplot` to recreate Figures 1 and 2 from this paper as closely as possible. Use the [starter notebook](../files/screentime-starter.Rmd) to get started (right-click \> Save Link As). This notebook will take care of the preliminary processing steps necessary to get the dataset ready for visualization. In addition to recreating Figures 1 and 2, you will also generate a new visualization of your choice, using a different kind of geom.
+
+See also the [`screentime`](../datasets/screentime.html) page for more information about the dataset.

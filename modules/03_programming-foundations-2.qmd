@@ -1,0 +1,45 @@
+---
+title: "Programming Foundations Part 2"
+---
+
+## Objectives
+
+This week, we'll expand on last week's module by discussing how to chain together commands to create functions and programs. We will discuss how to develop an algorithm, which is the list of steps required to solve a problem. Writing an algorithm is like writing a recipe for [someone](https://youtu.be/NywzrUJnmTo?si=Flm_2DChdYCAy7-A&t=34) who has never cooked before: you have to be very specific about what ingredients to use, and when and how to add them. We'll learn how to build these algorithms into our own custom functions and full-fledged programs.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+function, algorithm, pseudo code
+:::
+
+## Readings
+
+You should read these chapters before you come to class:
+
+-   *R for Psychological Science -* [Functions](https://psyr.djnavarro.net/functions.html)
+-   *R for Psychological Science -* [Programming](https://psyr.djnavarro.net/programming.html)
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `part-2.Rmd`.
+
+## Weekly assignment
+
+First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.
+
+As always, your R markdown report should be organized with headings and comments explaining your work.
+
+1.  Write a function to find the sum of all integers between any two values. Start by writing out your plan in comment form, and then fill in the code.
+2.  List all of the prime numbers from 1 to 1000. Start by writing out your plan in comment form, and then fill in the code.
+    -   Create a function `is_prime()` that helps you solve this problem.
+3.  Write your own functions to give descriptive statistics for a vector variable storing multiple numbers. Write functions for the following without using R intrinsics: mean, mode, median, range, standard deviation
+    -   It’s ok to use `sum()` and `length()` in your solutions.
+    -   For at least one of these, see if you can come up with two different solutions.
+    -   The output should be a vector with the descriptive statistics, with names included (refer back to the Vectors chapter).
+4.  Imagine you are writing a program to help you process data from a survey that you ran.
+    -   You have vectors containing the ages of 200 participants, their identified gender labels, and their responses to a 10-item survey indexing mental health. Note that you should exclude anyone with missing survey responses.
+    -   You want the descriptive statistics for an overall mental health score, across everybody as well as split by gender (here, including male, female, and non-binary).
+    -   You also want to run a [t-test](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/t.test) comparing mental health scores specifically for males and females between ages 18-24.
+    -   Make a plan for how you would implement this program, listing out the steps in order as well as what output you would need to pass from one step to the next. You can write this in pseudo-code - in other words, you don't have to write any actual syntax, only the logical list of steps as a series of comments that you could use to structure your code. Be as specific and as granular as possible.
+
+Some of these problems were adapted from this [website](https://www.crumplab.com/rstatsforpsych/practice-problems.html).

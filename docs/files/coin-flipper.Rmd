@@ -1,0 +1,133 @@
+---
+title: "Coin flipper"
+author: "Maureen Ritchey"
+date: "2025-02-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Coin flip tracker
+
+## Initialize the variables
+```{r}
+# set the number of iterations
+n_iter <- 1000
+
+# generate a list of random coin flip results
+coin_flips <- sample(x=c(0,1), size=n_iter, replace=TRUE)
+```
+
+## Function for counting heads and tails
+Count the number of heads in coin_flips using a for-loop
+```{r}
+heads_counter <- function(coin_flips) {
+  n_heads <- 0
+  for (iter in 1:length(coin_flips)){
+    if (coin_flips[iter]==0){
+      n_heads <- n_heads + 1
+    }
+    # browser()
+  }
+  return(n_heads)
+}
+
+heads_counter(coin_flips)
+```
+
+## Function for counting switches
+Count the number of times the coin switches (i.e., from heads to tails or vice versa) using a for-loop and if-statement
+```{r}
+switch_counter <- function(coin_flips) {
+  n_switches <- 0
+  for (iter in 2:length(coin_flips)){
+    if(coin_flips[iter] != coin_flips[iter-1]){
+      n_switches <- n_switches + 1
+    }
+    # browser()
+  } # end for
+  return(n_switches)
+} # end function
+switch_counter(coin_flips)
+
+### This is an alternative way of coding it
+switch_counter <- function(coin_flips) {
+  n_switches <- 0
+  last_flip <- -1 # start with neither head nor tail
+  for (flip in coin_flips){
+    if(flip != last_flip){
+      n_switches <- n_switches + 1
+    }
+    # browser()
+    last_flip <- flip
+  } # end for
+  return(n_switches)
+}
+switch_counter(coin_flips)
+
+# one difference is that the second method counts the first flip as a switch, so you end up with slightly different results
+
+```
+
+## Function for counting runs
+You want to know how many times there are runs of the same side (e.g., 5 heads in a row). Write a function that includes an input for the run length and returns the number of runs that match or exceed that value.
+
+### This is what we got through in class
+```{r}
+run_detector <- function(coin_flips, run_length) {
+  
+  run_counter <- c(1)
+  for (iter in 2:length(coin_flips)) {
+    if (coin_flips[iter]==coin_flips[iter-1]){
+      run_counter[iter] <- run_counter[iter-1] + 1
+    } else {
+      run_counter[iter] <- 1
+    }
+  }
+}
+```
+
+### This was my complete solution
+```{r}
+run_detector <- function(coin_flips,run_length) {
+  
+  # initialize run tracker - the first flip is always a "run" of 1
+  run_counter <- c(1)
+
+  # loop through coin_flips
+  for (i in 2:length(coin_flips)){
+    
+    # check if it's the same as the previous (that's why we're starting with 2)
+    if (coin_flips[i]==coin_flips[i-1]) {
+      # if it is, then add to the run
+      run_counter[i] <- run_counter[i-1] + 1
+    } else{
+      # if it's not, then reset to 1
+      run_counter[i] <- 1
+    }
+    
+    # Let's use the browser function to look at what we have so far
+    # browser()
+    
+    # This gets us most of the way there, but now I want to keep only the highest value for a run.
+    # If run_tracker gets reset to 1, then I could keep the previous value; otherwise, get rid of it.
+    if (run_counter[i]==1) {
+      run_counter[i-1] <- run_counter[i-1]
+    } else {
+      run_counter[i-1] <- NA
+    }
+    
+  } # end coin_flip loop
+  
+  # keep only the runs that match or exceed run_size
+  my_runs <- subset(run_tracker, run_tracker>=run_length)
+  
+  # return the length of my_runs
+  return(length(my_runs))
+}
+
+run_detector(coin_flips,3)
+```
+

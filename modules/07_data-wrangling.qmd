@@ -1,0 +1,53 @@
+---
+title: "Data Wrangling"
+---
+
+## Objectives
+
+You will notice that we are skipping ahead in the textbook. This is because many of the key concepts for data wrangling are related to what you just learned in the *Data Summaries* module. In this module, we will learn how to work with datasets in R. In particular, we will focus on functions for creating new variables and for filtering, grouping, and summarizing data. We will string these functions together using "pipes" to create our data processing workflows.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+pipes (`%>%`), summarize, grouping, filter, select, arrange, mutate, missing values
+:::
+
+## Readings
+
+You should read this chapter before you come to class:
+
+-   *Applied Data Skills -* [Chapter 9: Data Wrangling](https://ritcheym.github.io/ads-v3-abridged/09-wrangle.html)
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. Create an R project called `data-wrangling`, and save today's work in an R markdown report called `wrangle.Rmd`. [Download](../files/wrangle.Rmd) the version I used in class.
+
+To keep our programming skills sharp, we will also work in groups to solve the following programming problems.
+
+**Coin flip tracker:** Simulate flipping a coin 1000 times.
+
+1.  Count how many times it lands on heads. For practice, use a for-loop, even if you can think of a better way to do it.
+2.  Count how many times it switches from heads to tails or vice versa (e.g., heads-heads-tails would include one switch). Again, use a for-loop.
+3.  Bonus: Count how many times there are runs of the same side (e.g., 5 heads in a row). Write a function that includes an input for the run length and returns the number of runs that match or exceed that value.
+
+[Download](../files/coin-flipper.Rmd) the `coin_flipper` file we used in class.
+
+## Weekly assignment
+
+Solve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.
+
+1.  Using the `switch_counter` function you developed in class, figure out how many times it switches as a function of how many coin flips you simulate, setting the number of iterations to 5, 50, 100, 500, and 1000. Use ggplot to plot the results, using whatever format you think is best.
+
+2.  *Extra practice (optional):* Using the `run_detector` function we discussed in class, figure out how many runs occur for all run lengths between (and including) 2 and 10. Use ggplot to plot the results, using whatever format you think is best.
+
+    **For the rest of the questions, you will use the [`screentime`](../datasets/screentime.html) dataset.** You may want to build on the script we worked on in class ([download](../files/wrangle.Rmd)).
+
+3.  Which `REGION` has the most observations? Use the `count()` function.
+
+4.  Calculate a new composite measure of mental well-being, using only 3 questions on the Mental Well-Being Scale (`WBIntp`,`WBClsep`, and `WBLoved`), which all have to do with relationships with other people (see [scale](https://www2.uwe.ac.uk/services/Marketing/students/pdf/Wellbeing-resources/well-being-scale-wemwbs.pdf)). Filter out any observations with missing values. Caution - missing values are labeled in a suboptimal way in this dataset.
+
+5.  Use the `summarize()` function to compute the mean and 95% confidence intervals of your new composite measure, split by gender. Plot the results, using whatever format you think is best.
+
+6.  *Extra practice (optional):* How closely does this new measure correspond with the original mental well-being measure (`mwbi`)? One way to tell is by plotting their relationship with one another.
+
+7.  *Extra practice (optional):* What other questions could you answer with this dataset? How would you go about it?

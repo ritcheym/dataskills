@@ -1,0 +1,22 @@
+---
+title: "Data Summaries & Data Relations"
+---
+
+## Objectives
+
+Here's the objective for this week.
+
+## Readings
+
+You should read these chapters before you come to class:
+
+-   *Applied Data Skills -* [Chapter 4: Data Summaries](https://psyteachr.github.io/ads-v3/04-summary.html)
+-   *Applied Data Skills -* [Chapter 7: Data Relations](https://psyteachr.github.io/ads-v3/07-joins.html)
+
+## In-class exercises
+
+In-class exercises
+
+## Weekly assignment
+
+Here's the weekly assignment.

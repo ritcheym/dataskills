@@ -1,0 +1,324 @@
+---
+title: "FMRI Data Wrangling"
+author: "Maureen Ritchey"
+date: "2025-03-13"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen=999) # turn off scientific notation
+
+library(tidyverse)
+library(neurobase) # Run install.packages('neurobase') first
+
+# You can read more about the neurobase package here: https://neuroconductor.org/help/neurobase/articles/neurobase.html
+```
+
+# Download data
+
+We are going to download data from [Haxby et al. 2001](https://www.science.org/doi/10.1126/science.1063736). This was a landmark study for establishing techniques for analyzing multivariate patterns of fMRI data, and the resulting dataset is commonly used to demonstrate fMRI analysis techniques. We will download the data directly from this [website](http://data.pymvpa.org/datasets/haxby2001/). The dataset consists of fMRI data from 6 subjects while they viewed different categories of images, including faces, houses, and different kinds of objects. You can read more about the dataset in the paper or in the README file that you will download below.
+
+```{r}
+if (!file.exists('data')) { # Download only once
+  
+  # Create directory
+  dir.create('data')
+  
+  # Download README
+  download.file('http://data.pymvpa.org/datasets/haxby2001/README.rst','data/README.md')
+  
+  # Download & unpack stimuli
+  download.file('http://data.pymvpa.org/datasets/haxby2001/stimuli-2010.01.14.tar.gz','data/stimuli.tar.gz')
+  untar('data/stimuli.tar.gz', exdir='data')
+  file.remove('data/stimuli.tar.gz')
+  
+  # Download & unzip subject 1
+  download.file('http://data.pymvpa.org/datasets/haxby2001/subj1-2010.01.14.tar.gz','data/subj1.tar.gz')
+  untar('data/subj1.tar.gz', exdir='data')
+  file.remove('data/subj1.tar.gz')
+  
+  # Download & unzip subject 2
+  download.file('http://data.pymvpa.org/datasets/haxby2001/subj2-2010.01.14.tar.gz','data/subj2.tar.gz')
+  untar('data/subj2.tar.gz', exdir='data')
+  file.remove('data/subj2.tar.gz')
+  
+  # Download & unzip subject 3
+  download.file('http://data.pymvpa.org/datasets/haxby2001/subj3-2010.01.14.tar.gz','data/subj3.tar.gz')
+  untar('data/subj3.tar.gz', exdir='data')
+  file.remove('data/subj3.tar.gz')
+  
+  # Download & unzip subject 4
+  download.file('http://data.pymvpa.org/datasets/haxby2001/subj4-2010.01.14.tar.gz','data/subj4.tar.gz')
+  untar('data/subj4.tar.gz', exdir='data')
+  file.remove('data/subj4.tar.gz')
+  
+  # Download & unzip subject 5
+  download.file('http://data.pymvpa.org/datasets/haxby2001/subj5-2010.01.14.tar.gz','data/subj5.tar.gz')
+  untar('data/subj5.tar.gz', exdir='data')
+  file.remove('data/subj5.tar.gz')
+  
+  # Download & unzip subject 6
+  download.file('http://data.pymvpa.org/datasets/haxby2001/subj6-2010.01.14.tar.gz','data/subj6.tar.gz')
+  untar('data/subj6.tar.gz', exdir='data')
+  file.remove('data/subj6.tar.gz')
+  
+} else {
+  print('The data directory already exists. Check to see if everything has been downloaded already.')
+}
+
+# Print the list of files
+cat('List of files and folders in the data directory:\n')
+list.files('data')
+cat('List of files in the subj1 directory:\n')
+list.files('data/subj1', recursive=TRUE)
+```
+
+For each of the 6 subjects, there are 3 primary files: an anatomical brain image, a set of BOLD functional images, and the labels that indicate what the subject was viewing for each time-point. In addition, there are 5 mask files that correspond to different regions of interest (ROIs) within the ventral temporal cortex: the ventral temporal cortex (vt), face-sensitive areas (face_vt), house-sensitive areas (house_vt), and variations of those latter two areas.
+
+# Example for a single subject
+
+To demonstrate the steps that we'll take to load the fMRI data, we'll first look at what happens at each step when we load fMRI data for a single subject.
+
+## Load the anatomical file and inspect it
+
+```{r}
+# readnii is part of the neurobase package
+anat <- readnii('data/subj1/anat.nii.gz')
+print(anat)
+```
+
+## Load the functional file and inspect it
+
+```{r}
+func <- readnii('data/subj1/bold.nii.gz') # this will take several seconds because the file is large
+print(func)
+```
+
+Notice that the `func` image has a 4th dimension compared to the `anat` image. This 4th dimension is time. This dataset includes a series of `r func@dim_[5]` functional images, with one taken every `r func@pixdim[5]` seconds during the task. Each functional image has a resolution of `r func@pixdim[2]` x `r func@pixdim[3]` x `r func@pixdim[4]` mm.
+
+In contrast, the `anat` image has only 3 dimensions, meaning that it includes a single 3-dimensional image of the brain, but it is higher resolution than the functional images: `r anat@pixdim[2]` x `r anat@pixdim[3]` x `r anat@pixdim[4]` mm.
+
+## Visualize the images
+
+We can see the difference in resolution if we visualize these images.
+
+```{r}
+# visualize the anatomical image
+ortho2(anat)
+
+# visualize the first timepoint from the functional series
+ortho2(func[,,,1])
+
+# another visualization, this one showing all the slices
+image(func)
+```
+
+For each subject, we have `r func@dim_[5]` of these images, and each image includes `r func@dim_[2]` x `r func@dim_[3]` x `r func@dim_[4]` voxels (i.e., 3-d pixels). If we do the math, that's `r func@dim_[2]*func@dim_[3]*func@dim_[4]*func@dim_[5]` data points per subject.
+
+In order to reduce the size and dimensionality of the data, we're going to apply a mask to extract data only from particular areas of the brain, i.e., our regions of interest or ROIs. This will make it easier for us to use the tools we've been learning to summarize and visualize the results.
+
+## Mask the data
+
+### Load the masks
+
+```{r}
+mask_face <- readnii('data/subj1/mask8b_face_vt.nii.gz') 
+mask_house <- readnii('data/subj1/mask8b_house_vt.nii.gz') 
+
+print(mask_face)
+```
+
+### Visualize the face mask on the functional image
+
+```{r}
+ortho2(func[,,,1], y = mask_face > 0, xyz=c(20,25,26))
+```
+
+### Visualize the house mask on the functional image
+
+```{r}
+ortho2(func[,,,1], y = mask_house > 0, xyz=c(20,25,26))
+```
+
+As described in the study info, these masks were derived for each subject based on a comparison of brain responses to faces and houses.
+
+### Extract the masked data
+
+```{r}
+# Mask with the face mask
+func_face <- func * array(mask_face, dim = dim(func))
+func_face[func_face==0] <- NA
+ortho2(func_face[,,,1], xyz=c(20,25,26))
+
+# Average the signal within the mask
+func_face_vals <- colMeans(func_face, dims = 3, na.rm = TRUE)
+
+# Do the same thing with the house mask
+func_house <- func * array(mask_house, dim = dim(func))
+func_house[func_house==0] <- NA
+func_house_vals <- colMeans(func_house, dims = 3, na.rm = TRUE)
+
+# Save it to a dataframe
+func_df <- data.frame(func_face_vals, func_house_vals,timepoint=seq(1:length(func_face_vals)))
+
+```
+
+Now we have a time-series for the average signal within face-sensitive voxels and the average signal within house-sensitive voxels.
+
+## Visualize the timeseries
+
+Let's take a peek at what these time-series look like. We'll look at just the first 200 time-points.
+
+```{r}
+colors <- c("Face" = "red", "House" = "blue")
+
+func_df %>%
+  filter(timepoint<=200) %>%
+  ggplot(aes(y=func_face_vals,x=timepoint,color="Face")) +
+  geom_line() + 
+  geom_line(aes(y=func_house_vals,x=timepoint,color="House")) + 
+  scale_x_continuous(name="Time-points") +
+  scale_y_continuous(name="Average BOLD signal") +
+  scale_color_manual(values = colors) +
+  theme_minimal()
+```
+
+# Data wrangling
+
+Now that we know the process, we can set up a function that will do this for each subject.
+
+## Function for loading and masking data for one subject
+
+```{r}
+get_fmri_data <- function(subj_num) {
+  
+  # sometimes it's useful to have a function print a description of what it's doing
+  print(paste0('Loading data for subject ',subj_num))
+
+  # load data
+  func <- readnii(paste0('data/subj',subj_num,'/bold.nii.gz')) 
+  mask_face <- readnii(paste0('data/subj',subj_num,'/mask8b_face_vt.nii.gz'))
+  mask_house <- readnii(paste0('data/subj',subj_num,'/mask8b_house_vt.nii.gz'))
+  mask_vt <- readnii(paste0('data/subj',subj_num,'/mask4_vt.nii.gz'))           # adding in a 3rd mask
+  
+  # mask data
+  func_face <- func * array(mask_face, dim = dim(func))
+  func_face[func_face==0] <- NA
+  func_face_vals <- colMeans(func_face, dims = 3, na.rm = TRUE)
+  func_house <- func * array(mask_house, dim = dim(func))
+  func_house[func_house==0] <- NA
+  func_house_vals <- colMeans(func_house, dims = 3, na.rm = TRUE)
+  func_vt <- func * array(mask_vt, dim = dim(func))
+  func_vt[func_house==0] <- NA
+  func_vt_vals <- colMeans(func_vt, dims = 3, na.rm = TRUE)
+  
+  # save it to a dataframe
+  func_df <- data.frame(func_face_vals, 
+                        func_house_vals, 
+                        func_vt_vals,
+                        timepoint=seq(1:length(func_face_vals)), 
+                        subj_num=subj_num)
+  
+  # return dataframe
+  return(func_df)
+  
+}
+
+# Example use: func_df <- get_fmri_data(1)
+# Note that this function will take several seconds each time you run it
+```
+
+## Load and combine everyone's data
+
+Your goal is to have a single dataframe that contains everyone's data. How would you do this?
+
+```{r}
+# FILL IN HERE
+```
+
+Because this step takes a minute or so, you might want to save the output to a file that can be read in without having to load all of the fMRI data again. We can write the current dataframe to csv. Then we can implement some checks so that, next time you run the script, if that csv file exists, you can load it in instead of the original fMRI data. This is not a necessary step, but it will save you time down the line.
+
+```{r}
+# FILL IN HERE
+```
+
+## Adding the task label information
+
+Now we need to know what people were doing at each timepoint of the task. This information is stored in the `labels.txt` file in every subject's folder. How can we add it in? Hint: eventually you should use a `*_join` function.
+
+```{r}
+# FILL IN HERE
+```
+
+## Make the data tidy
+
+Tidy data has one observation per row, but in our dataframe, we have two observations per row: one for the face-sensitive voxels and one for the house-sensitive voxels. How can we tidy this up? Hint: we will want to use a `pivot_*` function.
+
+```{r}
+# FILL IN HERE
+```
+
+## Adding ROI information
+
+It would be useful if we also had some information about the regions of interest that we're using. Here is a table that contains this information.
+
+```{r}
+roi_data <- tibble(roi_type = c('face','house','vt'),
+                   roi_file = c('mask8b_face_vt.nii.gz',
+                                'mask8b_house_vt.nii.gz',
+                                'mask4_vt.nii.gz'),
+                   description = c('face-sensitive voxels',
+                                   'house-sensitive',
+                                   'ventral temporal cortex'))
+print(roi_data)
+```
+
+How can we add this information into the dataframe? Hint: we should use a `*_join` function.
+
+```{r}
+# FILL IN HERE
+```
+
+## Excluding data points
+
+I saw in a note in the README that: *"Data for the run 9 (chunk 8) of subject 5 was corrupted and therefore should not be used for the analyses. In the 'labels.txt' file all samples in that chunk are marked as 'rest' condition."*
+
+But we'd rather set the values for those data points to be `NA` so that I know they should excluded. How would we do this?
+
+```{r}
+# FILL IN HERE
+```
+
+# Data summaries
+
+Now that you have all of the data in a tidy format and with all of the accompanying information, you're reading to start exploring the dataset. Let's start by visualizing the data.
+
+## Visualizing everyone's data
+
+Imagine you want to create a plot of everyone's data, with a separate panel for each subject. This will give you insight into what else I might need to do to process the data. How would you do this?
+
+```{r}
+# FILL IN HERE
+```
+
+What do you notice? What are the similarities and differences that you see for the different subjects?
+
+## Summarizing the data by task
+
+Usually with fMRI data, our end goal is to relate brain activity to what the person was doing in the scanner - in this case, viewing different categories of visual images. There are many different ways to do this. Let's keep it simple by averaging activity across all of the time-points associated with each task. How would you do this?
+
+```{r}
+# FILL IN HERE
+```
+
+Now what if you wanted to have an average value for each subject for each task. How would you do this?
+
+```{r}
+# FILL IN HERE
+```
+

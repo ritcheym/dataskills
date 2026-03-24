@@ -1,0 +1,28 @@
+---
+title: "Dataset: vivid"
+sidebar: false
+---
+
+## Paper
+
+-   Faul, L., Ritchey, M., & Kensinger, E. A. (2025). The relationship between subjective vividness and remembered visual characteristics of emotional stimuli across the lifespan. *Emotion*. https://doi.org/10.1037/emo0001518. [link](https://doi.org/10.1037/emo0001518)
+
+## Open data
+
+[Download](https://osf.io/3wg7b/files/osfstorage) a copy of the data. Or use our starter script below to download it directly through R.
+
+## Description
+
+In this study, participants studied emotionally negative, positive, and neutral images. They then completed a memory test for these images, which included measures of:
+
+-   accuracy of the discrimination between old and new images
+-   ratings of subjective memory vividness
+-   errors in reconstructing the visual features of the images (here we'll look at color saturation).
+
+Participants were sampled across the lifespan from 19-78 years of age. Thus, this dataset is a rich dataset for looking at the effects of within-subjects and between-subjects variables on multiple dependent measures, as well as relationships between these variables.
+
+There are two main files: the `Key.csv` file, which gives a description of all of the variables included in the dataset, and the `Final_Data_307_Participants.csv` file, which includes all of the data. The dataset includes a row for every experimental trial for every participant.
+
+## Analysis
+
+[Download](../files/stats.Rmd) our starter script for working with this dataset in R.

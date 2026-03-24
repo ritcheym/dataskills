@@ -1,0 +1,1242 @@
+[
+  {
+    "objectID": "exercises.html",
+    "href": "exercises.html",
+    "title": "Exercises",
+    "section": "",
+    "text": "Below you can find some practice problems that you can use to test your understanding of programming logic. For each question, first try to guess what the code will produce. Then see if you are correct by running the code on your own."
+  },
+  {
+    "objectID": "exercises.html#overview",
+    "href": "exercises.html#overview",
+    "title": "Exercises",
+    "section": "",
+    "text": "Below you can find some practice problems that you can use to test your understanding of programming logic. For each question, first try to guess what the code will produce. Then see if you are correct by running the code on your own."
+  },
+  {
+    "objectID": "exercises.html#exercises",
+    "href": "exercises.html#exercises",
+    "title": "Exercises",
+    "section": "Exercises",
+    "text": "Exercises\n\n1: Indexing\n\naccuracy &lt;- c(1, 0, 1, 1, 0)\nreaction_times &lt;- c(520, 700, 480, 510, 730)\nreaction_times[accuracy == 1]\n\n\n\n2: If-else\n\ncondition &lt;- c(\"A\", \"B\", \"A\", \"B\", \"A\")\nstimulus &lt;- ifelse(condition == \"A\", \"face\", \"scene\")\nstimulus\n\n\n\n3: Indexing\n\ncondition &lt;- c(\"A\", \"B\", \"A\", \"B\", \"A\")\ncorrect &lt;- c(1, 1, 0, 1, 1)\ncondition[correct == 1 & condition == \"A\"]\n\n\n\n4: For loops\n\nrt1 &lt;- c(500, 480, 530)\nrt2 &lt;- c(520, 490, 500)\ndiffs &lt;- numeric(length(rt1))\nfor (i in 1:length(rt1)) {\n  diffs[i] &lt;- rt2[i] - rt1[i]\n}\ndiffs\n\n\n\n5: While loops\n\nresponses &lt;- c(1, 1, 0, 1, 0, 1, 1)\ni &lt;- 1\ncount &lt;- 0\nwhile (responses[i] == 1) {  # pay attention here to what will make the while loop stop\n  count &lt;- count + 1\n  i &lt;- i + 1\n}\ncount\n\n\n\n6: For loops and if-else\n\nrt &lt;- c(480, 610, 700)\nlabels &lt;- character(length(rt))\nfor (i in 1:length(rt)) {\n  if (rt[i] &lt; 500) {\n    labels[i] &lt;- \"fast\"\n  } else if (rt[i] &lt;= 650) {\n    labels[i] &lt;- \"medium\"\n  } else {\n    labels[i] &lt;- \"slow\"\n  }\n}\nlabels\n\n\n\n7: For loops and if-else\n\nrt &lt;- c(350, 560, 720, 450)\nflags &lt;- rep(FALSE, length(rt))\nfor (i in 1:length(rt)) {\n  if (rt[i] &gt; 500) {\n    if (rt[i] &lt; 700) {\n      flags[i] &lt;- TRUE\n    }\n  }\n}\nflags\n\n\n\n8: Data manipulation\n\ndf &lt;- data.frame(\n  subject = c(1, 1, 2, 2),\n  condition = c(\"congruent\", \"incongruent\", \"congruent\", \"incongruent\"),\n  rt = c(450, 600, 470, 620)\n) \n\ndf.new &lt;- df %&gt;%\n  filter(condition == \"incongruent\")\n\ndf.new\n\n\n\n9: Data manipulation\n\ndf &lt;- data.frame(\n  trial = 1:5,\n  response = c(\"old\", \"new\", \"old\", \"old\", \"new\"),\n  correct = c(TRUE, TRUE, FALSE, TRUE, FALSE)\n)\n\ndf.new &lt;- df %&gt;%\n  mutate(score = ifelse(correct, 1, 0))\n\nsum(df.new$score)\n\n\n\n10: Functions\n\ncategorize_rt &lt;- function(rt) {\n  if (is.na(rt)) {\n    return(\"missing\")\n  } else if (rt &lt; 500) {\n    return(\"fast\")\n  } else {\n    return(\"slow\")\n  }\n}\n\ncategorize_rt(480)\n\n\n\n11: Data manipulation\n\ndf &lt;- data.frame(\n  trial = 1:5,\n  emotion = c(\"happy\", \"sad\", \"angry\", \"happy\", \"sad\"),\n  rating = c(5, 3, 4, 4, 2)\n)\n\ndf %&gt;%\n  filter(emotion == \"happy\") %&gt;%\n  mutate(adjusted = rating + 1)\n\n\n\n12: Data summaries\n\ndf &lt;- data.frame(\n  subject = c(1, 1, 2, 2),\n  condition = c(\"easy\", \"hard\", \"easy\", \"hard\"),\n  correct = c(1, 0, 1, 1)\n)\n\ndf %&gt;%\n  group_by(condition) %&gt;%\n  summarize(mean_acc = mean(correct))\n\n\n\n13: Data manipulation\n\ndf &lt;- data.frame(\n  trial = 1:4,\n  rt = c(500, 430, 670, 520)\n)\n\ndf %&gt;%\n  arrange(rt)\n\n\n\n14: Data visualization\n\ndf &lt;- data.frame(\n  condition = c(\"A\",\"A\",\"A\",\"A\",\"A\",\"B\",\"B\",\"B\",\"B\",\"B\"),\n  rt = c(420, 430, 510, 525, 415, 620, 510, 605, 430, 615)\n)\n\nggplot(df, aes(x = condition, y = rt)) +\n  geom_boxplot()\n\n\n\n15: Data visualization\n\ndf &lt;- data.frame(\n  subject = c(1,2,3,4,5,1,2,3,4,5),\n  condition = c(\"easy\",\"easy\",\"easy\",\"easy\",\"easy\",\"hard\",\"hard\",\"hard\",\"hard\",\"hard\"),\n  accuracy = c(.8, 1, .75, .6, .8, .5, .7, .8, .4, .2)\n)\n\nggplot(df, aes(x = condition, y = accuracy, color = factor(subject))) +\n  geom_point()"
+  },
+  {
+    "objectID": "exercises.html#advanced-exercises",
+    "href": "exercises.html#advanced-exercises",
+    "title": "Exercises",
+    "section": "Advanced Exercises",
+    "text": "Advanced Exercises\n\nCode Breakers\nTurn any normal english text into an encrypted version of the text, and be able to turn any decrypted text back into normal english text. A simple encryption would be to scramble the alphabet such that each letter corresponds to a new randomly chosen (but unique) letter. You should have a function for each, as well as some tests that demonstrate how it works.\n\n\nPlaying Games\n\nSnakes and ladders\nYour task here is to write an algorithm that can simulate playing the depicted Snakes and Ladders board depicted here. You should assume that each roll of the dice produces a random number between 1 and 6. After you are able to simulate one played game, you will then write a loop to simulate 1000 games, and estimate the average number of dice rolls needed to successfully complete the game.\n\n\nTic Tac Toe\nImagine that two players make completely random choices when playing tic-tac-toe. Each game will either end in a draw or one of the two players will win. Create a simulation of this “random” version of tic-tac-toe. Out of 10,000 simulations, what proportion of the time is the game won versus drawn?\n\n\nSudoku\nSudoku is a logic puzzle in which the goal is to fill a 9 x 9 grid with numbers 1 to 9. The board has 9 rows, 9 columns, and is divided into 9 3x3 boxes. The catch is that each number must appear only once per row, column, and box. Start with a Sudoku puzzle that has some numbers filled in - here is an example, but you can use any starting puzzle. Write some code to solve the puzzle. To do so, you will probably want to write a function to make sure a number “works” for a particular spot, and then keep trying to add numbers until you fill in the entire puzzle.\n\n\n\nFind the Missing Number\nYou have a vector listing numbers from 1 to 100. You shuffle it randomly, and then— oh no, one of the numbers has gone missing! Write a function that will generate a randomized vector that is missing one value. Then write a function that can find the missing number. The second function should generalize to work any vector that includes consecutive numbers but is missing one value.\n\n\nWordle Thought Experiment\nThought experiment: How would you build a Wordle solver? Write out the algorithm in pseudo code. Think about what functions you’d like to be able to use (whether they already exist or not), and how you would chain them together to solve the puzzle.\nAdvanced Exercises were adapted from this list of Practice Problems and daily.dev blog."
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "See BruinLearn for the complete course syllabus."
+  },
+  {
+    "objectID": "syllabus.html#psy188b-data-skills-for-psychology",
+    "href": "syllabus.html#psy188b-data-skills-for-psychology",
+    "title": "Syllabus",
+    "section": "",
+    "text": "See BruinLearn for the complete course syllabus."
+  },
+  {
+    "objectID": "syllabus.html#schedule",
+    "href": "syllabus.html#schedule",
+    "title": "Syllabus",
+    "section": "Schedule",
+    "text": "Schedule\n\n\n\nWeek\nDate\nModule\nDescription\n\n\n\n\n1\nMarch 31,\nApril 2\nIntro to Programming with R\nInstallation and familiarization with R and RStudio interface;\nData organization, reproducible scientific programming\n\n\n2\nApril 7, 9\nProgramming Foundations\nVariables, vectors, branches, functions\n\n\n3\nApril 14, 16\nData Visualization\nExploratory data visualization with ggplot, customizing plots\n\n\n4\nApril 21, 21\nData Summaries\nImporting and summarizing data, tidyverse pipes\n\n\n5\nApril 28, 30\nData Wrangling\nSelecting and filtering data, creating new variables\n\n\n6\nMay 5, 7\nData Tidying\nWhat is “tidy” data and how do we get it; Combining datasets\n\n\n7\nMay 12, 14\nStatistical Analysis in R\nBasic statistical analysis in R, including t-tests, ANOVAs, and regression analyses on sample datasets\n\n\n8\nMay 19, 21\nData Workshop\nIntegrating these steps;\nMaybe: Working with fMRI data in R\n\n\n9\nMay 26, 28\nIntro to Machine Learning\nSimple machine learning models for classifying psychological outcomes\n\n\n10\nJune 2, 4\nProject Presentations\nFinal projects due"
+  },
+  {
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "For many topics in this class, we are going to be only scratching the surface. Below you can find some links that can help you learn more."
+  },
+  {
+    "objectID": "resources.html#readings",
+    "href": "resources.html#readings",
+    "title": "Resources",
+    "section": "Readings",
+    "text": "Readings\n\nTextbook readings\n\nEmily Nordmann and Lisa DeBruine. Applied Data Skills. doi:10.5281/zenodo.6365077\nDanielle Navarro. R for Psychological Science.\n\n\n\nArticles\n\nRoth et al. (2025). Ten principles for reliable, efficient, and adaptable coding in psychology and cognitive neuroscience. Nature Communications Psychology. link\n\n\n\nCoding for all\n\nTeaching coding inclusively\nA brief history of women in computing"
+  },
+  {
+    "objectID": "resources.html#useful-functions",
+    "href": "resources.html#useful-functions",
+    "title": "Resources",
+    "section": "Useful functions",
+    "text": "Useful functions\n\nBasic statistics: mean(), median(), min(), max(), sum() calculate basic descriptive statistics on a vector.\nData dimension checks: nrow(), ncol() return the number of rows and columns in a data frame length() returns the number of items in an object.\nData manipulation: subset() allows filtering data based on conditions, sort() sorts data in ascending order.\nData exploration: table() counts frequencies of unique values in a vector, head() gives you a preview of the first six parts of an object, and str() tells you more about the structure of an object.\nSampling: sample() generates random samples from a vector.\nData analysis with dplyr: filter(), select(), mutate(), group_by() are powerful functions for data manipulation within the dplyr package - covered in the Data Wrangling module\nVisualization with ggplot2: ggplot() is the primary function to create customized plots using the ggplot2 package - covered in the Data Visualization module\nMore useful functions"
+  },
+  {
+    "objectID": "resources.html#r-cheatsheets",
+    "href": "resources.html#r-cheatsheets",
+    "title": "Resources",
+    "section": "R cheatsheets",
+    "text": "R cheatsheets\n\nOfficial cheatsheets from Posit"
+  },
+  {
+    "objectID": "resources.html#working-with-files",
+    "href": "resources.html#working-with-files",
+    "title": "Resources",
+    "section": "Working with files",
+    "text": "Working with files\n\nHow to zip files: mac, windows\nCommon Mac terminal commands"
+  },
+  {
+    "objectID": "resources.html#practice-problems",
+    "href": "resources.html#practice-problems",
+    "title": "Resources",
+    "section": "Practice problems",
+    "text": "Practice problems\n\nPractice problems, from easy to hard\nProject Euler\nR programming exercises"
+  },
+  {
+    "objectID": "resources.html#version-control-with-git",
+    "href": "resources.html#version-control-with-git",
+    "title": "Resources",
+    "section": "Version control with git",
+    "text": "Version control with git\n\nGit, GitHub, and Version Control by Matt Crump\nHappy Git with R by Jenny Bryan"
+  },
+  {
+    "objectID": "resources.html#statistical-analysis-with-r",
+    "href": "resources.html#statistical-analysis-with-r",
+    "title": "Resources",
+    "section": "Statistical analysis with R",
+    "text": "Statistical analysis with R\n\nLearning Statistics with R by Danielle Navarro\nAnswering Questions with Data by Matt Crump, Danielle Navarro, and Jeffrey Suzuki"
+  },
+  {
+    "objectID": "resources.html#data-visualization",
+    "href": "resources.html#data-visualization",
+    "title": "Resources",
+    "section": "Data visualization",
+    "text": "Data visualization\n\nggplot2: Elegant Graphics for Data Analysis by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen"
+  },
+  {
+    "objectID": "resources.html#natural-language-processing-with-r",
+    "href": "resources.html#natural-language-processing-with-r",
+    "title": "Resources",
+    "section": "Natural language processing with R",
+    "text": "Natural language processing with R\n\nTidy Text Mining by Julia Silge and David Robinson"
+  },
+  {
+    "objectID": "resources.html#advanced-programming-with-r",
+    "href": "resources.html#advanced-programming-with-r",
+    "title": "Resources",
+    "section": "Advanced programming with R",
+    "text": "Advanced programming with R\n\nAdvanced R by Hadley Wickham"
+  },
+  {
+    "objectID": "resources.html#resources-for-learning-python",
+    "href": "resources.html#resources-for-learning-python",
+    "title": "Resources",
+    "section": "Resources for learning Python",
+    "text": "Resources for learning Python\n\nPython vs R: What’s the Difference?\nLab in Cognition and Perception by Todd Gureckis"
+  },
+  {
+    "objectID": "projects/final-project.html",
+    "href": "projects/final-project.html",
+    "title": "Final Project",
+    "section": "",
+    "text": "For the final project, you will reproduce data visualizations and analysis from an openly available psychology dataset. This project will integrate what you’ve learned about data processing, analysis, and visualization, culminating in a reproducible narrative report of the results.",
+    "crumbs": [
+      "Home",
+      "<b>Final Project</b>"
+    ]
+  },
+  {
+    "objectID": "projects/final-project.html#overview",
+    "href": "projects/final-project.html#overview",
+    "title": "Final Project",
+    "section": "",
+    "text": "For the final project, you will reproduce data visualizations and analysis from an openly available psychology dataset. This project will integrate what you’ve learned about data processing, analysis, and visualization, culminating in a reproducible narrative report of the results.",
+    "crumbs": [
+      "Home",
+      "<b>Final Project</b>"
+    ]
+  },
+  {
+    "objectID": "projects/final-project.html#steps",
+    "href": "projects/final-project.html#steps",
+    "title": "Final Project",
+    "section": "Steps",
+    "text": "Steps\n\n1. Find an openly available dataset\nThe dataset should correspond to a published empirical paper in psychology and/or neuroscience. You can search for datasets directly on the Open Science Framework, or you can search for an article that interests you and see if their data are available. Articles in the journal Psychological Science are now required to share their data, so this journal might be a good place to start. Other journals may have similar requirements.\nYou are strongly encouraged to find this dataset well in advance of the final deadline and to review your choice with the instructor.\n\n\n2. Reproduce a set of analyses and visualizations in R\nUse what you have learned about data tidying, wrangling, visualization, and analysis to report on the published paper. Your report should include at least one table of summary statistics, one statistical analysis, and one data visualization that reproduces a figure from the paper. When possible, your work should reproduce what is already published. However, you are not permitted to use or refer to any code that may already exist alongside the dataset. Your analysis script should incorporate concepts that we have covered in the class in order to tidy, wrangle, visualize, and analyze the data.\nYou do not need to reproduce the entire paper. Most papers includes a large number of different experiments, analyses, and visualizations, some of which may go beyond the scope of what you have learned. You should select a subset of what they have done– perhaps the key data for answering their research question- and focus on that.\n\n\n3. Package everything into an R markdown report\nYour markdown report should include a description of the research question, a link to the dataset, as well as narrative details about what you’re doing at each step and what you have found. This narrative content should be nicely formatted in Markdown and included in between code chunks (i.e., not as comments within a code chunk).\nThe end result should be a reproducible report that would allow another person to download the dataset and run your code to obtain the same results. You should include code that downloads the dataset directly from the internet to facilitate this process. You must upload both the Rmd file and the html file in order to receive full credit.",
+    "crumbs": [
+      "Home",
+      "<b>Final Project</b>"
+    ]
+  },
+  {
+    "objectID": "projects/final-project.html#report-components",
+    "href": "projects/final-project.html#report-components",
+    "title": "Final Project",
+    "section": "Report components",
+    "text": "Report components\nYour final report should include the following:\n\nA description of the research question, what the authors did, and what they found. This should consist of at least one detailed paragraph.\nA link to the paper.\nA link to the dataset.\nCode to directly download the data from the internet. You can model this after the code we used in the stats module.\nA table of summary statistics. This can be modeled after a table included in the paper, or something you create on your own (e.g., if they don’t have an appropriate table). An example of a summary stats table can be found here.\nA statistical analysis. This should be modeled after one of the analyses reported in the paper. Example analyses include t-tests, ANOVAs, and regressions, all of which we covered in our stats module.\nA data visualization. This should reproduce a figure included in the paper, as close as you can get it. Please also include an image of the original figure from the paper.\nYou are also welcome to include other visualizations that you think are interesting or helpful.\nThroughout, you should incorporate concepts that we have discussed in class.\nThroughout, you should include Markdown subheaders and narrative text (i.e., between your code chunks) to organize and describe what you are doing for each step and what you have found.\nIn your code chunks, you should include short comments detailing the steps.\nYou should submit both the Rmd file and the knitted html file.\nAny disclosures about use of AI. Remember that for this project, you should be using AI only for debugging purposes.",
+    "crumbs": [
+      "Home",
+      "<b>Final Project</b>"
+    ]
+  },
+  {
+    "objectID": "projects/final-project.html#final-presentation",
+    "href": "projects/final-project.html#final-presentation",
+    "title": "Final Project",
+    "section": "Final presentation",
+    "text": "Final presentation\nIn the last two weeks of class, you will present your final project to the group. Your presentation should include:\n\nan overview of the research question\ninformation about the original data visualization and results\ninformation about your process for reproducing the visualization and results\nthe research conclusions\nwhat you have learned from this exercise.\n\nYour presentation should be 5-8 minutes long.",
+    "crumbs": [
+      "Home",
+      "<b>Final Project</b>"
+    ]
+  },
+  {
+    "objectID": "modules/xx_experiment-design.html",
+    "href": "modules/xx_experiment-design.html",
+    "title": "Experimental Design & Data Collection",
+    "section": "",
+    "text": "Forthcoming. Maybe."
+  },
+  {
+    "objectID": "modules/xx_advanced-visualization.html",
+    "href": "modules/xx_advanced-visualization.html",
+    "title": "Advanced Visualization Techniques",
+    "section": "",
+    "text": "Forthcoming. Maybe."
+  },
+  {
+    "objectID": "modules/12_nlp.html",
+    "href": "modules/12_nlp.html",
+    "title": "Natural Language Processing",
+    "section": "",
+    "text": "Natural language processing (NLP) refers to a family of methods for processing natural (i.e., human) language. In recent years, NLP methods have taken off with the development of large language models that can interpret and generate complex texts. This week, we will take a brief peek into the world of NLP, focusing on basic steps involved in processing written text. As an example, we will conduct a sentiment analysis, which is a method for rating the emotional tone of text– that is, how positive or negative is its meaning.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Natural Language Processing"
+    ]
+  },
+  {
+    "objectID": "modules/12_nlp.html#objectives",
+    "href": "modules/12_nlp.html#objectives",
+    "title": "Natural Language Processing",
+    "section": "",
+    "text": "Natural language processing (NLP) refers to a family of methods for processing natural (i.e., human) language. In recent years, NLP methods have taken off with the development of large language models that can interpret and generate complex texts. This week, we will take a brief peek into the world of NLP, focusing on basic steps involved in processing written text. As an example, we will conduct a sentiment analysis, which is a method for rating the emotional tone of text– that is, how positive or negative is its meaning.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Natural Language Processing"
+    ]
+  },
+  {
+    "objectID": "modules/12_nlp.html#readings",
+    "href": "modules/12_nlp.html#readings",
+    "title": "Natural Language Processing",
+    "section": "Readings",
+    "text": "Readings\nThis week’s demonstration is based on methods described in Text Mining with R.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Natural Language Processing"
+    ]
+  },
+  {
+    "objectID": "modules/12_nlp.html#in-class-exercises",
+    "href": "modules/12_nlp.html#in-class-exercises",
+    "title": "Natural Language Processing",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will go through a demonstration of how to use natural language processing tools to run a sentiment analysis to better understand, what else, but the Eras of Taylor Swift.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Natural Language Processing"
+    ]
+  },
+  {
+    "objectID": "modules/12_nlp.html#weekly-assignment",
+    "href": "modules/12_nlp.html#weekly-assignment",
+    "title": "Natural Language Processing",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nNone this week. You should use this time to work on your final project.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Natural Language Processing"
+    ]
+  },
+  {
+    "objectID": "modules/10_statistical-analysis.html",
+    "href": "modules/10_statistical-analysis.html",
+    "title": "Statistical Analysis in R",
+    "section": "",
+    "text": "We’ve made a lot of progress on working with data in R. Now what? In scientific research, we are interested in testing hypotheses and seeing whether the data are consistent with our hypotheses. In order to do this, we need to know how likely it is that we would have seen this pattern of data by chance (i.e., if our hypothesis wasn’t true). That’s what statistics are for! This week we will go over a few basic statistical tests that are commonly used in psychology and neuroscience research, and see how to implement them in R.\n\n\n\n\n\n\nKey concepts\n\n\n\ndescriptive statistics, inferential statistics, null hypothesis, effect size, dependent variable, independent variable, p-value, t-test, ANOVA, within-subjects, between-subjects, main effect, interaction",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Statistical Analysis in R"
+    ]
+  },
+  {
+    "objectID": "modules/10_statistical-analysis.html#objectives",
+    "href": "modules/10_statistical-analysis.html#objectives",
+    "title": "Statistical Analysis in R",
+    "section": "",
+    "text": "We’ve made a lot of progress on working with data in R. Now what? In scientific research, we are interested in testing hypotheses and seeing whether the data are consistent with our hypotheses. In order to do this, we need to know how likely it is that we would have seen this pattern of data by chance (i.e., if our hypothesis wasn’t true). That’s what statistics are for! This week we will go over a few basic statistical tests that are commonly used in psychology and neuroscience research, and see how to implement them in R.\n\n\n\n\n\n\nKey concepts\n\n\n\ndescriptive statistics, inferential statistics, null hypothesis, effect size, dependent variable, independent variable, p-value, t-test, ANOVA, within-subjects, between-subjects, main effect, interaction",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Statistical Analysis in R"
+    ]
+  },
+  {
+    "objectID": "modules/10_statistical-analysis.html#readings",
+    "href": "modules/10_statistical-analysis.html#readings",
+    "title": "Statistical Analysis in R",
+    "section": "Readings",
+    "text": "Readings\nThere are no readings, but you can look at the slides ahead of time.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Statistical Analysis in R"
+    ]
+  },
+  {
+    "objectID": "modules/10_statistical-analysis.html#in-class-exercises",
+    "href": "modules/10_statistical-analysis.html#in-class-exercises",
+    "title": "Statistical Analysis in R",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will review basic statistical concepts and learn how to implement statistical tests in R. We will then apply these skills to an open-access psychology dataset. Download the stats.Rmd file to get started.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Statistical Analysis in R"
+    ]
+  },
+  {
+    "objectID": "modules/10_statistical-analysis.html#weekly-assignment",
+    "href": "modules/10_statistical-analysis.html#weekly-assignment",
+    "title": "Statistical Analysis in R",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nUsing the stats.Rmd file we used in class, complete the following:\n\nUsing the df.avg dataframe, determine whether there was a significant difference in mean vividness for negative and neutral trials. Run the appropriate statistical test and interpret the results. Use ggplot to visualize the results.\nUsing the df.avg dataframe, determine whether there was a significant interaction between emotion and age group on mean vividness. Run the appropriate statistical test and interpret the results. Use ggplot to visualize results.\nDo some internet research to find out how to test whether there is a significant relationship between two continuous variables. Determine whether there was a significant relationship between age and scores on the BDI. Use ggplot to visualize the results.\nCome up with another research question that you could answer with this dataset, and run the appropriate statistical test. Use ggplot to visualize the results.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Statistical Analysis in R"
+    ]
+  },
+  {
+    "objectID": "modules/08_data-relations.html",
+    "href": "modules/08_data-relations.html",
+    "title": "Data Relations",
+    "section": "",
+    "text": "When we analyze data, we often need to combine data from different sources to get the full picture of what’s going on. For example, you might have a spreadsheet that lists students, their years, majors, and demographic information, and another spreadsheet that lists their grade history. How do you combine these tables into a single dataset? This week, we will discuss the family of “join” functions that allow us to combine different datasets. They use the overlap between datasets to smartly join them together so that you have everything in one place. This will make it easier to summarize and visualize your data going forward.\n\n\n\n\n\n\nKey concepts\n\n\n\njoining functions (left_join, right_join, inner_join, full_join), binding functions (bind_rows), set operations (intersect, union, setdiff), functions for checking your data as you go (glimpse, str, summary)",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Relations"
+    ]
+  },
+  {
+    "objectID": "modules/08_data-relations.html#objectives",
+    "href": "modules/08_data-relations.html#objectives",
+    "title": "Data Relations",
+    "section": "",
+    "text": "When we analyze data, we often need to combine data from different sources to get the full picture of what’s going on. For example, you might have a spreadsheet that lists students, their years, majors, and demographic information, and another spreadsheet that lists their grade history. How do you combine these tables into a single dataset? This week, we will discuss the family of “join” functions that allow us to combine different datasets. They use the overlap between datasets to smartly join them together so that you have everything in one place. This will make it easier to summarize and visualize your data going forward.\n\n\n\n\n\n\nKey concepts\n\n\n\njoining functions (left_join, right_join, inner_join, full_join), binding functions (bind_rows), set operations (intersect, union, setdiff), functions for checking your data as you go (glimpse, str, summary)",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Relations"
+    ]
+  },
+  {
+    "objectID": "modules/08_data-relations.html#readings",
+    "href": "modules/08_data-relations.html#readings",
+    "title": "Data Relations",
+    "section": "Readings",
+    "text": "Readings\nYou should read this chapter before you come to class:\n\nApplied Data Skills - Chapter 7: Data Relations",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Relations"
+    ]
+  },
+  {
+    "objectID": "modules/08_data-relations.html#in-class-exercises",
+    "href": "modules/08_data-relations.html#in-class-exercises",
+    "title": "Data Relations",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called data-relations, and save today’s work in an R markdown report called relations.Rmd.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Relations"
+    ]
+  },
+  {
+    "objectID": "modules/08_data-relations.html#weekly-assignment",
+    "href": "modules/08_data-relations.html#weekly-assignment",
+    "title": "Data Relations",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nSolve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.\n\nComplete the exercise described in the chapter from 7.10.1 through 7.10.4.\nUsing the completes dataframe that you have created, compute some summary statistics:\n\nWhat is the mean and standard deviation for the number of points earned on the exam and essay?\nCreate a table counting how many students earned each grade level for each assessment (e.g., A1, A2, etc).\nNow create a table counting how many students earned each grade for each assessment, collapsing across levels within an alphabet grade (e.g., A, B, C).\nWhat proportion of students earned an A on both the exam and the essay?\n\nWhat is the relationship between students’ grades on the essay and the exam? Use ggplot to create a plot of this relationship.\nFinal project preparation: Refer to the instructions for the final project. You should get started on finding an openly available dataset. Please include in your Markdown report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Relations"
+    ]
+  },
+  {
+    "objectID": "modules/08_data-relations.html#chapter-summary",
+    "href": "modules/08_data-relations.html#chapter-summary",
+    "title": "Data Relations",
+    "section": "Chapter summary",
+    "text": "Chapter summary\nThe chapter focuses on combining data from multiple tables (data frames) using dplyr’s join functions. The below summary was created in collaboration with Google Gemini.\nKey Concepts:\n\nRelational Data: Data is often stored in multiple tables that are related to each other.\nKey Variables: Columns that are common between tables and used to link them.\nJoining: The process of combining data from multiple tables based on key variables.\n\nTypes of Joins (with dplyr syntax):\n\nInner Join (inner_join()):\n\nReturns only rows where the key variable(s) match in both tables.\ninner_join(x, y, by = \"common_column\")\nExample: Combining customer orders with customer details, only for customers who have placed orders.\n\nLeft Join (left_join()):\n\nReturns all rows from the left table (x) and matching rows from the right table (y).\nIf a row in x has no match in y, NA values are added for y’s columns.\nleft_join(x, y, by = \"common_column\")\nExample: Adding information about departments to a list of employees, even if some departments have no employees.\n\nRight Join (right_join()):\n\nReturns all rows from the right table (y) and matching rows from the left table (x).\nIf a row in y has no match in x, NA values are added for x’s columns.\nright_join(x, y, by = \"common_column\")\n\nFull Join (full_join()):\n\nReturns all rows from both tables.\nNA values are added where there are no matches.\nfull_join(x, y, by = \"common_column\")\nExample: Combining customer data from two different databases, including all customers from both.\n\n\nSpecifying Key Variables:\n\nby Argument:\n\nSpecifies the key variable(s).\nIf the key variables have the same name in both tables, use by = \"column_name\".\nIf the key variables have different names, use by = c(\"x_column\" = \"y_column\").\n\n\nHandling Duplicate Column Names:\n\nIf non-key columns have the same name in both tables, dplyr will add suffixes (.x and .y) to distinguish them. You can change the suffixes by using the argument suffix = c(\".x\", \".y\").\n\nRow and Column Binding:\n\nbind_rows():\n\nCombines data frames vertically (adds rows).\nSyntax: bind_rows(df1, df2, ...)\nRequirement: Data frames must have the same columns (or columns that can be matched by name).\nExample: Merging daily sales data from multiple files.\nIf columns do not match, then NA values will be placed into the combined dataframe.\n\nbind_cols():\n\nCombines data frames horizontally (adds columns).\nSyntax: bind_cols(df1, df2, ...)\nRequirement: Data frames must have the same number of rows.\nCaveat: You will often want to use a join function instead of bind_cols.\n\n\nSet Operations:\n\nintersect():\n\nReturns the rows that are present in both data frames.\nSyntax: intersect(df1, df2)\nExample: Finding common customers between two lists.\n\nunion():\n\nReturns all unique rows from both data frames. This is similar to bind_rows except it removes duplicates.\nSyntax: union(df1, df2)\nExample: Combining customer lists from different sources, removing duplicates.\n\nsetdiff():\n\nReturns the rows that are present in the first data frame but not in the second.\nSyntax: setdiff(df1, df2)\nExample: finding all customers that are in the first customer list, but not the second.\n\n\nKey Takeaways:\n\nJoins are essential for combining related data from multiple tables.\nJoins work with only two tables at a time. To combine multiple tables, use a pipe to connect multiple calls to a join function.\nThe by argument is crucial for specifying the key variables used to link tables.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Relations"
+    ]
+  },
+  {
+    "objectID": "modules/06_data-summaries.html",
+    "href": "modules/06_data-summaries.html",
+    "title": "Data Summaries",
+    "section": "",
+    "text": "R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you’ll include when building a script for data analysis.\n\n\n\n\n\n\nKey concepts\n\n\n\ncsv files, importing data, the $ operator, pipes (%&gt;%), count, summarize",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Summaries"
+    ]
+  },
+  {
+    "objectID": "modules/06_data-summaries.html#objectives",
+    "href": "modules/06_data-summaries.html#objectives",
+    "title": "Data Summaries",
+    "section": "",
+    "text": "R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you’ll include when building a script for data analysis.\n\n\n\n\n\n\nKey concepts\n\n\n\ncsv files, importing data, the $ operator, pipes (%&gt;%), count, summarize",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Summaries"
+    ]
+  },
+  {
+    "objectID": "modules/06_data-summaries.html#readings",
+    "href": "modules/06_data-summaries.html#readings",
+    "title": "Data Summaries",
+    "section": "Readings",
+    "text": "Readings\nYou should read this chapter before you come to class:\n\nApplied Data Skills - Chapter 4: Data Summaries",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Summaries"
+    ]
+  },
+  {
+    "objectID": "modules/06_data-summaries.html#in-class-exercises",
+    "href": "modules/06_data-summaries.html#in-class-exercises",
+    "title": "Data Summaries",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called data-summaries, and save today’s work in an R markdown report called summary.Rmd. We will also practice reading in a csv file and summarizing key variables using the screentime dataset.\nIn addition, we will review data visualization techniques by writing whiteboard code for three example plots (a bar plot, scatterplot, and histogram), recapping the key components of building up plot layers with the ggplot package.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Summaries"
+    ]
+  },
+  {
+    "objectID": "modules/06_data-summaries.html#weekly-assignment",
+    "href": "modules/06_data-summaries.html#weekly-assignment",
+    "title": "Data Summaries",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nNo homework this week. You should spend this time working on your midterm project.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Summaries"
+    ]
+  },
+  {
+    "objectID": "modules/04_programming-workshop.html",
+    "href": "modules/04_programming-workshop.html",
+    "title": "Programming Foundations Workshop",
+    "section": "",
+    "text": "This week we will take a breather to review and practice what we’ve learned so far.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Workshop"
+    ]
+  },
+  {
+    "objectID": "modules/04_programming-workshop.html#objectives",
+    "href": "modules/04_programming-workshop.html#objectives",
+    "title": "Programming Foundations Workshop",
+    "section": "",
+    "text": "This week we will take a breather to review and practice what we’ve learned so far.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Workshop"
+    ]
+  },
+  {
+    "objectID": "modules/04_programming-workshop.html#in-class-exercises",
+    "href": "modules/04_programming-workshop.html#in-class-exercises",
+    "title": "Programming Foundations Workshop",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nYou will work together in groups to solve the following problems. First sketch out your plan on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called programming-foundations, and save today’s work in an R markdown report called workshop.Rmd.\n\nProgramming to the max\nCreate your own function for finding the maximum value of a vector. The input will be a vector, and the output should be the maximum value.\nDid you use the sort() function in your solution? Now try to write the function without it.\n\n\nBitcoin millionaires\nYou’ve taken the plunge and invested in Bitcoin. Write a function that calculates how much money you’ve made. The inputs should be the amount that you invested and the percentage increase since then, and the output should be your total profit.\nHow would you adjust this function if you wanted to calculate your profit over time, factoring in the rate of increase each month? Your inputs will be your initial investment, the rate of increase each month, and the number of months since your investment.\n\n\nPalindrome finder\nYou are obsessed with palindromes, and you want a function that will automatically figure out if a given word is a palindrome. Create a function that will return TRUE if the input is a palindrome and FALSE otherwise. Hint: you will probably have to look up some functions that will help you manipulate the text.\n\n\nTips\n\nFocus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.\nWhile you’re brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., c(5,1,4,10,2)), and then imagine what is going to happen to that vector at each step of your function.\nWhen testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn’t designed only for positive integers.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Workshop"
+    ]
+  },
+  {
+    "objectID": "modules/04_programming-workshop.html#weekly-assignment",
+    "href": "modules/04_programming-workshop.html#weekly-assignment",
+    "title": "Programming Foundations Workshop",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nAs always, your R markdown report should be organized with headings and comments explaining your work, as well as disclosures about any use of AI tools. Please also include a table of contents.\n\nAdditional programming practice\n\nWrite a function that counts the number of words contained in a string of text, such as, “Karma is my boyfriend, karma is a god, karma is the breeze in my hair on the weekend. Karma’s a relaxing thought. Aren’t you envious that for you it’s not?” Hint: You will probably want to use the strsplit command. Read the help page or do a search to find out more about this function. How would you adapt this function to tell you how many times a particular word (e.g., “karma”) appears?\nWrite some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word “Fizz” instead of the number. If the number can be divided by five evenly, then store the word “Buzz” instead of the number. Finally, if the number can be divided by three and five evenly, then store “FizzBuzz” instead of the number. For example, the first five elements of your vector should look like this: c(1,2,\"Fizz\",4,\"Buzz\").\n\n\n\nData visualization example\n\nIn preparation for our transition to the data visualization module, find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries (one, two) showing off plots created with ggplot2. We’ll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here’s a reminder of how that works.\n\nSome of these problems were adapted from this website.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Workshop"
+    ]
+  },
+  {
+    "objectID": "modules/02_programming-foundations-1.html",
+    "href": "modules/02_programming-foundations-1.html",
+    "title": "Programming Foundations Part 1",
+    "section": "",
+    "text": "This week, we’ll learn the building blocks of programming: How do we represent text, numbers, and vectors in a way that a machine can understand? How do we tell the computer what to do with those variables? In other words, we’re going to learn how to “speak” the computer’s language. Although here we’ll focus specifically on the R language, many of these concepts are shared across programming languages.\n\n\n\n\n\n\nKey concepts\n\n\n\ncharacter, numeric, combine, vector, element, logical, logical indexing, &lt;-, != vs ==, flow control, while loop, for loop, conditional statements, if statement",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 1"
+    ]
+  },
+  {
+    "objectID": "modules/02_programming-foundations-1.html#objectives",
+    "href": "modules/02_programming-foundations-1.html#objectives",
+    "title": "Programming Foundations Part 1",
+    "section": "",
+    "text": "This week, we’ll learn the building blocks of programming: How do we represent text, numbers, and vectors in a way that a machine can understand? How do we tell the computer what to do with those variables? In other words, we’re going to learn how to “speak” the computer’s language. Although here we’ll focus specifically on the R language, many of these concepts are shared across programming languages.\n\n\n\n\n\n\nKey concepts\n\n\n\ncharacter, numeric, combine, vector, element, logical, logical indexing, &lt;-, != vs ==, flow control, while loop, for loop, conditional statements, if statement",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 1"
+    ]
+  },
+  {
+    "objectID": "modules/02_programming-foundations-1.html#readings",
+    "href": "modules/02_programming-foundations-1.html#readings",
+    "title": "Programming Foundations Part 1",
+    "section": "Readings",
+    "text": "Readings\nYou should read these chapters before you come to class:\n\nR for Psychological Science - Variables\nR for Psychological Science - Vectors\nR for Psychological Science - Loops\nR for Psychological Science - Branches\n\nDon’t worry, each chapter is short!",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 1"
+    ]
+  },
+  {
+    "objectID": "modules/02_programming-foundations-1.html#in-class-exercises",
+    "href": "modules/02_programming-foundations-1.html#in-class-exercises",
+    "title": "Programming Foundations Part 1",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called programming-foundations for this section of the course, and save today’s work in an R markdown report called part-1.Rmd.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 1"
+    ]
+  },
+  {
+    "objectID": "modules/02_programming-foundations-1.html#weekly-assignment",
+    "href": "modules/02_programming-foundations-1.html#weekly-assignment",
+    "title": "Programming Foundations Part 1",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nFirst, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.\nAs always, your R markdown report should be organized with headings and comments explaining your work.\n\nFind the sum of all the integer numbers from 1 to 100.\n\nYou can use the sum() function on a vector of numbers.\nHow would you do this without using the sum function? Show how you would use a while-loop to accomplish this task.\n\nList all of the odd numbers from 1 to 100.\n\nConsider using the mod function %%, which evaluates whether or not there is a remainder when dividing one number by another.\n\nCount the number of words in a string variable. You can use the strsplit() function to help.\nWrite code that will place the numbers 1 to 100 separately into a variable using a for-loop. Then, look up the seq() function and use this function to do the same thing.\nIf we list all of the natural numbers between 1 and 10 that are divisible by 3 or 5, we get 3, 5, 6, and 9. The sum of these numbers is 23. Find the sum of all the multiples of 3 and 5 between 1 and 1000.\n\nSome of these problems were adapted from this website and from Project Euler.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 1"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data Skills for Psychology",
+    "section": "",
+    "text": "This is the course website for Data Skills for Psychology, developed and taught by Dr. Maureen Ritchey in the Department of Psychology at UCLA. This course will be taught in Spring 2026."
+  },
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "Data Skills for Psychology",
+    "section": "",
+    "text": "This is the course website for Data Skills for Psychology, developed and taught by Dr. Maureen Ritchey in the Department of Psychology at UCLA. This course will be taught in Spring 2026."
+  },
+  {
+    "objectID": "index.html#course-description",
+    "href": "index.html#course-description",
+    "title": "Data Skills for Psychology",
+    "section": "Course description",
+    "text": "Course description\nThis course will provide an introduction to computer programming and its applications to psychology and neuroscience research. The goal will be to provide you with the skillset to program data analyses, as well as an understanding of how these tools are used to facilitate modern research. We will begin with the basics of how to develop algorithms and implement them with programming logic. In a series of hands-on projects, students will learn to analyze real-world psychology and neuroscience datasets using the R programming language."
+  },
+  {
+    "objectID": "index.html#website-information",
+    "href": "index.html#website-information",
+    "title": "Data Skills for Psychology",
+    "section": "Website information",
+    "text": "Website information\nOn this website, you can find the course modules and assignments. We will also use BruinLearn for managing quizzes and grading."
+  },
+  {
+    "objectID": "index.html#acknowledgments",
+    "href": "index.html#acknowledgments",
+    "title": "Data Skills for Psychology",
+    "section": "Acknowledgments",
+    "text": "Acknowledgments\nThis course incorporates open-access materials that have been generously shared by researchers around the world, including:\n\nEmily Nordmann and Lisa DeBruine. Applied Data Skills. doi:10.5281/zenodo.6365077\nDanielle Navarro. R for Psychological Science.\n\nSome content and assignments were inspired by Matt Crump’s similar course. The syllabus includes language recommended by the Boston College Center for Teaching Excellence.\nCourse development was supported by a CAREER Award from the National Science Foundation (BCS-2047415)."
+  },
+  {
+    "objectID": "datasets/screentime.html",
+    "href": "datasets/screentime.html",
+    "title": "Dataset: screentime",
+    "section": "",
+    "text": "Przybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. Psychological Science, 28(2), 204-215. link"
+  },
+  {
+    "objectID": "datasets/screentime.html#paper",
+    "href": "datasets/screentime.html#paper",
+    "title": "Dataset: screentime",
+    "section": "",
+    "text": "Przybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. Psychological Science, 28(2), 204-215. link"
+  },
+  {
+    "objectID": "datasets/screentime.html#open-data",
+    "href": "datasets/screentime.html#open-data",
+    "title": "Dataset: screentime",
+    "section": "Open data",
+    "text": "Open data\nData can be downloaded from the Open Science Framework - Download\nDataset includes usable data from 120,115 participants."
+  },
+  {
+    "objectID": "datasets/screentime.html#key-variables",
+    "href": "datasets/screentime.html#key-variables",
+    "title": "Dataset: screentime",
+    "section": "Key variables",
+    "text": "Key variables\nVariables are described in the paper, analysis files, as well as in the registered analysis plan.\n\nMental Well-Being\n\nmwbi: Mental well-being (with imputed values) - from the WEMWBS scale\nResponses to individual questions are also included but not listed here.\n\n\n\nDemographics\n\nmale: Is the participant male? (1=male, 0=no)\nminority: Is the participant a minority? (1=yes, 0=no)\ndeprived: Does the participant live in a deprived area? (1=yes, 0=no)\n\n\n\nSummary screentime\n\nweekday_screen: Linear digital screen time (week days)\nweekend_screen: Linear digital screen time (weekend days)\n\n\n\nScreentime by type\n\nwatch_wd: Linear Streaming/Watching (week days)\nwatch_we: Linear StreamIng/Watching (weekend days)\nplay_wd: Linear Playing (week days)\nplay_we: Linear Playing (weekend days)\ncomp_wd: Linear Computing (week days)\ncomp_we: Linear Computing (weekend days)\nsp_wd: Linear Smartphone (week days)\nsp_we: Linear Smartphone (weekend days)"
+  },
+  {
+    "objectID": "datasets/screentime.html#analysis",
+    "href": "datasets/screentime.html#analysis",
+    "title": "Dataset: screentime",
+    "section": "Analysis",
+    "text": "Analysis\nDownload our starter script for working with this dataset in R."
+  },
+  {
+    "objectID": "datasets/haxby01.html",
+    "href": "datasets/haxby01.html",
+    "title": "Dataset: haxby01",
+    "section": "",
+    "text": "Haxby, J. V., Gobbini, M. I., Furey, M. L., Ishai, A., Schouten, J. L., & Pietrini, P. (2001). Distributed and overlapping representations of faces and objects in ventral temporal cortex. Science (New York, N.Y.), 293(5539), 2425–2430. link"
+  },
+  {
+    "objectID": "datasets/haxby01.html#paper",
+    "href": "datasets/haxby01.html#paper",
+    "title": "Dataset: haxby01",
+    "section": "",
+    "text": "Haxby, J. V., Gobbini, M. I., Furey, M. L., Ishai, A., Schouten, J. L., & Pietrini, P. (2001). Distributed and overlapping representations of faces and objects in ventral temporal cortex. Science (New York, N.Y.), 293(5539), 2425–2430. link"
+  },
+  {
+    "objectID": "datasets/haxby01.html#open-data",
+    "href": "datasets/haxby01.html#open-data",
+    "title": "Dataset: haxby01",
+    "section": "Open data",
+    "text": "Open data\nDownload a copy of the data. Or use our starter script below to download it directly through R."
+  },
+  {
+    "objectID": "datasets/haxby01.html#description",
+    "href": "datasets/haxby01.html#description",
+    "title": "Dataset: haxby01",
+    "section": "Description",
+    "text": "Description\nHaxby et al. (2001) was a landmark study for establishing techniques for analyzing multivariate patterns of fMRI data, and the resulting dataset is commonly used to demonstrate fMRI analysis techniques. The dataset consists of fMRI data from 6 subjects while they viewed different categories of images, including faces, houses, and different kinds of objects. You can read more about the dataset in the paper or in the README file associated with the data.\nFor each of the 6 subjects, there are 3 primary files: an anatomical brain image, a set of BOLD functional images, and the labels that indicate what the subject was viewing for each time-point. In addition, there are 5 mask files that correspond to different regions of interest (ROIs) within the ventral temporal cortex: the ventral temporal cortex (vt), face-sensitive areas (face_vt), house-sensitive areas (house_vt), and variations of those latter two areas."
+  },
+  {
+    "objectID": "datasets/haxby01.html#analysis",
+    "href": "datasets/haxby01.html#analysis",
+    "title": "Dataset: haxby01",
+    "section": "Analysis",
+    "text": "Analysis\nDownload our starter script for working with this dataset in R."
+  },
+  {
+    "objectID": "datasets/index.html",
+    "href": "datasets/index.html",
+    "title": "Datasets",
+    "section": "",
+    "text": "screentime\nhaxby01\nvivid"
+  },
+  {
+    "objectID": "datasets/index.html#datasets-used-in-this-course",
+    "href": "datasets/index.html#datasets-used-in-this-course",
+    "title": "Datasets",
+    "section": "",
+    "text": "screentime\nhaxby01\nvivid"
+  },
+  {
+    "objectID": "datasets/index.html#searching-for-other-datasets",
+    "href": "datasets/index.html#searching-for-other-datasets",
+    "title": "Datasets",
+    "section": "Searching for other datasets",
+    "text": "Searching for other datasets\n\nPsychology datasets published on the Open Science Framework\nArticles with open data published in Psychological Science\nTidy Tuesday multi-purpose datasets"
+  },
+  {
+    "objectID": "datasets/index.html#other-options",
+    "href": "datasets/index.html#other-options",
+    "title": "Datasets",
+    "section": "Other options",
+    "text": "Other options\nPrevious students have been successful in working with data from the following papers:\n\nBrady, W. J., McLoughlin, K., Doan, T. N., & Crockett, M. J. (2021). How social learning amplifies moral outrage expression in online social networks. Science Advances, 7(33). link - data from Study 3 & 4\nJames, E. L., Bonsall, M. B., Hoppitt, L., Tunbridge, E. M., Geddes, J. R., Milton, A. L., & Holmes, E. A. (2015). Computer game play reduces intrusive memories of experimental trauma via reconsolidation-update mechanisms. Psychological Science, 26(8), 1201–1215. link - data\nPorter, T., Catalán Molina, D., Cimpian, A., Roberts, S., Fredericks, A., Blackwell, L. S., & Trzesniewski, K. (2022). Growth-mindset intervention delivered by teachers boosts achievement in early adolescence. Psychological Science, 33(7), 1086–1096. link - data\nScullin, M. K., Gao, C., & Fillmore, P. (2021). Bedtime music, involuntary musical imagery, and sleep. Psychological Science, 32(7), 985–997. link - data"
+  },
+  {
+    "objectID": "datasets/vivid.html",
+    "href": "datasets/vivid.html",
+    "title": "Dataset: vivid",
+    "section": "",
+    "text": "Faul, L., Ritchey, M., & Kensinger, E. A. (2025). The relationship between subjective vividness and remembered visual characteristics of emotional stimuli across the lifespan. Emotion. https://doi.org/10.1037/emo0001518. link"
+  },
+  {
+    "objectID": "datasets/vivid.html#paper",
+    "href": "datasets/vivid.html#paper",
+    "title": "Dataset: vivid",
+    "section": "",
+    "text": "Faul, L., Ritchey, M., & Kensinger, E. A. (2025). The relationship between subjective vividness and remembered visual characteristics of emotional stimuli across the lifespan. Emotion. https://doi.org/10.1037/emo0001518. link"
+  },
+  {
+    "objectID": "datasets/vivid.html#open-data",
+    "href": "datasets/vivid.html#open-data",
+    "title": "Dataset: vivid",
+    "section": "Open data",
+    "text": "Open data\nDownload a copy of the data. Or use our starter script below to download it directly through R."
+  },
+  {
+    "objectID": "datasets/vivid.html#description",
+    "href": "datasets/vivid.html#description",
+    "title": "Dataset: vivid",
+    "section": "Description",
+    "text": "Description\nIn this study, participants studied emotionally negative, positive, and neutral images. They then completed a memory test for these images, which included measures of:\n\naccuracy of the discrimination between old and new images\nratings of subjective memory vividness\nerrors in reconstructing the visual features of the images (here we’ll look at color saturation).\n\nParticipants were sampled across the lifespan from 19-78 years of age. Thus, this dataset is a rich dataset for looking at the effects of within-subjects and between-subjects variables on multiple dependent measures, as well as relationships between these variables.\nThere are two main files: the Key.csv file, which gives a description of all of the variables included in the dataset, and the Final_Data_307_Participants.csv file, which includes all of the data. The dataset includes a row for every experimental trial for every participant."
+  },
+  {
+    "objectID": "datasets/vivid.html#analysis",
+    "href": "datasets/vivid.html#analysis",
+    "title": "Dataset: vivid",
+    "section": "Analysis",
+    "text": "Analysis\nDownload our starter script for working with this dataset in R."
+  },
+  {
+    "objectID": "modules/01_intro.html",
+    "href": "modules/01_intro.html",
+    "title": "Introduction to R and RStudio",
+    "section": "",
+    "text": "This week, we’ll get started with familiarizing ourselves with R and RStudio. You should come to class with software already installed on your laptop (see below for instructions). During class, we will learn how to interact the RStudio interface. We’ll also talk about what reproducible scientific programming is, and how R markdown reports can be used to make your work reproducible, shareable, and one might even say, beautiful.\n\n\n\n\n\n\nKey concepts\n\n\n\nR vs RStudio, base-R, package, function, argument, objects, environment (workspace), help, R markdown, script, knit, chunk, comments, project",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Introduction to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "modules/01_intro.html#objectives",
+    "href": "modules/01_intro.html#objectives",
+    "title": "Introduction to R and RStudio",
+    "section": "",
+    "text": "This week, we’ll get started with familiarizing ourselves with R and RStudio. You should come to class with software already installed on your laptop (see below for instructions). During class, we will learn how to interact the RStudio interface. We’ll also talk about what reproducible scientific programming is, and how R markdown reports can be used to make your work reproducible, shareable, and one might even say, beautiful.\n\n\n\n\n\n\nKey concepts\n\n\n\nR vs RStudio, base-R, package, function, argument, objects, environment (workspace), help, R markdown, script, knit, chunk, comments, project",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Introduction to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "modules/01_intro.html#readings-and-other-preparation",
+    "href": "modules/01_intro.html#readings-and-other-preparation",
+    "title": "Introduction to R and RStudio",
+    "section": "Readings and other preparation",
+    "text": "Readings and other preparation\nYou should install R and RStudio before class. If you already have them installed, please update to the latest versions. Here are some directions on how to install (or update) these software packages.\nWhile you’re at it, you should go ahead and install git too. See instructions on Happy Git, sections 4, 6, and 7.\nFor our first week, you do not to read ahead of the class period. But you should read these chapters afterward to solidify what we’ve discussed in class:\n\nApplied Data Skills - Chapter 1: Intro to R and RStudio\nApplied Data Skills - Chapter 2: Reports with R Markdown",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Introduction to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "modules/01_intro.html#in-class-exercises",
+    "href": "modules/01_intro.html#in-class-exercises",
+    "title": "Introduction to R and RStudio",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. In addition, we will make sure everyone is set up with the software and with Canvas.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Introduction to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "modules/01_intro.html#weekly-assignment",
+    "href": "modules/01_intro.html#weekly-assignment",
+    "title": "Introduction to R and RStudio",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nCreate the demo_report project following the instructions in the textbook under Exercises (2.8.1-2.8.7), with one modification: Focus on a job you might like to have in the future. In your description, include any ideas about how programming might be able to help you in that job. Include the rest of the information that is requested in the instructions.\nOnce you are done, you will zip the demo_report folder (instructions: mac, windows) containing your R project, html file, and Rmd file and upload it through the link provided.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Introduction to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "modules/03_programming-foundations-2.html",
+    "href": "modules/03_programming-foundations-2.html",
+    "title": "Programming Foundations Part 2",
+    "section": "",
+    "text": "This week, we’ll expand on last week’s module by discussing how to chain together commands to create functions and programs. We will discuss how to develop an algorithm, which is the list of steps required to solve a problem. Writing an algorithm is like writing a recipe for someone who has never cooked before: you have to be very specific about what ingredients to use, and when and how to add them. We’ll learn how to build these algorithms into our own custom functions and full-fledged programs.\n\n\n\n\n\n\nKey concepts\n\n\n\nfunction, algorithm, pseudo code",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 2"
+    ]
+  },
+  {
+    "objectID": "modules/03_programming-foundations-2.html#objectives",
+    "href": "modules/03_programming-foundations-2.html#objectives",
+    "title": "Programming Foundations Part 2",
+    "section": "",
+    "text": "This week, we’ll expand on last week’s module by discussing how to chain together commands to create functions and programs. We will discuss how to develop an algorithm, which is the list of steps required to solve a problem. Writing an algorithm is like writing a recipe for someone who has never cooked before: you have to be very specific about what ingredients to use, and when and how to add them. We’ll learn how to build these algorithms into our own custom functions and full-fledged programs.\n\n\n\n\n\n\nKey concepts\n\n\n\nfunction, algorithm, pseudo code",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 2"
+    ]
+  },
+  {
+    "objectID": "modules/03_programming-foundations-2.html#readings",
+    "href": "modules/03_programming-foundations-2.html#readings",
+    "title": "Programming Foundations Part 2",
+    "section": "Readings",
+    "text": "Readings\nYou should read these chapters before you come to class:\n\nR for Psychological Science - Functions\nR for Psychological Science - Programming",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 2"
+    ]
+  },
+  {
+    "objectID": "modules/03_programming-foundations-2.html#in-class-exercises",
+    "href": "modules/03_programming-foundations-2.html#in-class-exercises",
+    "title": "Programming Foundations Part 2",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Open the R project called programming-foundations, and save today’s work in an R markdown report called part-2.Rmd.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 2"
+    ]
+  },
+  {
+    "objectID": "modules/03_programming-foundations-2.html#weekly-assignment",
+    "href": "modules/03_programming-foundations-2.html#weekly-assignment",
+    "title": "Programming Foundations Part 2",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nFirst, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.\nAs always, your R markdown report should be organized with headings and comments explaining your work.\n\nWrite a function to find the sum of all integers between any two values. Start by writing out your plan in comment form, and then fill in the code.\nList all of the prime numbers from 1 to 1000. Start by writing out your plan in comment form, and then fill in the code.\n\nCreate a function is_prime() that helps you solve this problem.\n\nWrite your own functions to give descriptive statistics for a vector variable storing multiple numbers. Write functions for the following without using R intrinsics: mean, mode, median, range, standard deviation\n\nIt’s ok to use sum() and length() in your solutions.\nFor at least one of these, see if you can come up with two different solutions.\nThe output should be a vector with the descriptive statistics, with names included (refer back to the Vectors chapter).\n\nImagine you are writing a program to help you process data from a survey that you ran.\n\nYou have vectors containing the ages of 200 participants, their identified gender labels, and their responses to a 10-item survey indexing mental health. Note that you should exclude anyone with missing survey responses.\nYou want the descriptive statistics for an overall mental health score, across everybody as well as split by gender (here, including male, female, and non-binary).\nYou also want to run a t-test comparing mental health scores specifically for males and females between ages 18-24.\nMake a plan for how you would implement this program, listing out the steps in order as well as what output you would need to pass from one step to the next. You can write this in pseudo-code - in other words, you don’t have to write any actual syntax, only the logical list of steps as a series of comments that you could use to structure your code. Be as specific and as granular as possible.\n\n\nSome of these problems were adapted from this website.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Programming Foundations Part 2"
+    ]
+  },
+  {
+    "objectID": "modules/05_data-visualization.html",
+    "href": "modules/05_data-visualization.html",
+    "title": "Data Visualization",
+    "section": "",
+    "text": "Now that we have our programming foundation in place, let’s revisit our goal of making our work reproducible, shareable, and beautiful. This week, we’ll discuss how to make data visualizations in R using the {ggplot2} package. This package will allow you to make a large variety of plots, which are useful for exploratory data analysis as well as for generating publication-quality figures. We’ll go over the most common types of data visualizations, as well as principles for when you should use one type of plot versus another.\n\n\n\n\n\n\nKey concepts\n\n\n\ncategorical, continuous, ordinal, nominal, numeric, observation, factor, geom, mapping, scales, themes, tidy data",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Visualization"
+    ]
+  },
+  {
+    "objectID": "modules/05_data-visualization.html#objectives",
+    "href": "modules/05_data-visualization.html#objectives",
+    "title": "Data Visualization",
+    "section": "",
+    "text": "Now that we have our programming foundation in place, let’s revisit our goal of making our work reproducible, shareable, and beautiful. This week, we’ll discuss how to make data visualizations in R using the {ggplot2} package. This package will allow you to make a large variety of plots, which are useful for exploratory data analysis as well as for generating publication-quality figures. We’ll go over the most common types of data visualizations, as well as principles for when you should use one type of plot versus another.\n\n\n\n\n\n\nKey concepts\n\n\n\ncategorical, continuous, ordinal, nominal, numeric, observation, factor, geom, mapping, scales, themes, tidy data",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Visualization"
+    ]
+  },
+  {
+    "objectID": "modules/05_data-visualization.html#readings",
+    "href": "modules/05_data-visualization.html#readings",
+    "title": "Data Visualization",
+    "section": "Readings",
+    "text": "Readings\nYou should read this chapter before you come to class:\n\nApplied Data Skills - Chapter 3: Data Visualization\n\nWe will also discuss content from this chapter:\n\nApplied Data Skills - Chapter 10: Customizing Visualizations",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Visualization"
+    ]
+  },
+  {
+    "objectID": "modules/05_data-visualization.html#in-class-exercises",
+    "href": "modules/05_data-visualization.html#in-class-exercises",
+    "title": "Data Visualization",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called visualization, and save today’s work in an R markdown report called plots.Rmd. We will also go over the dataset that you’ll use for your assignment this week.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Visualization"
+    ]
+  },
+  {
+    "objectID": "modules/05_data-visualization.html#weekly-assignment",
+    "href": "modules/05_data-visualization.html#weekly-assignment",
+    "title": "Data Visualization",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nThis week, you will recreate figures from the following paper:\n\nPrzybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. Psychological Science, 28(2), 204-215. link\n\nYour goal is to use ggplot to recreate Figures 1 and 2 from this paper as closely as possible. Use the starter notebook to get started (right-click &gt; Save Link As). This notebook will take care of the preliminary processing steps necessary to get the dataset ready for visualization. In addition to recreating Figures 1 and 2, you will also generate a new visualization of your choice, using a different kind of geom.\nSee also the screentime page for more information about the dataset.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Visualization"
+    ]
+  },
+  {
+    "objectID": "modules/07_data-wrangling.html",
+    "href": "modules/07_data-wrangling.html",
+    "title": "Data Wrangling",
+    "section": "",
+    "text": "You will notice that we are skipping ahead in the textbook. This is because many of the key concepts for data wrangling are related to what you just learned in the Data Summaries module. In this module, we will learn how to work with datasets in R. In particular, we will focus on functions for creating new variables and for filtering, grouping, and summarizing data. We will string these functions together using “pipes” to create our data processing workflows.\n\n\n\n\n\n\nKey concepts\n\n\n\npipes (%&gt;%), summarize, grouping, filter, select, arrange, mutate, missing values",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "modules/07_data-wrangling.html#objectives",
+    "href": "modules/07_data-wrangling.html#objectives",
+    "title": "Data Wrangling",
+    "section": "",
+    "text": "You will notice that we are skipping ahead in the textbook. This is because many of the key concepts for data wrangling are related to what you just learned in the Data Summaries module. In this module, we will learn how to work with datasets in R. In particular, we will focus on functions for creating new variables and for filtering, grouping, and summarizing data. We will string these functions together using “pipes” to create our data processing workflows.\n\n\n\n\n\n\nKey concepts\n\n\n\npipes (%&gt;%), summarize, grouping, filter, select, arrange, mutate, missing values",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "modules/07_data-wrangling.html#readings",
+    "href": "modules/07_data-wrangling.html#readings",
+    "title": "Data Wrangling",
+    "section": "Readings",
+    "text": "Readings\nYou should read this chapter before you come to class:\n\nApplied Data Skills - Chapter 9: Data Wrangling",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "modules/07_data-wrangling.html#in-class-exercises",
+    "href": "modules/07_data-wrangling.html#in-class-exercises",
+    "title": "Data Wrangling",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called data-wrangling, and save today’s work in an R markdown report called wrangle.Rmd. Download the version I used in class.\nTo keep our programming skills sharp, we will also work in groups to solve the following programming problems.\nCoin flip tracker: Simulate flipping a coin 1000 times.\n\nCount how many times it lands on heads. For practice, use a for-loop, even if you can think of a better way to do it.\nCount how many times it switches from heads to tails or vice versa (e.g., heads-heads-tails would include one switch). Again, use a for-loop.\nBonus: Count how many times there are runs of the same side (e.g., 5 heads in a row). Write a function that includes an input for the run length and returns the number of runs that match or exceed that value.\n\nDownload the coin_flipper file we used in class.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "modules/07_data-wrangling.html#weekly-assignment",
+    "href": "modules/07_data-wrangling.html#weekly-assignment",
+    "title": "Data Wrangling",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nSolve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.\n\nUsing the switch_counter function you developed in class, figure out how many times it switches as a function of how many coin flips you simulate, setting the number of iterations to 5, 50, 100, 500, and 1000. Use ggplot to plot the results, using whatever format you think is best.\nExtra practice (optional): Using the run_detector function we discussed in class, figure out how many runs occur for all run lengths between (and including) 2 and 10. Use ggplot to plot the results, using whatever format you think is best.\nFor the rest of the questions, you will use the screentime dataset. You may want to build on the script we worked on in class (download).\nWhich REGION has the most observations? Use the count() function.\nCalculate a new composite measure of mental well-being, using only 3 questions on the Mental Well-Being Scale (WBIntp,WBClsep, and WBLoved), which all have to do with relationships with other people (see scale). Filter out any observations with missing values. Caution - missing values are labeled in a suboptimal way in this dataset.\nUse the summarize() function to compute the mean and 95% confidence intervals of your new composite measure, split by gender. Plot the results, using whatever format you think is best.\nExtra practice (optional): How closely does this new measure correspond with the original mental well-being measure (mwbi)? One way to tell is by plotting their relationship with one another.\nExtra practice (optional): What other questions could you answer with this dataset? How would you go about it?",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Wrangling"
+    ]
+  },
+  {
+    "objectID": "modules/09_data-tidying.html",
+    "href": "modules/09_data-tidying.html",
+    "title": "Data Tidying- with fMRI!",
+    "section": "",
+    "text": "This week we’re going to polish off our section on data manipulation by working with fMRI data. First we’ll go over a couple of key functions that are useful for rearranging data into “tidy” format. Then we will download an openly-available fMRI dataset and learn how to load and visualize fMRI data in R. Finally, we’ll apply the skills we’ve learned to combine and wrangle fMRI datasets and to summarize and visualize their results.\n\n\n\n\n\n\nKey concepts\n\n\n\ntidy data, reshaping functions (pivot_longer, pivot_wider), fMRI-related concepts including NIfTI file, anatomical image, functional image, voxel, time-point, time-series",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Tidying- with fMRI!"
+    ]
+  },
+  {
+    "objectID": "modules/09_data-tidying.html#objectives",
+    "href": "modules/09_data-tidying.html#objectives",
+    "title": "Data Tidying- with fMRI!",
+    "section": "",
+    "text": "This week we’re going to polish off our section on data manipulation by working with fMRI data. First we’ll go over a couple of key functions that are useful for rearranging data into “tidy” format. Then we will download an openly-available fMRI dataset and learn how to load and visualize fMRI data in R. Finally, we’ll apply the skills we’ve learned to combine and wrangle fMRI datasets and to summarize and visualize their results.\n\n\n\n\n\n\nKey concepts\n\n\n\ntidy data, reshaping functions (pivot_longer, pivot_wider), fMRI-related concepts including NIfTI file, anatomical image, functional image, voxel, time-point, time-series",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Tidying- with fMRI!"
+    ]
+  },
+  {
+    "objectID": "modules/09_data-tidying.html#readings",
+    "href": "modules/09_data-tidying.html#readings",
+    "title": "Data Tidying- with fMRI!",
+    "section": "Readings",
+    "text": "Readings\nYou should read this chapter before you come to class:\n\nApplied Data Skills - Chapter 8: Data Tidying",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Tidying- with fMRI!"
+    ]
+  },
+  {
+    "objectID": "modules/09_data-tidying.html#in-class-exercises",
+    "href": "modules/09_data-tidying.html#in-class-exercises",
+    "title": "Data Tidying- with fMRI!",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook through section 8.4. Create an R project called data-tidy, and save today’s work in an R markdown report called tidy.Rmd.\nThen we will follow along with a set of exercises to learn about interacting with fMRI data in R. Download the fmri-data-wrangling.Rmd file to get started. See also the haxby01 page for more information about the dataset.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Tidying- with fMRI!"
+    ]
+  },
+  {
+    "objectID": "modules/09_data-tidying.html#weekly-assignment",
+    "href": "modules/09_data-tidying.html#weekly-assignment",
+    "title": "Data Tidying- with fMRI!",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nDownload a modified version of the fmri-data-wrangling script here. This version does NOT require that you download the original data. Instead, download this csv file that contains summary data for each subject. Put these two files in the same folder, and follow the instructions in the script. You will start from the section cleverly labeled Start running from here. Below that section, you will find several questions that you will answer using the data and the skills you have learned so far. Respond to the questions by filling in the chunks that say FILL IN HERE.\nFinal project preparation: Read the paper associated with your final project. Download the data and make sure you are able to load it in to R. Your markdown file should include the code that you used to load it into R.\nWhen you zip your files to submit your assignment, please do not include the original data files. You should include only the Rmd and html report files.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Tidying- with fMRI!"
+    ]
+  },
+  {
+    "objectID": "modules/09_data-tidying.html#chapter-summary",
+    "href": "modules/09_data-tidying.html#chapter-summary",
+    "title": "Data Tidying- with fMRI!",
+    "section": "Chapter summary",
+    "text": "Chapter summary\nThis chapter focuses on the principles of tidy data and how to reshape data using tidyr. The below summary was created in collaboration with Google Gemini.\nKey Concepts:\n\nTidy Data: A standard way of structuring datasets that makes them easier to manipulate and analyze.\nPrinciples of Tidy Data:\n\nEach variable forms a column.\nEach observation forms a row.\nEach type of observational unit forms a table.\n\nReshaping Data: Transforming data from a wide format (multiple variables in columns) to a long format (multiple observations in rows), or vice versa.\n\nKey Functions from tidyr:\n\npivot_longer():\n\nConverts data from wide to long format.\nSyntax: pivot_longer(data, cols, names_to, values_to)\n\ncols: Columns to pivot.\nnames_to: Name of the new column that will contain the pivoted column names.\nvalues_to: Name of the new column that will contain the pivoted values.\n\nExample: Transforming columns representing measurements at different time points into rows.\n\npivot_wider():\n\nConverts data from long to wide format.\nSyntax: pivot_wider(data, names_from, values_from)\n\nnames_from: Column whose values will become column names.\nvalues_from: Column whose values will populate the new columns.\n\nExample: Transforming rows representing different categories into columns.\n\nseparate():\n\nSplits a single column into multiple columns.\nSyntax: separate(data, col, into, sep)\n\ncol: Column to separate.\ninto: Vector of new column names.\nsep: Separator character or regular expression.\n\nExample: Splitting a date column into year, month, and day columns.\n\ndrop_na():\n\nRemoves rows with missing values (NA).\nSyntax: drop_na(data, ...)\n...: Optional columns to check for NAs. If empty, checks all columns.\n\n\nPractical Applications:\n\nPreparing data for analysis and visualization.\nStandardizing data formats for consistency.\nReshaping data to meet the requirements of specific functions or packages.\n\nKey Takeaways:\n\nTidy data is essential for efficient data analysis.\ntidyr provides powerful tools for reshaping data.\nUnderstanding pivot_longer() and pivot_wider() is crucial for transforming data between wide and long formats.\ndrop_na() is useful for cleaning data.\n\nAdditional Concepts Related to Processing fMRI Data:\n\nNIfTI file: A common file format for storing MRI data.\nAnatomical image: An image that maps out the anatomical structures of the brain due to its sensitivity to differences between tissue types, e.g., gray and white matter. Typically only one anatomical image is collected, with high spatial resolution to visualize brain structures.\nFunctional image: An image that measures the BOLD (blood oxygen level dependent) signal, which is used as a proxy for brain activity. Typically many functional images are collected to capture how the BOLD signal changes over time, e.g., while a participant completes a cognitive task. Functional images are typically lower in spatial resolution than the anatomical image.\nVoxel: The spatial unit of measurement for MRI, i.e., a volumetric (3-D) pixel. The smaller the voxel, the higher the resolution and the clearer the image.\nTime-point: Related to the temporal unit of measurement for functional MRI. We collect many functional images, one per time-point.\nTime-series: The ordered collection of time-points, reflecting the time-course of the BOLD signal.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Tidying- with fMRI!"
+    ]
+  },
+  {
+    "objectID": "modules/11_machine-learning.html",
+    "href": "modules/11_machine-learning.html",
+    "title": "Machine Learning",
+    "section": "",
+    "text": "Multiple regression is a statistical technique used to understand how multiple predictor variables influence an outcome variable. It is widely used in psychology and neuroscience to examine relationships between brain activity, cognitive performance, and behavioral variables. This week we are going to learn how to implement a multiple regression model in R and interpret its results. We are also going to discuss how regression models can be used to generate predictions about what outcomes will be observed given a new set of data. This is a primary goal of “machine learning,” a set of methods for using algorithms and statistical models to identify patterns in data and make predictions or decisions about those data.\n\n\n\n\n\n\nKey concepts\n\n\n\nmachine learning, multiple regression, predictors, outcomes, residuals, training set, testing set, cross-validation, generalizability",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "modules/11_machine-learning.html#objectives",
+    "href": "modules/11_machine-learning.html#objectives",
+    "title": "Machine Learning",
+    "section": "",
+    "text": "Multiple regression is a statistical technique used to understand how multiple predictor variables influence an outcome variable. It is widely used in psychology and neuroscience to examine relationships between brain activity, cognitive performance, and behavioral variables. This week we are going to learn how to implement a multiple regression model in R and interpret its results. We are also going to discuss how regression models can be used to generate predictions about what outcomes will be observed given a new set of data. This is a primary goal of “machine learning,” a set of methods for using algorithms and statistical models to identify patterns in data and make predictions or decisions about those data.\n\n\n\n\n\n\nKey concepts\n\n\n\nmachine learning, multiple regression, predictors, outcomes, residuals, training set, testing set, cross-validation, generalizability",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "modules/11_machine-learning.html#readings",
+    "href": "modules/11_machine-learning.html#readings",
+    "title": "Machine Learning",
+    "section": "Readings",
+    "text": "Readings\nNo readings this week!",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "modules/11_machine-learning.html#in-class-exercises",
+    "href": "modules/11_machine-learning.html#in-class-exercises",
+    "title": "Machine Learning",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nWe will review the concept of regression and how we can use regression to make predictions in a new set of data. We will then apply these skills to an open-access psychology dataset. Download the prediction.Rmd file to get started. You will also want to download this csv file, which contains summary data from the vivid dataset.",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "modules/11_machine-learning.html#weekly-assignment",
+    "href": "modules/11_machine-learning.html#weekly-assignment",
+    "title": "Machine Learning",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nIn class today, we figured out how to run a regression model with the vivid dataset. Your homework is to try to predict memory vividness in this dataset. Build a model to predict memory vividness for positively valenced images, using any of the predictor variables that you think would be useful. How much variability in vividness are you able to explain? Try a few different types of models to see which ones gives you the highest R squared value with cross-validation to ensure generalizability. You should feel free to explore different combinations of predictors, model types, or data transformations. The student who achieves the highest R squared value will win a very cool brain sticker. 🧠",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "modules/index.html",
+    "href": "modules/index.html",
+    "title": "Modules",
+    "section": "",
+    "text": "To the left, you can find links to all of the course modules. Click one to get started.\n\n\n\n\n\n\nTip\n\n\n\nSee BruinLearn for the complete course syllabus, including information about course policies, grading, office hours, and more!",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>"
+    ]
+  },
+  {
+    "objectID": "modules/index.html#overview",
+    "href": "modules/index.html#overview",
+    "title": "Modules",
+    "section": "",
+    "text": "To the left, you can find links to all of the course modules. Click one to get started.\n\n\n\n\n\n\nTip\n\n\n\nSee BruinLearn for the complete course syllabus, including information about course policies, grading, office hours, and more!",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>"
+    ]
+  },
+  {
+    "objectID": "modules/index.html#schedule-for-spring-2026",
+    "href": "modules/index.html#schedule-for-spring-2026",
+    "title": "Modules",
+    "section": "Schedule for Spring 2026",
+    "text": "Schedule for Spring 2026\n\n\n\nWeek\nDate\nModule\nDescription\n\n\n\n\n1\nMarch 31,\nApril 2\nIntro to Programming with R\nInstallation and familiarization with R and RStudio interface;\nData organization, reproducible scientific programming\n\n\n2\nApril 7, 9\nProgramming Foundations\nVariables, vectors, branches, functions\n\n\n3\nApril 14, 16\nData Visualization\nExploratory data visualization with ggplot, customizing plots\n\n\n4\nApril 21, 21\nData Summaries\nImporting and summarizing data, tidyverse pipes\n\n\n5\nApril 28, 30\nData Wrangling\nSelecting and filtering data, creating new variables\n\n\n6\nMay 5, 7\nData Tidying\nWhat is “tidy” data and how do we get it; Combining datasets\n\n\n7\nMay 12, 14\nStatistical Analysis in R\nBasic statistical analysis in R, including t-tests, ANOVAs, and regression analyses on sample datasets\n\n\n8\nMay 19, 21\nData Workshop\nIntegrating these steps;\nMaybe: Working with fMRI data in R\n\n\n9\nMay 26, 28\nIntro to Machine Learning\nSimple machine learning models for classifying psychological outcomes\n\n\n10\nJune 2, 4\nProject Presentations\nFinal projects due",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>"
+    ]
+  },
+  {
+    "objectID": "modules/xx_data-summaries-relations.html",
+    "href": "modules/xx_data-summaries-relations.html",
+    "title": "Data Summaries & Data Relations",
+    "section": "",
+    "text": "Here’s the objective for this week."
+  },
+  {
+    "objectID": "modules/xx_data-summaries-relations.html#objectives",
+    "href": "modules/xx_data-summaries-relations.html#objectives",
+    "title": "Data Summaries & Data Relations",
+    "section": "",
+    "text": "Here’s the objective for this week."
+  },
+  {
+    "objectID": "modules/xx_data-summaries-relations.html#readings",
+    "href": "modules/xx_data-summaries-relations.html#readings",
+    "title": "Data Summaries & Data Relations",
+    "section": "Readings",
+    "text": "Readings\nYou should read these chapters before you come to class:\n\nApplied Data Skills - Chapter 4: Data Summaries\nApplied Data Skills - Chapter 7: Data Relations"
+  },
+  {
+    "objectID": "modules/xx_data-summaries-relations.html#in-class-exercises",
+    "href": "modules/xx_data-summaries-relations.html#in-class-exercises",
+    "title": "Data Summaries & Data Relations",
+    "section": "In-class exercises",
+    "text": "In-class exercises\nIn-class exercises"
+  },
+  {
+    "objectID": "modules/xx_data-summaries-relations.html#weekly-assignment",
+    "href": "modules/xx_data-summaries-relations.html#weekly-assignment",
+    "title": "Data Summaries & Data Relations",
+    "section": "Weekly assignment",
+    "text": "Weekly assignment\nHere’s the weekly assignment."
+  },
+  {
+    "objectID": "modules/xx_intro-jspsych.html",
+    "href": "modules/xx_intro-jspsych.html",
+    "title": "Introduction to jsPsych",
+    "section": "",
+    "text": "Forthcoming. Maybe."
+  },
+  {
+    "objectID": "projects/midterm-project.html",
+    "href": "projects/midterm-project.html",
+    "title": "Midterm Project",
+    "section": "",
+    "text": "The midterm project will give you an opportunity to showcase your new skills in programming, drawing on concepts from the first half of the class. You will write code to solve computational problems, integrating what you’ve learned about variables, loops, functions, etc. This will give you practice in breaking down larger problems into its component parts, and developing an algorithm to step through the problem. You will also share your code and the output in an R markdown report. The midterm project will be graded according to its accuracy, completeness, and clear presentation of the code and results."
+  },
+  {
+    "objectID": "projects/midterm-project.html#instructions",
+    "href": "projects/midterm-project.html#instructions",
+    "title": "Midterm Project",
+    "section": "Instructions",
+    "text": "Instructions\nYou will be graded on the accuracy and completeness of your code, as well as its presentation.\nAccuracy: Does the code run? Can someone else (e.g., your professor) download it and run it without making any edits? Does it approach the problem in a logical way?\nCompleteness: Does it solve the problem? Does it work with a variety of different possible inputs or situations?\nPresentation: Did you submit an html file? Does it have headers and explanatory text that describe what you are doing? Does it have a table of contents? Does it have comments that label the different steps?\nUse of AI: Please review the AI policy on the course syllabus. You are permitted to turn to AI if you get stuck on part of the problem. However, you should clearly indicate when and how you have done so, including notes about your thought process. As always, I strongly encourage you to try to work through the problems independently first, and then use AI only as a debugging tool. For the midterm, I am very likely to ask you to explain chunks of your code that I perceive as being AI-assisted, either in class or in an office hours meeting.\n\n\n\n\n\n\nTip\n\n\n\nThe following functions might come in handy as you work through these problems: sample(), all(), and any(). You can look up their syntax in the help window or online."
+  },
+  {
+    "objectID": "projects/midterm-project.html#questions",
+    "href": "projects/midterm-project.html#questions",
+    "title": "Midterm Project",
+    "section": "Questions",
+    "text": "Questions\n\nQuestion 1: Code Breakers\nTurn any normal english text into an encrypted version of the text, and be able to turn any decrypted text back into normal english text. A simple encryption would be to scramble the alphabet such that each letter corresponds to a new randomly chosen (but unique) letter. You should have a function for each, as well as some tests that demonstrate how it works.\n\n\nQuestion 2: Playing Games\nSolve 1 of the following 3 game problems. You can solve a second for 10 bonus points.\n\nSnakes and ladders\nYour task here is to write an algorithm that can simulate playing the depicted Snakes and Ladders board depicted here. You should assume that each roll of the dice produces a random number between 1 and 6. After you are able to simulate one played game, you will then write a loop to simulate 1000 games, and estimate the average number of dice rolls needed to successfully complete the game.\n\n\nTic Tac Toe\nImagine that two players make completely random choices when playing tic-tac-toe. Each game will either end in a draw or one of the two players will win. Create a simulation of this “random” version of tic-tac-toe. Out of 10,000 simulations, what proportion of the time is the game won versus drawn?\n\n\nSudoku\nSudoku is a logic puzzle in which the goal is to fill a 9 x 9 grid with numbers 1 to 9. The board has 9 rows, 9 columns, and is divided into 9 3x3 boxes. The catch is that each number must appear only once per row, column, and box. Start with a Sudoku puzzle that has some numbers filled in - here is an example, but you can use any starting puzzle. Write some code to solve the puzzle. To do so, you will probably want to write a function to make sure a number “works” for a particular spot, and then keep trying to add numbers until you fill in the entire puzzle.\n\n\n\nQuestion 4: Find the Missing Number\nYou have a vector listing numbers from 1 to 100. You shuffle it randomly, and then— oh no, one of the numbers has gone missing! Write a function that will generate a randomized vector that is missing one value. Then write a function that can find the missing number. The second function should generalize to work any vector that includes consecutive numbers but is missing one value.\n\n\nQuestion 5: Wordle Thought Experiment\nThought experiment: How would you build a Wordle solver? Write out the algorithm in pseudo code. Think about what functions you’d like to be able to use (whether they already exist or not), and how you would chain them together to solve the puzzle.\n\nProblems were adapted from this list of Practice Problems and daily.dev blog."
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "See BruinLearn for the complete course syllabus.\n\n\n\nWeek\nDate\nModule\nDescription\n\n\n\n\n1\nMarch 31,\nApril 2\nIntro to Programming with R\nInstallation and familiarization with R and RStudio interface;\nData organization, reproducible scientific programming\n\n\n2\nApril 7, 9\nProgramming Foundations\nVariables, vectors, branches, functions\n\n\n3\nApril 14, 16\nData Visualization\nExploratory data visualization with ggplot, customizing plots\n\n\n4\nApril 21, 21\nData Summaries\nImporting and summarizing data, tidyverse pipes\n\n\n5\nApril 28, 30\nData Wrangling\nSelecting and filtering data, creating new variables\n\n\n6\nMay 5, 7\nData Tidying\nWhat is “tidy” data and how do we get it; Combining datasets\n\n\n7\nMay 12, 14\nStatistical Analysis in R\nBasic statistical analysis in R, including t-tests, ANOVAs, and regression analyses on sample datasets\n\n\n8\nMay 19, 21\nData Workshop\nIntegrating these steps;\nMaybe: Working with fMRI data in R\n\n\n9\nMay 26, 28\nIntro to Machine Learning\nSimple machine learning models for classifying psychological outcomes\n\n\n10\nJune 2, 4\nProject Presentations\nFinal projects due"
+  },
+  {
+    "objectID": "styletest.html",
+    "href": "styletest.html",
+    "title": "Styles",
+    "section": "",
+    "text": "Style examples"
+  },
+  {
+    "objectID": "styletest.html#callouts",
+    "href": "styletest.html#callouts",
+    "title": "Styles",
+    "section": "Callouts",
+    "text": "Callouts\n\n\n\n\n\n\nNote\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.\n\n\n\n\n\n\n\n\nWarning\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nImportant\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nExpand To Learn About Collapse\n\n\n\n\n\nThis is an example of a ‘folded’ caution callout that can be expanded by the user. You can use collapse=\"true\" to collapse it by default or collapse=\"false\" to make a collapsible callout that is expanded by default."
+  },
+  {
+    "objectID": "styletest.html#code",
+    "href": "styletest.html#code",
+    "title": "Styles",
+    "section": "Code",
+    "text": "Code\n\nq &lt;- 1 + 2\nprint(q)\n\n[1] 3"
+  },
+  {
+    "objectID": "styletest.html#citations",
+    "href": "styletest.html#citations",
+    "title": "Styles",
+    "section": "Citations",
+    "text": "Citations"
+  },
+  {
+    "objectID": "styletest.html#interactive-questions",
+    "href": "styletest.html#interactive-questions",
+    "title": "Styles",
+    "section": "Interactive questions",
+    "text": "Interactive questions\nSee this website: https://web.mat.upc.edu/joaquim.puig/posts/webexercises-quiz/"
+  }
+]

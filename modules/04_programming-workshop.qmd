@@ -1,0 +1,48 @@
+---
+title: "Programming Foundations Workshop"
+---
+
+## Objectives
+
+This week we will take a breather to review and practice what we've learned so far.
+
+## In-class exercises
+
+You will work together in groups to solve the following problems. First sketch out your plan on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `workshop.Rmd`.
+
+### Programming to the max
+
+Create your own function for finding the maximum value of a vector. The input will be a vector, and the output should be the maximum value.
+
+Did you use the `sort()` function in your solution? Now try to write the function without it.
+
+### Bitcoin millionaires
+
+You've taken the plunge and invested in Bitcoin. Write a function that calculates how much money you've made. The inputs should be the amount that you invested and the percentage increase since then, and the output should be your total profit.
+
+How would you adjust this function if you wanted to calculate your profit over time, factoring in the rate of increase each month? Your inputs will be your initial investment, the rate of increase each month, and the number of months since your investment.
+
+### Palindrome finder
+
+You are obsessed with palindromes, and you want a function that will automatically figure out if a given word is a palindrome. Create a function that will return TRUE if the input is a palindrome and FALSE otherwise. Hint: you will probably have to look up some functions that will help you manipulate the text.
+
+### Tips
+
+-   Focus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.
+-   While you're brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., `c(5,1,4,10,2)`), and then imagine what is going to happen to that vector at each step of your function.
+-   When testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn't designed only for positive integers.
+
+## Weekly assignment
+
+As always, your R markdown report should be organized with headings and comments explaining your work, as well as disclosures about any use of AI tools. Please also include a table of contents.
+
+### Additional programming practice
+
+1.  Write a function that counts the number of words contained in a string of text, such as, "Karma is my boyfriend, karma is a god, karma is the breeze in my hair on the weekend. Karma's a relaxing thought. Aren't you envious that for you it's not?" Hint: You will probably want to use the `strsplit` command. Read the help page or do a search to find out more about this function. How would you adapt this function to tell you how many times a particular word (e.g., "karma") appears?
+2.  Write some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word "Fizz" instead of the number. If the number can be divided by five evenly, then store the word "Buzz" instead of the number. Finally, if the number can be divided by three and five evenly, then store "FizzBuzz" instead of the number. For example, the first five elements of your vector should look like this: `c(1,2,"Fizz",4,"Buzz")`.
+
+### Data visualization example
+
+3.  In preparation for our transition to the data visualization module, find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries ([one](https://r-graph-gallery.com/ggplot2-package.html), [two](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)) showing off plots created with `ggplot2`. We'll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here's a [reminder](https://psyteachr.github.io/ads-v3/02-reports.html#sec-exercises-reports-images) of how that works.
+
+Some of these problems were adapted from this [website](https://www.crumplab.com/rstatsforpsych/practice-problems.html).

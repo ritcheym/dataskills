@@ -1,0 +1,21 @@
+---
+title: "Dataset: haxby01"
+sidebar: false
+---
+## Paper
+
+-   Haxby, J. V., Gobbini, M. I., Furey, M. L., Ishai, A., Schouten, J. L., & Pietrini, P. (2001). Distributed and overlapping representations of faces and objects in ventral temporal cortex. Science (New York, N.Y.), 293(5539), 2425–2430. [link](https://doi.org/10.1126/science.1063736)
+
+## Open data
+
+[Download](http://data.pymvpa.org/datasets/haxby2001/) a copy of the data. Or use our starter script below to download it directly through R.
+
+## Description
+
+Haxby et al. (2001) was a landmark study for establishing techniques for analyzing multivariate patterns of fMRI data, and the resulting dataset is commonly used to demonstrate fMRI analysis techniques. The dataset consists of fMRI data from 6 subjects while they viewed different categories of images, including faces, houses, and different kinds of objects. You can read more about the dataset in the paper or in the README file associated with the data.
+
+For each of the 6 subjects, there are 3 primary files: an anatomical brain image, a set of BOLD functional images, and the labels that indicate what the subject was viewing for each time-point. In addition, there are 5 mask files that correspond to different regions of interest (ROIs) within the ventral temporal cortex: the ventral temporal cortex (vt), face-sensitive areas (face_vt), house-sensitive areas (house_vt), and variations of those latter two areas.
+
+## Analysis
+
+[Download](../files/fmri-data-wrangling.Rmd) our starter script for working with this dataset in R.

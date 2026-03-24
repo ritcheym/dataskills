@@ -1,0 +1,29 @@
+---
+title: "Data Summaries"
+---
+
+## Objectives
+
+R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you'll include when building a script for data analysis.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+csv files, importing data, the `$` operator, pipes (`%>%`), count, summarize
+:::
+
+## Readings
+
+You should read this chapter before you come to class:
+
+-   *Applied Data Skills -* [Chapter 4: Data Summaries](https://ritcheym.github.io/ads-v3-abridged/04-summary.html)
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. Create an R project called `data-summaries`, and save today's work in an R markdown report called `summary.Rmd`. We will also practice reading in a csv file and summarizing key variables using the `screentime` dataset.
+
+In addition, we will review data visualization techniques by writing whiteboard code for three example plots (a bar plot, scatterplot, and histogram), recapping the key components of building up plot layers with the `ggplot` package.
+
+## Weekly assignment
+
+No homework this week. You should spend this time working on your midterm project.

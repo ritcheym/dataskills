@@ -1,0 +1,25 @@
+---
+title: "Machine Learning"
+---
+
+## Objectives
+
+Multiple regression is a statistical technique used to understand how multiple predictor variables influence an outcome variable. It is widely used in psychology and neuroscience to examine relationships between brain activity, cognitive performance, and behavioral variables. This week we are going to learn how to implement a multiple regression model in R and interpret its results. We are also going to discuss how regression models can be used to generate predictions about what outcomes will be observed given a new set of data. This is a primary goal of "machine learning," a set of methods for using algorithms and statistical models to identify patterns in data and make predictions or decisions about those data.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+machine learning, multiple regression, predictors, outcomes, residuals, training set, testing set, cross-validation, generalizability
+:::
+
+## Readings
+
+No readings this week!
+
+## In-class exercises
+
+We will review the concept of regression and how we can use regression to make predictions in a new set of data. We will then apply these skills to an open-access psychology dataset. [Download](../files/prediction.Rmd) the `prediction.Rmd` file to get started. You will also want to download this [csv file](../files/vivid_df_avg.csv), which contains summary data from the `vivid` dataset.
+
+## Weekly assignment
+
+In class today, we figured out how to run a regression model with the `vivid` dataset. Your homework is to try to predict **memory vividness** in this dataset. Build a model to predict memory vividness *for positively valenced images*, using any of the predictor variables that you think would be useful. How much variability in vividness are you able to explain? Try a few different types of models to see which ones gives you the highest R squared value *with cross-validation* to ensure generalizability*.* You should feel free to explore different combinations of predictors, model types, or data transformations. The student who achieves the highest R squared value will win a very cool brain sticker. 🧠

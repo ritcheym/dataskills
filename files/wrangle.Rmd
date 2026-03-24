@@ -1,0 +1,72 @@
+---
+title: "Data Wrangling"
+author: "Maureen Ritchey"
+date: "2025-02-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+```
+
+# Load screentime data
+```{r}
+screentime <- read_csv('data.csv')
+```
+# Select function
+```{r}
+screentime %>%
+  select(REGION,male,minority,deprived,mwbi) -> screentime.select
+
+screentime %>%
+  select(REGION,male:mwbi) -> screentime.select
+
+screentime %>%
+  select(REGION,male:mwbi,starts_with('WB')) -> screentime.select
+
+screentime %>%
+  select(-REGION) -> screentime.select
+
+screentime %>%
+  select(REGION,male:mwbi,starts_with('WB')) -> screentime.select
+
+```
+
+# Filter function
+```{r}
+screentime.select %>%
+  filter(mwbi > 0) -> screentime.select.filter
+
+screentime.select %>%
+  filter(mwbi > 0, 
+         REGION=="East of England") -> screentime.select.filter
+```
+
+# Mutate function
+```{r}
+screentime.select.filter %>%
+  mutate(new_measure = mean(c(WBOptimf,WBUseful))) -> screentime.sfm
+```
+
+# Group_by and summarize 
+```{r}
+screentime.sfm %>%
+  group_by(male,minority) %>%
+  summarize(mean_new = mean(new_measure)) %>%
+  ungroup()
+```
+
+# Chain all of them together
+```{r}
+screentime %>%
+  select(REGION,male:mwbi,starts_with('WB')) %>%
+  filter(mwbi>0,
+         REGION=="East of England") %>%
+  mutate(new_measure = (WBOptimf+WBUseful)/2) %>%
+  group_by(male,minority) %>%
+  summarize(mean_new = mean(c(WBOptimf,WBUseful))) %>%
+  ungroup()
+```
+

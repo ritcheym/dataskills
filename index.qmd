@@ -1,0 +1,27 @@
+---
+title: "Data Skills for Psychology"
+sidebar: false
+---
+
+## Welcome
+
+This is the course website for *Data Skills for Psychology*, developed and taught by [Dr. Maureen Ritchey](https://www.thememolab.org/people/ritchey/) in the Department of Psychology at UCLA. This course will be taught in Spring 2026.
+
+## Course description
+
+This course will provide an introduction to computer programming and its applications to psychology and neuroscience research. The goal will be to provide you with the skillset to program data analyses, as well as an understanding of how these tools are used to facilitate modern research. We will begin with the basics of how to develop algorithms and implement them with programming logic. In a series of hands-on projects, students will learn to analyze real-world psychology and neuroscience datasets using the R programming language.
+
+## Website information
+
+On this website, you can find the course [modules](modules/index.html) and assignments. We will also use BruinLearn for managing quizzes and grading.
+
+## Acknowledgments
+
+This course incorporates open-access materials that have been generously shared by researchers around the world, including:
+
+-   Emily Nordmann and Lisa DeBruine. [*Applied Data Skills*](https://psyteachr.github.io/ads-v3/). doi:10.5281/zenodo.6365077
+-   Danielle Navarro. [*R for Psychological Science*](https://psyr.djnavarro.net/).
+
+Some content and assignments were inspired by Matt Crump's similar [course](https://www.crumplab.com/psyc3470/). The syllabus includes language recommended by the Boston College [Center for Teaching Excellence](https://cteresources.bc.edu/).
+
+Course development was supported by a CAREER Award from the National Science Foundation ([BCS-2047415](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2047415)).

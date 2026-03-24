@@ -1,0 +1,157 @@
+---
+title: "Statistical Data Analysis"
+author: "Maureen Ritchey"
+date: "2025-03-20"
+output: 
+  html_document: 
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen=999) # turn off scientific notation
+
+library(tidyverse)
+
+```
+
+# Download data
+
+We are going to download data from [Faul et al. 2025](https://psycnet.apa.org/doi/10.1037/emo0001518). In this study, participants studied emotionally negative, positive, and neutral images. They then completed a memory test for these images, which included measures of:
+
+-   accuracy of the discrimination between old and new images
+-   ratings of subjective memory vividness
+-   errors in reconstructing the visual features of the images (here we'll look at color saturation).
+
+Participants were sampled across the lifespan from 19-78 years of age. Thus, this dataset is a rich dataset for looking at the effects of within-subjects and between-subjects variables on multiple dependent measures, as well as relationships between these variables.
+
+```{r}
+if (!file.exists('data')) { # Download only once
+  
+  # Create directory
+  dir.create('data')
+  
+  # Download the variable key
+  download.file('https://osf.io/download/hcwj4/','data/Key.csv')
+  
+  # Download data
+  download.file('https://osf.io/download/9nvu3/','data/Final_Data_307_Participants.csv')
+  
+} else {
+  print('The data directory already exists. Check to see if everything has been downloaded already.')
+}
+
+# Print the list of files
+cat('List of files and folders in the data directory:\n')
+list.files('data')
+
+```
+
+There are two files: the `Key.csv` file, which gives a description of all of the variables included in the dataset, and the `Final_Data_307_Participants.csv` file, which includes all of the data. The dataset includes a row for every experimental trial for every participant.
+
+# Load data
+
+```{r}
+df <- read.csv('data/Final_Data_307_Participants.csv')
+var_key <- read.csv('data/Key.csv')
+
+# How many participants are there?
+n_subs <- length(unique(df$Subject_ID))
+
+# How many trials are there per participant?
+n_trials <- length(unique(df$Retrieval_Trial))
+```
+
+There are `r n_subs` participants and `r n_trials` trials per participant, for a total of `r nrow(df)` rows of data.
+
+# Data wrangling
+
+Let's select only a subset of the data to keep for further analysis. We'll keep some demographic information about the participant, the key conditions for each experimental trial, and the main response information for each trial.
+
+## Select variables
+
+```{r}
+df.tidy <- df %>%
+  # create new Accuracy variable
+  mutate(Accuracy = case_when(Old_New_Response_Type=="HIT" ~ 1,
+                              Old_New_Response_Type=="MISS" ~ 0,
+                              Old_New_Response_Type=="CR" ~ 1,
+                              Old_New_Response_Type=="FA" ~ 0,
+                              TRUE ~ NA),
+         # rename some of the variables; convert some to factors
+         Subject_ID = factor(Subject_ID),
+         Emotion = factor(Retrieval_Emotion_Category),
+         Old_or_New = Retrieval_Image_Type,
+         Vividness = Retrieval_Vividness_Response,
+         Error = Error_ColorSat_Reconstruction,
+         # create an absolute error variable
+         ErrorAbs = abs(Error),
+         # create an age bracket variable
+         Age_Group = case_when(Age<35 ~ 'Younger Age',
+                               Age>=35 & Age < 65 ~ 'Middle Age',
+                               Age>65 ~ 'Older Age')) %>%
+  # select a subset of variables
+  select(Subject_ID, Age, Age_Group, Gender, BDI_Sum,    # subject information
+         Emotion, Old_or_New,                 # trial information
+         Vividness, Accuracy, Error, ErrorAbs # response information
+         ) 
+
+head(df.tidy)
+```
+
+Here, `Age`, `Gender`, and `BDI_Sum` are between-subjects variables, and `Emotion` and `Old_or_New` are within-subjects conditions. `Vividness`, `Accuracy`, and `Error`, and `ErrorAbs` correspond to the participants' responses to each trial, and they will serve as our dependent measures.
+
+We will also create another dataframe that averages across trials in the same condition, so that we have one row per condition per participant.
+
+## Summarize across trials
+
+```{r}
+# Get the average data
+df.avg <- df.tidy %>%
+  group_by(Subject_ID, Emotion) %>%
+  summarize(meanVivid = mean(Vividness, na.rm=TRUE),
+            meanAccuracy = mean(Accuracy, na.rm = TRUE),
+            meanError = mean(Error, na.rm=TRUE),
+            meanErrorAbs = mean(ErrorAbs, na.rm=TRUE)) %>%
+  ungroup() 
+
+```
+
+## Re-join with subject information
+
+```{r}
+# Get the subject information
+df.sub_info <- df.tidy %>%
+  select(Subject_ID, Age, Age_Group, Gender, BDI_Sum) %>%
+  unique()
+
+# Join the subject information to the average data
+df.avg <- df.avg %>%
+  left_join(df.sub_info,by=c("Subject_ID"))
+
+head(df.avg)
+
+```
+
+# Stats
+## Example t-test
+Add your own annotations!
+```{r}
+neg <- filter(df.avg,Emotion=="Negative") %>% arrange(Subject_ID)
+neu <- filter(df.avg,Emotion=="Neutral") %>% arrange(Subject_ID)
+t.test(neg$meanAccuracy, neu$meanAccuracy, paired=TRUE)
+```
+
+## Example ANOVA
+Add your own annotations!
+```{r}
+library('ez')
+
+results <- ezANOVA(data=df.avg,
+        dv=meanAccuracy,
+        wid=Subject_ID,
+        within=Emotion)
+print(results$ANOVA)
+```

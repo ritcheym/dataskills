@@ -1,0 +1,55 @@
+---
+title: "Midterm Project"
+---
+
+The midterm project will give you an opportunity to showcase your new skills in programming, drawing on concepts from the first half of the class. You will write code to solve computational problems, integrating what you've learned about variables, loops, functions, etc. This will give you practice in breaking down larger problems into its component parts, and developing an algorithm to step through the problem. You will also share your code and the output in an R markdown report. The midterm project will be graded according to its accuracy, completeness, and clear presentation of the code and results.
+
+## Instructions
+
+You will be graded on the accuracy and completeness of your code, as well as its presentation.
+
+**Accuracy:** Does the code run? Can someone else (e.g., your professor) download it and run it without making any edits? Does it approach the problem in a logical way?
+
+**Completeness:** Does it solve the problem? Does it work with a variety of different possible inputs or situations?
+
+**Presentation:** Did you submit an html file? Does it have headers and explanatory text that describe what you are doing? Does it have a table of contents? Does it have comments that label the different steps?
+
+**Use of AI:** Please review the AI policy on the course syllabus. You are permitted to turn to AI if you get stuck on part of the problem. However, you should clearly indicate when and how you have done so, including notes about your thought process. As always, I strongly encourage you to try to work through the problems independently first, and then use AI only as a debugging tool. For the midterm, I am very likely to ask you to explain chunks of your code that I perceive as being AI-assisted, either in class or in an office hours meeting.
+
+::: callout-tip
+The following functions might come in handy as you work through these problems: `sample()`, `all()`, and `any()`. You can look up their syntax in the help window or online.
+:::
+
+## Questions
+
+### Question 1: Code Breakers
+
+Turn any normal english text into an encrypted version of the text, and be able to turn any decrypted text back into normal english text. A simple encryption would be to scramble the alphabet such that each letter corresponds to a new randomly chosen (but unique) letter. You should have a function for each, as well as some tests that demonstrate how it works.
+
+### Question 2: Playing Games
+
+Solve **1** of the following 3 game problems. You can solve a second for 10 bonus points.
+
+#### Snakes and ladders
+
+Your task here is to write an algorithm that can simulate playing the depicted Snakes and Ladders board depicted [here](https://www.crumplab.com/rstatsforpsych/imgs/SnakesLadders.png). You should assume that each roll of the dice produces a random number between 1 and 6. After you are able to simulate one played game, you will then write a loop to simulate 1000 games, and estimate the average number of dice rolls needed to successfully complete the game.
+
+#### Tic Tac Toe
+
+Imagine that two players make completely random choices when playing tic-tac-toe. Each game will either end in a draw or one of the two players will win. Create a simulation of this “random” version of tic-tac-toe. Out of 10,000 simulations, what proportion of the time is the game won versus drawn?
+
+#### Sudoku
+
+Sudoku is a logic puzzle in which the goal is to fill a 9 x 9 grid with numbers 1 to 9. The board has 9 rows, 9 columns, and is divided into 9 3x3 boxes. The catch is that each number must appear only once per row, column, and box. Start with a Sudoku puzzle that has some numbers filled in - here is an [example](https://pi.math.cornell.edu/~mec/Summer2009/Mahmood/Pictures/ExSudokuV.JPG), but you can use any starting puzzle. Write some code to solve the puzzle. To do so, you will probably want to write a function to make sure a number "works” for a particular spot, and then keep trying to add numbers until you fill in the entire puzzle.
+
+### Question 4: Find the Missing Number
+
+You have a vector listing numbers from 1 to 100. You shuffle it randomly, and then— oh no, one of the numbers has gone missing! Write a function that will generate a randomized vector that is missing one value. Then write a function that can find the missing number. The second function should generalize to work any vector that includes consecutive numbers but is missing one value.
+
+### Question 5: Wordle Thought Experiment
+
+Thought experiment: How would you build a Wordle solver? Write out the algorithm in pseudo code. Think about what functions you’d like to be able to use (whether they already exist or not), and how you would chain them together to solve the puzzle.
+
+------------------------------------------------------------------------
+
+Problems were adapted from this list of [Practice Problems](https://www.crumplab.com/rstatsforpsych/practice-problems.html) and daily.dev [blog](https://daily.dev/blog).

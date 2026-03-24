@@ -1,0 +1,19 @@
+---
+title: "Natural Language Processing"
+---
+
+## Objectives
+
+Natural language processing (NLP) refers to a family of methods for processing natural (i.e., human) language. In recent years, NLP methods have taken off with the development of large language models that can interpret and generate complex texts. This week, we will take a brief peek into the world of NLP, focusing on basic steps involved in processing written text. As an example, we will conduct a sentiment analysis, which is a method for rating the emotional tone of text– that is, how positive or negative is its meaning.
+
+## Readings
+
+This week's demonstration is based on methods described in [*Text Mining with R*](https://www.tidytextmining.com/).
+
+## In-class exercises
+
+We will go through a [demonstration](../files/nlp-swift.html) of how to use natural language processing tools to run a sentiment analysis to better understand, what else, but the Eras of Taylor Swift.
+
+## Weekly assignment
+
+None this week. You should use this time to work on your final project.

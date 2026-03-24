@@ -1,0 +1,120 @@
+---
+title: "Data Relations"
+---
+
+## Objectives
+
+When we analyze data, we often need to combine data from different sources to get the full picture of what's going on. For example, you might have a spreadsheet that lists students, their years, majors, and demographic information, and another spreadsheet that lists their grade history. How do you combine these tables into a single dataset? This week, we will discuss the family of "join" functions that allow us to combine different datasets. They use the overlap between datasets to smartly join them together so that you have everything in one place. This will make it easier to summarize and visualize your data going forward.
+
+::: {.callout-note icon="false"}
+## Key concepts
+
+joining functions (`left_join`, `right_join`, `inner_join`, `full_join`), binding functions (`bind_rows`), set operations (`intersect`, `union`, `setdiff`), functions for checking your data as you go (`glimpse`, `str`, `summary`)
+:::
+
+## Readings
+
+You should read this chapter before you come to class:
+
+-   *Applied Data Skills -* [Chapter 7: Data Relations](https://psyteachr.github.io/ads-v3/07-joins.html)
+
+## In-class exercises
+
+We will follow along with the examples given in the textbook. Create an R project called `data-relations`, and save today's work in an R markdown report called `relations.Rmd`.
+
+## Weekly assignment
+
+Solve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.
+
+1.  Complete the [exercise](https://psyteachr.github.io/ads-v3/07-joins.html#grade-data) described in the chapter from 7.10.1 through 7.10.4.
+
+2.  Using the `completes` dataframe that you have created, compute some summary statistics:
+
+    a)  What is the mean and standard deviation for the number of points earned on the exam and essay?
+
+    b)  Create a table counting how many students earned each grade level for each assessment (e.g., A1, A2, etc).
+
+    c)  Now create a table counting how many students earned each grade for each assessment, collapsing across levels within an alphabet grade (e.g., A, B, C).
+
+    d)  What proportion of students earned an A on both the exam and the essay?
+
+3.  What is the relationship between students' grades on the essay and the exam? Use `ggplot` to create a plot of this relationship.
+
+4.  *Final project preparation:* Refer to the instructions for the final [project](../projects/final-project.html). You should get started on finding an openly available dataset. Please include in your Markdown report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.
+
+## Chapter summary
+
+The chapter focuses on combining data from multiple tables (data frames) using `dplyr`'s join functions. The below summary was created in collaboration with Google Gemini.
+
+**Key Concepts:**
+
+-   **Relational Data:** Data is often stored in multiple tables that are related to each other.
+-   **Key Variables:** Columns that are common between tables and used to link them.
+-   **Joining:** The process of combining data from multiple tables based on key variables.
+
+**Types of Joins (with dplyr syntax):**
+
+-   **Inner Join (inner_join()):**
+    -   Returns only rows where the key variable(s) match in both tables.
+    -   `inner_join(x, y, by = "common_column")`
+    -   Example: Combining customer orders with customer details, only for customers who have placed orders.
+-   **Left Join (left_join()):**
+    -   Returns all rows from the left table (x) and matching rows from the right table (y).
+    -   If a row in x has no match in y, NA values are added for y's columns.
+    -   `left_join(x, y, by = "common_column")`
+    -   Example: Adding information about departments to a list of employees, even if some departments have no employees.
+-   **Right Join (right_join()):**
+    -   Returns all rows from the right table (y) and matching rows from the left table (x).
+    -   If a row in y has no match in x, NA values are added for x's columns.
+    -   `right_join(x, y, by = "common_column")`
+-   **Full Join (full_join()):**
+    -   Returns all rows from both tables.
+    -   NA values are added where there are no matches.
+    -   `full_join(x, y, by = "common_column")`
+    -   Example: Combining customer data from two different databases, including all customers from both.
+
+**Specifying Key Variables:**
+
+-   **by Argument:**
+    -   Specifies the key variable(s).
+    -   If the key variables have the same name in both tables, use `by = "column_name"`.
+    -   If the key variables have different names, use `by = c("x_column" = "y_column")`.
+
+**Handling Duplicate Column Names:**
+
+-   If non-key columns have the same name in both tables, dplyr will add suffixes (.x and .y) to distinguish them. You can change the suffixes by using the argument `suffix = c(".x", ".y")`.
+
+**Row and Column Binding:**
+
+-   **bind_rows():**
+    -   Combines data frames vertically (adds rows).
+    -   Syntax: `bind_rows(df1, df2, ...)`
+    -   Requirement: Data frames must have the same columns (or columns that can be matched by name).
+    -   Example: Merging daily sales data from multiple files.
+    -   If columns do not match, then NA values will be placed into the combined dataframe.
+-   **bind_cols():**
+    -   Combines data frames horizontally (adds columns).
+    -   Syntax: `bind_cols(df1, df2, ...)`
+    -   Requirement: Data frames must have the same number of rows.
+    -   Caveat: You will often want to use a join function instead of `bind_cols`.
+
+**Set Operations:**
+
+-   **intersect():**
+    -   Returns the rows that are present in both data frames.
+    -   Syntax: `intersect(df1, df2)`
+    -   Example: Finding common customers between two lists.
+-   **union():**
+    -   Returns all unique rows from both data frames. This is similar to `bind_rows` except it removes duplicates.
+    -   Syntax: `union(df1, df2)`
+    -   Example: Combining customer lists from different sources, removing duplicates.
+-   **setdiff():**
+    -   Returns the rows that are present in the first data frame but not in the second.
+    -   Syntax: `setdiff(df1, df2)`
+    -   Example: finding all customers that are in the first customer list, but not the second.
+
+**Key Takeaways:**
+
+-   Joins are essential for combining related data from multiple tables.
+-   Joins work with only two tables at a time. To combine multiple tables, use a pipe to connect multiple calls to a join function.
+-   The `by` argument is crucial for specifying the key variables used to link tables.

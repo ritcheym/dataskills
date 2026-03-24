@@ -1,0 +1,232 @@
+---
+title: "Exercises"
+sidebar: false
+---
+
+## Overview
+
+Below you can find some practice problems that you can use to test your understanding of programming logic. For each question, first try to guess what the code will produce. Then see if you are correct by running the code on your own.
+
+## Exercises
+
+### 1: Indexing
+
+```{r eval=FALSE}
+accuracy <- c(1, 0, 1, 1, 0)
+reaction_times <- c(520, 700, 480, 510, 730)
+reaction_times[accuracy == 1]
+```
+
+### 2: If-else
+
+```{r eval=FALSE}
+condition <- c("A", "B", "A", "B", "A")
+stimulus <- ifelse(condition == "A", "face", "scene")
+stimulus
+```
+
+### 3: Indexing
+
+```{r eval=FALSE}
+condition <- c("A", "B", "A", "B", "A")
+correct <- c(1, 1, 0, 1, 1)
+condition[correct == 1 & condition == "A"]
+```
+
+### 4: For loops
+
+```{r eval=FALSE}
+rt1 <- c(500, 480, 530)
+rt2 <- c(520, 490, 500)
+diffs <- numeric(length(rt1))
+for (i in 1:length(rt1)) {
+  diffs[i] <- rt2[i] - rt1[i]
+}
+diffs
+```
+
+### 5: While loops
+
+```{r eval=FALSE}
+responses <- c(1, 1, 0, 1, 0, 1, 1)
+i <- 1
+count <- 0
+while (responses[i] == 1) {  # pay attention here to what will make the while loop stop
+  count <- count + 1
+  i <- i + 1
+}
+count
+```
+
+### 6: For loops and if-else
+
+```{r eval=FALSE}
+rt <- c(480, 610, 700)
+labels <- character(length(rt))
+for (i in 1:length(rt)) {
+  if (rt[i] < 500) {
+    labels[i] <- "fast"
+  } else if (rt[i] <= 650) {
+    labels[i] <- "medium"
+  } else {
+    labels[i] <- "slow"
+  }
+}
+labels
+```
+
+### 7: For loops and if-else
+
+```{r eval=FALSE}
+rt <- c(350, 560, 720, 450)
+flags <- rep(FALSE, length(rt))
+for (i in 1:length(rt)) {
+  if (rt[i] > 500) {
+    if (rt[i] < 700) {
+      flags[i] <- TRUE
+    }
+  }
+}
+flags
+```
+
+### 8: Data manipulation
+
+```{r eval=FALSE}
+df <- data.frame(
+  subject = c(1, 1, 2, 2),
+  condition = c("congruent", "incongruent", "congruent", "incongruent"),
+  rt = c(450, 600, 470, 620)
+) 
+
+df.new <- df %>%
+  filter(condition == "incongruent")
+
+df.new
+```
+
+### 9: Data manipulation
+
+```{r eval=FALSE}
+df <- data.frame(
+  trial = 1:5,
+  response = c("old", "new", "old", "old", "new"),
+  correct = c(TRUE, TRUE, FALSE, TRUE, FALSE)
+)
+
+df.new <- df %>%
+  mutate(score = ifelse(correct, 1, 0))
+
+sum(df.new$score)
+```
+
+### 10: Functions
+
+```{r eval=FALSE}
+categorize_rt <- function(rt) {
+  if (is.na(rt)) {
+    return("missing")
+  } else if (rt < 500) {
+    return("fast")
+  } else {
+    return("slow")
+  }
+}
+
+categorize_rt(480)
+```
+
+### 11: Data manipulation
+
+```{r eval=FALSE}
+df <- data.frame(
+  trial = 1:5,
+  emotion = c("happy", "sad", "angry", "happy", "sad"),
+  rating = c(5, 3, 4, 4, 2)
+)
+
+df %>%
+  filter(emotion == "happy") %>%
+  mutate(adjusted = rating + 1)
+```
+
+### 12: Data summaries
+
+```{r eval=FALSE}
+df <- data.frame(
+  subject = c(1, 1, 2, 2),
+  condition = c("easy", "hard", "easy", "hard"),
+  correct = c(1, 0, 1, 1)
+)
+
+df %>%
+  group_by(condition) %>%
+  summarize(mean_acc = mean(correct))
+```
+
+### 13: Data manipulation
+
+```{r eval=FALSE}
+df <- data.frame(
+  trial = 1:4,
+  rt = c(500, 430, 670, 520)
+)
+
+df %>%
+  arrange(rt)
+```
+
+### 14: Data visualization
+
+```{r eval=FALSE}
+df <- data.frame(
+  condition = c("A","A","A","A","A","B","B","B","B","B"),
+  rt = c(420, 430, 510, 525, 415, 620, 510, 605, 430, 615)
+)
+
+ggplot(df, aes(x = condition, y = rt)) +
+  geom_boxplot()
+```
+
+### 15: Data visualization
+
+```{r eval=FALSE}
+df <- data.frame(
+  subject = c(1,2,3,4,5,1,2,3,4,5),
+  condition = c("easy","easy","easy","easy","easy","hard","hard","hard","hard","hard"),
+  accuracy = c(.8, 1, .75, .6, .8, .5, .7, .8, .4, .2)
+)
+
+ggplot(df, aes(x = condition, y = accuracy, color = factor(subject))) +
+  geom_point()
+```
+
+## Advanced Exercises
+
+### Code Breakers
+
+Turn any normal english text into an encrypted version of the text, and be able to turn any decrypted text back into normal english text. A simple encryption would be to scramble the alphabet such that each letter corresponds to a new randomly chosen (but unique) letter. You should have a function for each, as well as some tests that demonstrate how it works.
+
+### Playing Games
+
+#### Snakes and ladders
+
+Your task here is to write an algorithm that can simulate playing the depicted Snakes and Ladders board depicted [here](https://www.crumplab.com/rstatsforpsych/imgs/SnakesLadders.png). You should assume that each roll of the dice produces a random number between 1 and 6. After you are able to simulate one played game, you will then write a loop to simulate 1000 games, and estimate the average number of dice rolls needed to successfully complete the game.
+
+#### Tic Tac Toe
+
+Imagine that two players make completely random choices when playing tic-tac-toe. Each game will either end in a draw or one of the two players will win. Create a simulation of this “random” version of tic-tac-toe. Out of 10,000 simulations, what proportion of the time is the game won versus drawn?
+
+#### Sudoku
+
+Sudoku is a logic puzzle in which the goal is to fill a 9 x 9 grid with numbers 1 to 9. The board has 9 rows, 9 columns, and is divided into 9 3x3 boxes. The catch is that each number must appear only once per row, column, and box. Start with a Sudoku puzzle that has some numbers filled in - here is an [example](https://pi.math.cornell.edu/~mec/Summer2009/Mahmood/Pictures/ExSudokuV.JPG), but you can use any starting puzzle. Write some code to solve the puzzle. To do so, you will probably want to write a function to make sure a number "works” for a particular spot, and then keep trying to add numbers until you fill in the entire puzzle.
+
+### Find the Missing Number
+
+You have a vector listing numbers from 1 to 100. You shuffle it randomly, and then— oh no, one of the numbers has gone missing! Write a function that will generate a randomized vector that is missing one value. Then write a function that can find the missing number. The second function should generalize to work any vector that includes consecutive numbers but is missing one value.
+
+### Wordle Thought Experiment
+
+Thought experiment: How would you build a Wordle solver? Write out the algorithm in pseudo code. Think about what functions you’d like to be able to use (whether they already exist or not), and how you would chain them together to solve the puzzle.
+
+*Advanced Exercises were adapted from this list of [Practice Problems](https://www.crumplab.com/rstatsforpsych/practice-problems.html) and daily.dev [blog](https://daily.dev/blog).*

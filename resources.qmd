@@ -1,0 +1,72 @@
+---
+title: "Resources"
+sidebar: false
+---
+
+For many topics in this class, we are going to be only scratching the surface. Below you can find some links that can help you learn more.
+
+## Readings
+### Textbook readings
+-   Emily Nordmann and Lisa DeBruine. [*Applied Data Skills*](https://psyteachr.github.io/ads-v3/). doi:10.5281/zenodo.6365077
+-   Danielle Navarro. [*R for Psychological Science*](https://psyr.djnavarro.net/).
+
+### Articles
+-   Roth et al. (2025). Ten principles for reliable, efficient, and adaptable coding in psychology and cognitive neuroscience. *Nature Communications Psychology*. [link](https://www.nature.com/articles/s44271-025-00236-3)
+
+### Coding for all
+-   [Teaching coding inclusively](https://osf.io/preprints/socarxiv/3r2ez_v1)
+-   [A brief history of women in computing](https://hackernoon.com/a-brief-history-of-women-in-computing-e7253ac24306)
+
+## Useful functions
+
+-   **Basic statistics:** `mean()`, `median()`, `min()`, `max()`, `sum()` calculate basic descriptive statistics on a vector.
+-   **Data dimension checks:** `nrow()`, `ncol()` return the number of rows and columns in a data frame `length()` returns the number of items in an object.
+-   **Data manipulation:** `subset()` allows filtering data based on conditions, `sort()` sorts data in ascending order.
+-   **Data exploration:** `table()` counts frequencies of unique values in a vector, `head()` gives you a preview of the first six parts of an object, and `str()` tells you more about the structure of an object.
+-   **Sampling:** `sample()` generates random samples from a vector.
+-   **Data analysis with dplyr:** `filter()`, `select()`, `mutate()`, `group_by()` are powerful functions for data manipulation within the dplyr package - covered in the [Data Wrangling](/modules/07_data-wrangling.html) module
+-   **Visualization with ggplot2:** `ggplot()` is the primary function to create customized plots using the ggplot2 package - covered in the [Data Visualization](/modules/05_data-visualization.html) module
+-   [**More useful functions**](https://ashki23.github.io/r-functions.html)
+
+## R cheatsheets
+
+-   Official cheatsheets from [Posit](https://posit.co/resources/cheatsheets/)
+
+## Working with files
+
+-   How to zip files: [mac](https://support.apple.com/guide/mac-help/zip-and-unzip-files-and-folders-on-mac-mchlp2528/mac), [windows](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5)
+-   [Common Mac terminal commands](https://www.techrepublic.com/article/16-terminal-commands-every-user-should-know/)
+
+## Practice problems
+
+-   [Practice problems, from easy to hard](https://www.crumplab.com/rstatsforpsych/practice-problems.html)
+-   [Project Euler](https://projecteuler.net/)
+-   [R programming exercises](https://www.geeksforgeeks.org/r-programming-exercises-practice-questions-and-solutions/)
+
+## Version control with git
+
+-   [Git, GitHub, and Version Control](https://www.crumplab.com/psyc3470/compendium/version_control.html) by Matt Crump
+-   [Happy Git with R](https://happygitwithr.com/) by Jenny Bryan
+
+## Statistical analysis with R
+
+-   [Learning Statistics with R](https://learningstatisticswithr.com/book/) by Danielle Navarro
+-   [Answering Questions with Data](https://www.crumplab.com/statistics/) by Matt Crump, Danielle Navarro, and Jeffrey Suzuki
+
+## Data visualization
+
+-   [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen
+
+## Natural language processing with R
+
+-   [Tidy Text Mining](https://www.tidytextmining.com/) by Julia Silge and David Robinson
+
+## Advanced programming with R
+
+-   [Advanced R](https://adv-r.hadley.nz/) by Hadley Wickham
+
+## Resources for learning Python
+
+-   [Python vs R: What's the Difference?](https://www.ibm.com/think/topics/python-vs-r)
+-   [Lab in Cognition and Perception](https://cims.nyu.edu/~brenden/courses/labincp/intro.html) by Todd Gureckis
+

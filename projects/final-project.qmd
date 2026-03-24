@@ -1,0 +1,57 @@
+---
+title: "Final Project"
+---
+
+## Overview
+
+For the final project, you will reproduce data visualizations and analysis from an openly available psychology dataset. This project will integrate what you've learned about data processing, analysis, and visualization, culminating in a reproducible narrative report of the results.
+
+## Steps
+
+### 1. Find an openly available dataset
+
+The dataset should correspond to a published empirical paper in psychology and/or neuroscience. You can search for datasets directly on the [Open Science Framework](https://osf.io/), or you can search for an article that interests you and see if their data are available. Articles in the journal [*Psychological Science*](https://journals.sagepub.com/home/pss) are now required to share their data, so this journal might be a good place to start. Other journals may have similar requirements.
+
+You are *strongly encouraged* to find this dataset well in advance of the final deadline and to review your choice with the instructor.
+
+### 2. Reproduce a set of analyses and visualizations in R
+
+Use what you have learned about data tidying, wrangling, visualization, and analysis to report on the published paper. Your report should include at least one table of summary statistics, one statistical analysis, and one data visualization that reproduces a figure from the paper. When possible, your work should reproduce what is already published. However, you are not permitted to use or refer to any code that may already exist alongside the dataset. Your analysis script should incorporate concepts that we have covered in the class in order to tidy, wrangle, visualize, and analyze the data.
+
+You do not need to reproduce the entire paper. Most papers includes a large number of different experiments, analyses, and visualizations, some of which may go beyond the scope of what you have learned. You should select a subset of what they have done– perhaps the key data for answering their research question- and focus on that.
+
+### 3. Package everything into an R markdown report
+
+Your markdown report should include a description of the research question, a link to the dataset, as well as narrative details about what you're doing at each step and what you have found. This narrative content should be nicely formatted in Markdown and included in between code chunks (i.e., not as comments within a code chunk).
+
+The end result should be a reproducible report that would allow another person to download the dataset and run your code to obtain the same results. You should include code that downloads the dataset directly from the internet to facilitate this process. You must upload both the Rmd file and the html file in order to receive full credit.
+
+## Report components
+
+Your final report should include the following:
+
+-   **A description of the research question, what the authors did, and what they found.** This should consist of at least one detailed paragraph.
+-   **A link to the paper.**
+-   **A link to the dataset.**
+-   **Code to directly download the data from the internet.** You can model this after the code we used in the stats module.
+-   **A table of summary statistics.** This can be modeled after a table included in the paper, or something you create on your own (e.g., if they don't have an appropriate table). An example of a summary stats table can be found [here](https://link-springer-com.proxy.bc.edu/article/10.3758/s13421-022-01291-5/tables/1).
+-   **A statistical analysis.** This should be modeled after one of the analyses reported in the paper. Example analyses include t-tests, ANOVAs, and regressions, all of which we covered in our stats module.
+-   **A data visualization.** This should reproduce a figure included in the paper, as close as you can get it. Please also include an **image of the original figure** from the paper.
+-   You are also welcome to include other visualizations that you think are interesting or helpful.
+-   Throughout, you should incorporate **concepts** that we have discussed in class.
+-   Throughout, you should include **Markdown subheaders and narrative text** (i.e., between your code chunks) to organize and describe what you are doing for each step and what you have found.
+-   In your code chunks, you should include **short comments** detailing the steps.
+-   You should submit both the **Rmd file** and the **knitted html file**.
+-   Any disclosures about **use of AI**. Remember that for this project, you should be using AI only for debugging purposes.
+
+## Final presentation
+
+In the last two weeks of class, you will present your final project to the group. Your presentation should include:
+
+-   an overview of the research question
+-   information about the original data visualization and results
+-   information about your process for reproducing the visualization and results
+-   the research conclusions
+-   what you have learned from this exercise.
+
+Your presentation should be 5-8 minutes long.
