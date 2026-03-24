@@ -22,6 +22,6 @@ This course incorporates open-access materials that have been generously shared 
 -   Emily Nordmann and Lisa DeBruine. [*Applied Data Skills*](https://psyteachr.github.io/ads-v3/). doi:10.5281/zenodo.6365077
 -   Danielle Navarro. [*R for Psychological Science*](https://psyr.djnavarro.net/).
 
-Some content and assignments were inspired by Matt Crump's similar [course](https://www.crumplab.com/psyc3470/). The syllabus includes language recommended by the Boston College [Center for Teaching Excellence](https://cteresources.bc.edu/).
+Some content and assignments were inspired by Matt Crump's similar [course](https://www.crumplab.com/psyc3470/).
 
 Course development was supported by a CAREER Award from the National Science Foundation ([BCS-2047415](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2047415)).

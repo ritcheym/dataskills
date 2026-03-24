@@ -594,7 +594,7 @@
     "href": "index.html#acknowledgments",
     "title": "Data Skills for Psychology",
     "section": "Acknowledgments",
-    "text": "Acknowledgments\nThis course incorporates open-access materials that have been generously shared by researchers around the world, including:\n\nEmily Nordmann and Lisa DeBruine. Applied Data Skills. doi:10.5281/zenodo.6365077\nDanielle Navarro. R for Psychological Science.\n\nSome content and assignments were inspired by Matt Crump’s similar course. The syllabus includes language recommended by the Boston College Center for Teaching Excellence.\nCourse development was supported by a CAREER Award from the National Science Foundation (BCS-2047415)."
+    "text": "Acknowledgments\nThis course incorporates open-access materials that have been generously shared by researchers around the world, including:\n\nEmily Nordmann and Lisa DeBruine. Applied Data Skills. doi:10.5281/zenodo.6365077\nDanielle Navarro. R for Psychological Science.\n\nSome content and assignments were inspired by Matt Crump’s similar course.\nCourse development was supported by a CAREER Award from the National Science Foundation (BCS-2047415)."
   },
   {
     "objectID": "datasets/screentime.html",
