@@ -180,30 +180,30 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../modules/04_programming-workshop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Programming Foundations Workshop</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
  <span class="menu-text"><mark>Data Manipulation</mark></span>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/05_data-visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/04_data-visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/06_data-summaries.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/05_data-summaries.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Summaries</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/07_data-wrangling.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/06_data-wrangling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Wrangling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/07_data-tidying.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Tidying- with fMRI!</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -213,29 +213,32 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../modules/09_data-tidying.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Tidying- with fMRI!</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
  <span class="menu-text"><mark>Data Analysis</mark></span>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/10_statistical-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/09_statistical-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Statistical Analysis in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/11_machine-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/10_machine-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
+ <span class="menu-text"><mark>Bonus Modules</mark></span>
+  </li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/12_nlp.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/00_programming-workshop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming Foundations Workshop</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/11_nlp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Natural Language Processing</span></a>
   </div>
 </li>
@@ -245,6 +248,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../projects/final-project.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><b>Final Project</b></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/chapter-summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><b>Chapter Summaries</b></span></a>
   </div>
 </li>
     </ul>
@@ -288,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>This week, we’ll expand on last week’s module by discussing how to chain together commands to create functions and programs. We will discuss how to develop an algorithm, which is the list of steps required to solve a problem. Writing an algorithm is like writing a recipe for <a href="https://youtu.be/NywzrUJnmTo?si=Flm_2DChdYCAy7-A&amp;t=34">someone</a> who has never cooked before: you have to be very specific about what ingredients to use, and when and how to add them. We’ll learn how to build these algorithms into our own custom functions and full-fledged programs.</p>
+<p>We’ll expand on the last module by discussing how to chain together commands to create functions and programs. We will discuss how to develop an algorithm, which is the list of steps required to solve a problem. Writing an algorithm is like writing a recipe for <a href="https://youtu.be/NywzrUJnmTo?si=Flm_2DChdYCAy7-A&amp;t=34">someone</a> who has never cooked before: you have to be very specific about what ingredients to use, and when and how to add them. We’ll learn how to build these algorithms into our own custom functions.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -320,23 +329,16 @@ Key concepts
 <p>First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.</p>
 <p>As always, your R markdown report should be organized with headings and comments explaining your work.</p>
 <ol type="1">
-<li>Write a function to find the sum of all integers between any two values. Start by writing out your plan in comment form, and then fill in the code.</li>
+<li>Write a <strong>function</strong> to find the sum of all integers between any two values. Start by writing out your plan in comment form, and then fill in the code.</li>
 <li>List all of the prime numbers from 1 to 1000. Start by writing out your plan in comment form, and then fill in the code.
 <ul>
-<li>Create a function <code>is_prime()</code> that helps you solve this problem.</li>
+<li>Create a <strong>function</strong> <code>is_prime()</code> that helps you solve this problem.</li>
 </ul></li>
-<li>Write your own functions to give descriptive statistics for a vector variable storing multiple numbers. Write functions for the following without using R intrinsics: mean, mode, median, range, standard deviation
+<li>Write your own functions to give descriptive statistics for a vector variable storing multiple numbers. Write <strong>functions</strong> for the following without using R intrinsics: mean, mode, median, range, standard deviation
 <ul>
 <li>It’s ok to use <code>sum()</code> and <code>length()</code> in your solutions.</li>
 <li>For at least one of these, see if you can come up with two different solutions.</li>
 <li>The output should be a vector with the descriptive statistics, with names included (refer back to the Vectors chapter).</li>
-</ul></li>
-<li>Imagine you are writing a program to help you process data from a survey that you ran.
-<ul>
-<li>You have vectors containing the ages of 200 participants, their identified gender labels, and their responses to a 10-item survey indexing mental health. Note that you should exclude anyone with missing survey responses.</li>
-<li>You want the descriptive statistics for an overall mental health score, across everybody as well as split by gender (here, including male, female, and non-binary).</li>
-<li>You also want to run a <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/t.test">t-test</a> comparing mental health scores specifically for males and females between ages 18-24.</li>
-<li>Make a plan for how you would implement this program, listing out the steps in order as well as what output you would need to pass from one step to the next. You can write this in pseudo-code - in other words, you don’t have to write any actual syntax, only the logical list of steps as a series of comments that you could use to structure your code. Be as specific and as granular as possible.</li>
 </ul></li>
 </ol>
 <p>Some of these problems were adapted from this <a href="https://www.crumplab.com/rstatsforpsych/practice-problems.html">website</a>.</p>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Midterm Project – Data Skills for Psychology</title>
+<title>Data Tidying- with fMRI! – Data Skills for Psychology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Midterm Project</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/index.html"><b>Modules</b></a></li><li class="breadcrumb-item"><a href="../modules/07_data-tidying.html">Data Tidying- with fMRI!</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -202,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/07_data-tidying.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/07_data-tidying.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Data Tidying- with fMRI!</span></a>
   </div>
 </li>
@@ -266,23 +266,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#instructions" id="toc-instructions" class="nav-link active" data-scroll-target="#instructions">Instructions</a></li>
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a>
-  <ul class="collapse">
-  <li><a href="#question-1-code-breakers" id="toc-question-1-code-breakers" class="nav-link" data-scroll-target="#question-1-code-breakers">Question 1: Code Breakers</a></li>
-  <li><a href="#question-2-playing-games" id="toc-question-2-playing-games" class="nav-link" data-scroll-target="#question-2-playing-games">Question 2: Playing Games</a></li>
-  <li><a href="#question-4-find-the-missing-number" id="toc-question-4-find-the-missing-number" class="nav-link" data-scroll-target="#question-4-find-the-missing-number">Question 4: Find the Missing Number</a></li>
-  <li><a href="#question-5-wordle-thought-experiment" id="toc-question-5-wordle-thought-experiment" class="nav-link" data-scroll-target="#question-5-wordle-thought-experiment">Question 5: Wordle Thought Experiment</a></li>
-  </ul></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
+  <li><a href="#in-class-exercises" id="toc-in-class-exercises" class="nav-link" data-scroll-target="#in-class-exercises">In-class exercises</a></li>
+  <li><a href="#weekly-assignment" id="toc-weekly-assignment" class="nav-link" data-scroll-target="#weekly-assignment">Weekly assignment</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/index.html"><b>Modules</b></a></li><li class="breadcrumb-item"><a href="../modules/07_data-tidying.html">Data Tidying- with fMRI!</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Midterm Project</h1>
+<h1 class="title">Data Tidying- with fMRI!</h1>
 </div>
 
 
@@ -299,62 +295,42 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The midterm project will give you an opportunity to showcase your new skills in programming, drawing on concepts from the first half of the class. You will write code to solve computational problems, integrating what you’ve learned about variables, loops, functions, etc. This will give you practice in breaking down larger problems into its component parts, and developing an algorithm to step through the problem. You will also share your code and the output in an R markdown report. The midterm project will be graded according to its accuracy, completeness, and clear presentation of the code and results.</p>
-<section id="instructions" class="level2">
-<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
-<p>You will be graded on the accuracy and completeness of your code, as well as its presentation.</p>
-<p><strong>Accuracy:</strong> Does the code run? Can someone else (e.g., your professor) download it and run it without making any edits? Does it approach the problem in a logical way?</p>
-<p><strong>Completeness:</strong> Does it solve the problem? Does it work with a variety of different possible inputs or situations?</p>
-<p><strong>Presentation:</strong> Did you submit an html file? Does it have headers and explanatory text that describe what you are doing? Does it have a table of contents? Does it have comments that label the different steps?</p>
-<p><strong>Use of AI:</strong> Please review the AI policy on the course syllabus. You are permitted to turn to AI if you get stuck on part of the problem. However, you should clearly indicate when and how you have done so, including notes about your thought process. As always, I strongly encourage you to try to work through the problems independently first, and then use AI only as a debugging tool. For the midterm, I am very likely to ask you to explain chunks of your code that I perceive as being AI-assisted, either in class or in an office hours meeting.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>This week we’re going to polish off our section on data manipulation by working with fMRI data. First we’ll go over a couple of key functions that are useful for rearranging data into “tidy” format. Then we will download an openly-available fMRI dataset and learn how to load and visualize fMRI data in R. Finally, we’ll apply the skills we’ve learned to combine and wrangle fMRI datasets and to summarize and visualize their results.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Key concepts
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The following functions might come in handy as you work through these problems: <code>sample()</code>, <code>all()</code>, and <code>any()</code>. You can look up their syntax in the help window or online.</p>
+<p>tidy data, reshaping functions (<code>pivot_longer</code>, <code>pivot_wider</code>), fMRI-related concepts including NIfTI file, anatomical image, functional image, voxel, time-point, time-series</p>
 </div>
 </div>
 </section>
-<section id="questions" class="level2">
-<h2 class="anchored" data-anchor-id="questions">Questions</h2>
-<section id="question-1-code-breakers" class="level3">
-<h3 class="anchored" data-anchor-id="question-1-code-breakers">Question 1: Code Breakers</h3>
-<p>Turn any normal english text into an encrypted version of the text, and be able to turn any decrypted text back into normal english text. A simple encryption would be to scramble the alphabet such that each letter corresponds to a new randomly chosen (but unique) letter. You should have a function for each, as well as some tests that demonstrate how it works.</p>
+<section id="readings" class="level2">
+<h2 class="anchored" data-anchor-id="readings">Readings</h2>
+<p>You should read this chapter before you come to class:</p>
+<ul>
+<li><em>Applied Data Skills -</em> <a href="https://psyteachr.github.io/ads-v3/08-tidy.html">Chapter 8: Data Tidying</a></li>
+</ul>
 </section>
-<section id="question-2-playing-games" class="level3">
-<h3 class="anchored" data-anchor-id="question-2-playing-games">Question 2: Playing Games</h3>
-<p>Solve <strong>1</strong> of the following 3 game problems. You can solve a second for 10 bonus points.</p>
-<section id="snakes-and-ladders" class="level4">
-<h4 class="anchored" data-anchor-id="snakes-and-ladders">Snakes and ladders</h4>
-<p>Your task here is to write an algorithm that can simulate playing the depicted Snakes and Ladders board depicted <a href="https://www.crumplab.com/rstatsforpsych/imgs/SnakesLadders.png">here</a>. You should assume that each roll of the dice produces a random number between 1 and 6. After you are able to simulate one played game, you will then write a loop to simulate 1000 games, and estimate the average number of dice rolls needed to successfully complete the game.</p>
+<section id="in-class-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="in-class-exercises">In-class exercises</h2>
+<p>We will follow along with the examples given in the textbook through section 8.4. Create an R project called <code>data-tidy</code>, and save today’s work in an R markdown report called <code>tidy.Rmd</code>.</p>
+<p>Then we will follow along with a set of exercises to learn about interacting with fMRI data in R. <a href="../files/fmri-data-wrangling.Rmd">Download</a> the <code>fmri-data-wrangling.Rmd</code> file to get started. See also the <a href="../datasets/haxby01.html"><code>haxby01</code></a> page for more information about the dataset.</p>
 </section>
-<section id="tic-tac-toe" class="level4">
-<h4 class="anchored" data-anchor-id="tic-tac-toe">Tic Tac Toe</h4>
-<p>Imagine that two players make completely random choices when playing tic-tac-toe. Each game will either end in a draw or one of the two players will win. Create a simulation of this “random” version of tic-tac-toe. Out of 10,000 simulations, what proportion of the time is the game won versus drawn?</p>
-</section>
-<section id="sudoku" class="level4">
-<h4 class="anchored" data-anchor-id="sudoku">Sudoku</h4>
-<p>Sudoku is a logic puzzle in which the goal is to fill a 9 x 9 grid with numbers 1 to 9. The board has 9 rows, 9 columns, and is divided into 9 3x3 boxes. The catch is that each number must appear only once per row, column, and box. Start with a Sudoku puzzle that has some numbers filled in - here is an <a href="https://pi.math.cornell.edu/~mec/Summer2009/Mahmood/Pictures/ExSudokuV.JPG">example</a>, but you can use any starting puzzle. Write some code to solve the puzzle. To do so, you will probably want to write a function to make sure a number “works” for a particular spot, and then keep trying to add numbers until you fill in the entire puzzle.</p>
-</section>
-</section>
-<section id="question-4-find-the-missing-number" class="level3">
-<h3 class="anchored" data-anchor-id="question-4-find-the-missing-number">Question 4: Find the Missing Number</h3>
-<p>You have a vector listing numbers from 1 to 100. You shuffle it randomly, and then— oh no, one of the numbers has gone missing! Write a function that will generate a randomized vector that is missing one value. Then write a function that can find the missing number. The second function should generalize to work any vector that includes consecutive numbers but is missing one value.</p>
-</section>
-<section id="question-5-wordle-thought-experiment" class="level3">
-<h3 class="anchored" data-anchor-id="question-5-wordle-thought-experiment">Question 5: Wordle Thought Experiment</h3>
-<p>Thought experiment: How would you build a Wordle solver? Write out the algorithm in pseudo code. Think about what functions you’d like to be able to use (whether they already exist or not), and how you would chain them together to solve the puzzle.</p>
-<hr>
-<p>Problems were adapted from this list of <a href="https://www.crumplab.com/rstatsforpsych/practice-problems.html">Practice Problems</a> and daily.dev <a href="https://daily.dev/blog">blog</a>.</p>
+<section id="weekly-assignment" class="level2">
+<h2 class="anchored" data-anchor-id="weekly-assignment">Weekly assignment</h2>
+<p>Download a modified version of the <code>fmri-data-wrangling</code> script <a href="../files/fmri-data-wrangling-hw.Rmd">here</a>. This version does NOT require that you download the original data. Instead, download this <a href="../files/all_roi_data.csv">csv file</a> that contains summary data for each subject. Put these two files in the same folder, and follow the instructions in the script. You will start from the section cleverly labeled <em>Start running from here</em>. Below that section, you will find several questions that you will answer using the data and the skills you have learned so far. Respond to the questions by filling in the chunks that say <em>FILL IN HERE</em>.</p>
+<p><em>Final project preparation:</em> Read the paper associated with your final project. Download the data and make sure you are able to load it in to R. Your markdown file should include the code that you used to load it into R.</p>
+<p>When you zip your files to submit your assignment, please do <em>not</em> include the original data files. You should include only the Rmd and html report files.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

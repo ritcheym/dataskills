@@ -37,19 +37,22 @@ website:
           - modules/01_intro.qmd
           - modules/02_programming-foundations-1.qmd
           - modules/03_programming-foundations-2.qmd
-          - modules/04_programming-workshop.qmd
           - text: "<mark>Data Manipulation</mark>"
-          - modules/05_data-visualization.qmd
-          - modules/06_data-summaries.qmd
-          - modules/07_data-wrangling.qmd
+          - modules/04_data-visualization.qmd
+          - modules/05_data-summaries.qmd
+          - modules/06_data-wrangling.qmd
+          - modules/07_data-tidying.qmd
           - modules/08_data-relations.qmd
-          - modules/09_data-tidying.qmd
           - text: "<mark>Data Analysis</mark>"
-          - modules/10_statistical-analysis.qmd
-          - modules/11_machine-learning.qmd
-          - modules/12_nlp.qmd
+          - modules/09_statistical-analysis.qmd
+          - modules/10_machine-learning.qmd
+          - text: "<mark>Bonus Modules</mark>"
+          - modules/00_programming-workshop.qmd
+          - modules/11_nlp.qmd
       - text: "<b>Final Project</b>"
         href: projects/final-project.qmd
+      - text: "<b>Chapter Summaries</b>"
+        href: modules/chapter-summaries.qmd
 
 format:
   html:

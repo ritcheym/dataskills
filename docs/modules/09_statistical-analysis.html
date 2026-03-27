@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Wrangling – Data Skills for Psychology</title>
+<title>Statistical Analysis in R – Data Skills for Psychology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/index.html"><b>Modules</b></a></li><li class="breadcrumb-item"><a href="../modules/07_data-wrangling.html">Data Wrangling</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/index.html"><b>Modules</b></a></li><li class="breadcrumb-item"><a href="../modules/09_statistical-analysis.html">Statistical Analysis in R</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -180,30 +180,30 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../modules/04_programming-workshop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Programming Foundations Workshop</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
  <span class="menu-text"><mark>Data Manipulation</mark></span>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/05_data-visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/04_data-visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/06_data-summaries.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/05_data-summaries.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Summaries</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/07_data-wrangling.html" class="sidebar-item-text sidebar-link active">
+  <a href="../modules/06_data-wrangling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Wrangling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/07_data-tidying.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Tidying- with fMRI!</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -213,29 +213,32 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../modules/09_data-tidying.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Tidying- with fMRI!</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
  <span class="menu-text"><mark>Data Analysis</mark></span>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/10_statistical-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/09_statistical-analysis.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Statistical Analysis in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/11_machine-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/10_machine-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
+ <span class="menu-text"><mark>Bonus Modules</mark></span>
+  </li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/12_nlp.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/00_programming-workshop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming Foundations Workshop</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/11_nlp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Natural Language Processing</span></a>
   </div>
 </li>
@@ -245,6 +248,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../projects/final-project.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><b>Final Project</b></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/chapter-summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><b>Chapter Summaries</b></span></a>
   </div>
 </li>
     </ul>
@@ -267,9 +276,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/index.html"><b>Modules</b></a></li><li class="breadcrumb-item"><a href="../modules/07_data-wrangling.html">Data Wrangling</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../modules/index.html"><b>Modules</b></a></li><li class="breadcrumb-item"><a href="../modules/09_statistical-analysis.html">Statistical Analysis in R</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Data Wrangling</h1>
+<h1 class="title">Statistical Analysis in R</h1>
 </div>
 
 
@@ -288,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>You will notice that we are skipping ahead in the textbook. This is because many of the key concepts for data wrangling are related to what you just learned in the <em>Data Summaries</em> module. In this module, we will learn how to work with datasets in R. In particular, we will focus on functions for creating new variables and for filtering, grouping, and summarizing data. We will string these functions together using “pipes” to create our data processing workflows.</p>
+<p>We’ve made a lot of progress on working with data in R. Now what? In scientific research, we are interested in testing <em>hypotheses</em> and seeing whether the data are consistent with our hypotheses. In order to do this, we need to know how likely it is that we would have seen this pattern of data by chance (i.e., if our hypothesis wasn’t true). That’s what statistics are for! This week we will go over a few basic statistical tests that are commonly used in psychology and neuroscience research, and see how to implement them in R.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -299,41 +308,26 @@ Key concepts
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>pipes (<code>%&gt;%</code>), summarize, grouping, filter, select, arrange, mutate, missing values</p>
+<p>descriptive statistics, inferential statistics, null hypothesis, effect size, dependent variable, independent variable, p-value, t-test, ANOVA, within-subjects, between-subjects, main effect, interaction</p>
 </div>
 </div>
 </section>
 <section id="readings" class="level2">
 <h2 class="anchored" data-anchor-id="readings">Readings</h2>
-<p>You should read this chapter before you come to class:</p>
-<ul>
-<li><em>Applied Data Skills -</em> <a href="https://ritcheym.github.io/ads-v3-abridged/09-wrangle.html">Chapter 9: Data Wrangling</a></li>
-</ul>
+<p>There are no readings, but you can look at the <a href="../files/stats_slides.pdf">slides</a> ahead of time.</p>
 </section>
 <section id="in-class-exercises" class="level2">
 <h2 class="anchored" data-anchor-id="in-class-exercises">In-class exercises</h2>
-<p>We will follow along with the examples given in the textbook. Create an R project called <code>data-wrangling</code>, and save today’s work in an R markdown report called <code>wrangle.Rmd</code>. <a href="../files/wrangle.Rmd">Download</a> the version I used in class.</p>
-<p>To keep our programming skills sharp, we will also work in groups to solve the following programming problems.</p>
-<p><strong>Coin flip tracker:</strong> Simulate flipping a coin 1000 times.</p>
-<ol type="1">
-<li>Count how many times it lands on heads. For practice, use a for-loop, even if you can think of a better way to do it.</li>
-<li>Count how many times it switches from heads to tails or vice versa (e.g., heads-heads-tails would include one switch). Again, use a for-loop.</li>
-<li>Bonus: Count how many times there are runs of the same side (e.g., 5 heads in a row). Write a function that includes an input for the run length and returns the number of runs that match or exceed that value.</li>
-</ol>
-<p><a href="../files/coin-flipper.Rmd">Download</a> the <code>coin_flipper</code> file we used in class.</p>
+<p>We will review basic statistical concepts and learn how to implement statistical tests in R. We will then apply these skills to an open-access psychology dataset. <a href="../files/stats.Rmd">Download</a> the <code>stats.Rmd</code> file to get started.</p>
 </section>
 <section id="weekly-assignment" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-assignment">Weekly assignment</h2>
-<p>Solve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.</p>
+<p>Using the <code>stats.Rmd</code> file we used in class, complete the following:</p>
 <ol type="1">
-<li><p>Using the <code>switch_counter</code> function you developed in class, figure out how many times it switches as a function of how many coin flips you simulate, setting the number of iterations to 5, 50, 100, 500, and 1000. Use ggplot to plot the results, using whatever format you think is best.</p></li>
-<li><p><em>Extra practice (optional):</em> Using the <code>run_detector</code> function we discussed in class, figure out how many runs occur for all run lengths between (and including) 2 and 10. Use ggplot to plot the results, using whatever format you think is best.</p>
-<p><strong>For the rest of the questions, you will use the <a href="../datasets/screentime.html"><code>screentime</code></a> dataset.</strong> You may want to build on the script we worked on in class (<a href="../files/wrangle.Rmd">download</a>).</p></li>
-<li><p>Which <code>REGION</code> has the most observations? Use the <code>count()</code> function.</p></li>
-<li><p>Calculate a new composite measure of mental well-being, using only 3 questions on the Mental Well-Being Scale (<code>WBIntp</code>,<code>WBClsep</code>, and <code>WBLoved</code>), which all have to do with relationships with other people (see <a href="https://www2.uwe.ac.uk/services/Marketing/students/pdf/Wellbeing-resources/well-being-scale-wemwbs.pdf">scale</a>). Filter out any observations with missing values. Caution - missing values are labeled in a suboptimal way in this dataset.</p></li>
-<li><p>Use the <code>summarize()</code> function to compute the mean and 95% confidence intervals of your new composite measure, split by gender. Plot the results, using whatever format you think is best.</p></li>
-<li><p><em>Extra practice (optional):</em> How closely does this new measure correspond with the original mental well-being measure (<code>mwbi</code>)? One way to tell is by plotting their relationship with one another.</p></li>
-<li><p><em>Extra practice (optional):</em> What other questions could you answer with this dataset? How would you go about it?</p></li>
+<li>Using the <code>df.avg</code> dataframe, determine whether there was a significant difference in mean vividness for negative and neutral trials. Run the appropriate statistical test and interpret the results. Use <code>ggplot</code> to visualize the results.</li>
+<li>Using the <code>df.avg</code> dataframe, determine whether there was a significant interaction between emotion and age group on mean vividness. Run the appropriate statistical test and interpret the results. Use <code>ggplot</code> to visualize results.</li>
+<li>Do some internet research to find out how to test whether there is a significant relationship between two continuous variables. Determine whether there was a significant relationship between age and scores on the BDI. Use <code>ggplot</code> to visualize the results.</li>
+<li>Come up with another research question that you could answer with this dataset, and run the appropriate statistical test. Use <code>ggplot</code> to visualize the results.</li>
 </ol>
 
 

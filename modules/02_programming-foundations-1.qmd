@@ -9,7 +9,7 @@ This week, we'll learn the building blocks of programming: How do we represent t
 ::: {.callout-note icon="false"}
 ## Key concepts
 
-character, numeric, combine, vector, element, logical, logical indexing, `<-`, !`=` vs `==`, flow control, while loop, for loop, conditional statements, if statement
+character, numeric, combine, vector, element, logical, logical indexing, `<-`, !`=` vs `==`, flow control, for loop, conditional statements, if statement
 :::
 
 ## Readings

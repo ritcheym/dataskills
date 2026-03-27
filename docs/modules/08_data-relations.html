@@ -180,30 +180,30 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../modules/04_programming-workshop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Programming Foundations Workshop</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
  <span class="menu-text"><mark>Data Manipulation</mark></span>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/05_data-visualization.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/04_data-visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/06_data-summaries.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/05_data-summaries.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Summaries</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/07_data-wrangling.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/06_data-wrangling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Wrangling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/07_data-tidying.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Tidying- with fMRI!</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -213,29 +213,32 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../modules/09_data-tidying.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Tidying- with fMRI!</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
  <span class="menu-text"><mark>Data Analysis</mark></span>
   </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/10_statistical-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/09_statistical-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Statistical Analysis in R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/11_machine-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/10_machine-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
+ <span class="menu-text"><mark>Bonus Modules</mark></span>
+  </li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../modules/12_nlp.html" class="sidebar-item-text sidebar-link">
+  <a href="../modules/00_programming-workshop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming Foundations Workshop</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/11_nlp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Natural Language Processing</span></a>
   </div>
 </li>
@@ -245,6 +248,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../projects/final-project.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><b>Final Project</b></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/chapter-summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><b>Chapter Summaries</b></span></a>
   </div>
 </li>
     </ul>
@@ -261,7 +270,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
   <li><a href="#in-class-exercises" id="toc-in-class-exercises" class="nav-link" data-scroll-target="#in-class-exercises">In-class exercises</a></li>
   <li><a href="#weekly-assignment" id="toc-weekly-assignment" class="nav-link" data-scroll-target="#weekly-assignment">Weekly assignment</a></li>
-  <li><a href="#chapter-summary" id="toc-chapter-summary" class="nav-link" data-scroll-target="#chapter-summary">Chapter summary</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
     </div>
@@ -328,105 +337,10 @@ Key concepts
 <li><p>What proportion of students earned an A on both the exam and the essay?</p></li>
 </ol></li>
 <li><p>What is the relationship between students’ grades on the essay and the exam? Use <code>ggplot</code> to create a plot of this relationship.</p></li>
-<li><p><em>Final project preparation:</em> Refer to the instructions for the final <a href="../projects/final-project.html">project</a>. You should get started on finding an openly available dataset. Please include in your Markdown report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.</p></li>
 </ol>
 </section>
-<section id="chapter-summary" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-summary">Chapter summary</h2>
-<p>The chapter focuses on combining data from multiple tables (data frames) using <code>dplyr</code>’s join functions. The below summary was created in collaboration with Google Gemini.</p>
-<p><strong>Key Concepts:</strong></p>
-<ul>
-<li><strong>Relational Data:</strong> Data is often stored in multiple tables that are related to each other.</li>
-<li><strong>Key Variables:</strong> Columns that are common between tables and used to link them.</li>
-<li><strong>Joining:</strong> The process of combining data from multiple tables based on key variables.</li>
-</ul>
-<p><strong>Types of Joins (with dplyr syntax):</strong></p>
-<ul>
-<li><strong>Inner Join (inner_join()):</strong>
-<ul>
-<li>Returns only rows where the key variable(s) match in both tables.</li>
-<li><code>inner_join(x, y, by = "common_column")</code></li>
-<li>Example: Combining customer orders with customer details, only for customers who have placed orders.</li>
-</ul></li>
-<li><strong>Left Join (left_join()):</strong>
-<ul>
-<li>Returns all rows from the left table (x) and matching rows from the right table (y).</li>
-<li>If a row in x has no match in y, NA values are added for y’s columns.</li>
-<li><code>left_join(x, y, by = "common_column")</code></li>
-<li>Example: Adding information about departments to a list of employees, even if some departments have no employees.</li>
-</ul></li>
-<li><strong>Right Join (right_join()):</strong>
-<ul>
-<li>Returns all rows from the right table (y) and matching rows from the left table (x).</li>
-<li>If a row in y has no match in x, NA values are added for x’s columns.</li>
-<li><code>right_join(x, y, by = "common_column")</code></li>
-</ul></li>
-<li><strong>Full Join (full_join()):</strong>
-<ul>
-<li>Returns all rows from both tables.</li>
-<li>NA values are added where there are no matches.</li>
-<li><code>full_join(x, y, by = "common_column")</code></li>
-<li>Example: Combining customer data from two different databases, including all customers from both.</li>
-</ul></li>
-</ul>
-<p><strong>Specifying Key Variables:</strong></p>
-<ul>
-<li><strong>by Argument:</strong>
-<ul>
-<li>Specifies the key variable(s).</li>
-<li>If the key variables have the same name in both tables, use <code>by = "column_name"</code>.</li>
-<li>If the key variables have different names, use <code>by = c("x_column" = "y_column")</code>.</li>
-</ul></li>
-</ul>
-<p><strong>Handling Duplicate Column Names:</strong></p>
-<ul>
-<li>If non-key columns have the same name in both tables, dplyr will add suffixes (.x and .y) to distinguish them. You can change the suffixes by using the argument <code>suffix = c(".x", ".y")</code>.</li>
-</ul>
-<p><strong>Row and Column Binding:</strong></p>
-<ul>
-<li><strong>bind_rows():</strong>
-<ul>
-<li>Combines data frames vertically (adds rows).</li>
-<li>Syntax: <code>bind_rows(df1, df2, ...)</code></li>
-<li>Requirement: Data frames must have the same columns (or columns that can be matched by name).</li>
-<li>Example: Merging daily sales data from multiple files.</li>
-<li>If columns do not match, then NA values will be placed into the combined dataframe.</li>
-</ul></li>
-<li><strong>bind_cols():</strong>
-<ul>
-<li>Combines data frames horizontally (adds columns).</li>
-<li>Syntax: <code>bind_cols(df1, df2, ...)</code></li>
-<li>Requirement: Data frames must have the same number of rows.</li>
-<li>Caveat: You will often want to use a join function instead of <code>bind_cols</code>.</li>
-</ul></li>
-</ul>
-<p><strong>Set Operations:</strong></p>
-<ul>
-<li><strong>intersect():</strong>
-<ul>
-<li>Returns the rows that are present in both data frames.</li>
-<li>Syntax: <code>intersect(df1, df2)</code></li>
-<li>Example: Finding common customers between two lists.</li>
-</ul></li>
-<li><strong>union():</strong>
-<ul>
-<li>Returns all unique rows from both data frames. This is similar to <code>bind_rows</code> except it removes duplicates.</li>
-<li>Syntax: <code>union(df1, df2)</code></li>
-<li>Example: Combining customer lists from different sources, removing duplicates.</li>
-</ul></li>
-<li><strong>setdiff():</strong>
-<ul>
-<li>Returns the rows that are present in the first data frame but not in the second.</li>
-<li>Syntax: <code>setdiff(df1, df2)</code></li>
-<li>Example: finding all customers that are in the first customer list, but not the second.</li>
-</ul></li>
-</ul>
-<p><strong>Key Takeaways:</strong></p>
-<ul>
-<li>Joins are essential for combining related data from multiple tables.</li>
-<li>Joins work with only two tables at a time. To combine multiple tables, use a pipe to connect multiple calls to a join function.</li>
-<li>The <code>by</code> argument is crucial for specifying the key variables used to link tables.</li>
-</ul>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
 
 
 </section>

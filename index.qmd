@@ -5,7 +5,7 @@ sidebar: false
 
 ## Welcome
 
-This is the course website for *Data Skills for Psychology*, developed and taught by [Dr. Maureen Ritchey](https://www.thememolab.org/people/ritchey/) in the Department of Psychology at UCLA. This course will be taught in Spring 2026.
+This is the course website for *Data Skills for Psychology*, developed and taught by [Dr. Maureen Ritchey](https://www.thememolab.org/people/ritchey.html) in the Department of Psychology at UCLA. This course will be taught in Spring 2026.
 
 ## Course description
 
