@@ -36,10 +36,8 @@ As always, your R markdown report should be organized with headings and comments
 1.  Find the sum of all the integer numbers from 1 to 100.
     -   You can use the `sum()` function on a vector of numbers.
     -   How would you do this without using the sum function? Show how you would use a while-loop to accomplish this task.
-2.  List all of the odd numbers from 1 to 100.
-    -   Consider using the mod function `%%`, which evaluates whether or not there is a remainder when dividing one number by another.
-3.  Count the number of words in a string variable. You can use the `strsplit()` function to help.
-4.  Write code that will place the numbers 1 to 100 separately into a variable using a for-loop. Then, look up the `seq()` function and use this function to do the same thing.
-5.  If we list all of the natural numbers between 1 and 10 that are divisible by 3 or 5, we get 3, 5, 6, and 9. The sum of these numbers is 23. Find the sum of all the multiples of 3 and 5 between 1 and 1000.
+2.  Count the number of words in a string variable. You can use the `strsplit()` function to help.
+3.  Write code that will place the numbers 1 to 100 separately into a variable using a for-loop. Then, look up the `seq()` function and use this function to do the same thing.
+4.  If we list all of the natural numbers between 1 and 10 that are divisible by 3 or 5, we get 3, 5, 6, and 9. The sum of these numbers is 23. Find the sum of all the multiples of 3 and 5 between 1 and 1000.
 
 Some of these problems were adapted from this [website](https://www.crumplab.com/rstatsforpsych/practice-problems.html) and from [Project Euler](https://projecteuler.net/).

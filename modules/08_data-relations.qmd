@@ -16,7 +16,7 @@ joining functions (`left_join`, `right_join`, `inner_join`, `full_join`), bindin
 
 You should read this chapter before you come to class:
 
--   *Applied Data Skills -* [Chapter 7: Data Relations](https://psyteachr.github.io/ads-v3/07-joins.html)
+-   *Applied Data Skills -* [Chapter 5: Data Relations](https://psyteachr.github.io/ads-v3/05-joins.html)
 
 ## In-class exercises
 
@@ -26,7 +26,7 @@ We will follow along with the examples given in the textbook. Create an R projec
 
 Solve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.
 
-1.  Complete the [exercise](https://psyteachr.github.io/ads-v3/07-joins.html#grade-data) described in the chapter from 7.10.1 through 7.10.4.
+1.  Complete the [exercise](https://psyteachr.github.io/ads-v3/05-joins.html#grade-data) described in the chapter from 7.10.1 through 7.10.4.
 
 2.  Using the `completes` dataframe that you have created, compute some summary statistics:
 

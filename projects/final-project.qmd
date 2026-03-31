@@ -46,7 +46,7 @@ Your final report should include the following:
 
 ## Final presentation
 
-In the last two weeks of class, you will present your final project to the group. Your presentation should include:
+You will create a project presentation using the software of your choice (Zoom, TikTok, interactive Quarto site, whatever your preferred medium is). Your presentation should include:
 
 -   an overview of the research question
 -   information about the original data visualization and results
@@ -54,4 +54,4 @@ In the last two weeks of class, you will present your final project to the group
 -   the research conclusions
 -   what you have learned from this exercise.
 
-Your presentation should be 5-8 minutes long.
+Your presentation should be no more than 5-8 minutes long. You are permitted to use generative AI to help create slides or animations, but the writing and coding should be your own. With your permission, we may share your presentation with the rest of the class.

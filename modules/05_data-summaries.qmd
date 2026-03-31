@@ -16,7 +16,7 @@ csv files, importing data, the `$` operator, pipes (`%>%`), count, summarize
 
 You should read this chapter before you come to class:
 
--   *Applied Data Skills -* [Chapter 4: Data Summaries](https://ritcheym.github.io/ads-v3-abridged/04-summary.html)
+-   *Applied Data Skills -* [Chapter 4: Data Summaries](https://psyteachr.github.io/ads-v3/04-summary.html)
 
 ## In-class exercises
 

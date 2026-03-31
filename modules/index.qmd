@@ -22,9 +22,9 @@ See [BruinLearn](http://bruinlearn.ucla.edu) for the complete **course syllabus*
 |          |              | [Part 1](02_programming-foundations-1.html)\              |                                                                                                        |
 |          |              | [Part 2](03_programming-foundations-2.html)               |                                                                                                        |
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| 3        | April 14, 16 | [Data Visualization](04_data-visualization.html)          | Exploratory data visualization with ggplot, customizing plots                                          |
+| 3        | April 14, 16 | [Data Summaries](05_data-summaries.html)                  | Importing and summarizing data, tidyverse pipes                                                        |
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| 4        | April 21, 21 | [Data Summaries](05_data-summaries.html)                  | Importing and summarizing data, tidyverse pipes                                                        |
+| 4        | April 21, 23 | [Data Visualization](04_data-visualization.html)          | Exploratory data visualization with ggplot, customizing plots                                          |
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
 | 5        | April 28, 30 | [Data Wrangling](06_data-wrangling.html)                  | Selecting and filtering data, creating new variables                                                   |
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
@@ -37,5 +37,5 @@ See [BruinLearn](http://bruinlearn.ucla.edu) for the complete **course syllabus*
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
 | 9        | May 26, 28   | [Intro to Machine Learning](10_machine-learning.html)     | Simple machine learning models for classifying psychological outcomes                                  |
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| 10       | June 2, 4    | Project Presentations                                     | [**Final projects** **due**](projects/final-project.html)                                              |
+| 10       | June 2, 4    | Review; Project highlights                                | [**Final projects** **due**](projects/final-project.html)                                              |
 +----------+--------------+-----------------------------------------------------------+--------------------------------------------------------------------------------------------------------+

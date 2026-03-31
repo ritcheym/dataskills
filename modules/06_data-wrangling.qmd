@@ -16,7 +16,7 @@ pipes (`%>%`), summarize, grouping, filter, select, arrange, mutate, missing val
 
 You should read this chapter before you come to class:
 
--   *Applied Data Skills -* [Chapter 9: Data Wrangling](https://ritcheym.github.io/ads-v3-abridged/09-wrangle.html)
+-   *Applied Data Skills -* [Chapter 9: Data Wrangling](https://psyteachr.github.io/ads-v3/09-wrangle.html)
 
 ## In-class exercises
 

@@ -38,8 +38,8 @@ website:
           - modules/02_programming-foundations-1.qmd
           - modules/03_programming-foundations-2.qmd
           - text: "<mark>Data Manipulation</mark>"
-          - modules/04_data-visualization.qmd
           - modules/05_data-summaries.qmd
+          - modules/04_data-visualization.qmd
           - modules/06_data-wrangling.qmd
           - modules/07_data-tidying.qmd
           - modules/08_data-relations.qmd
