@@ -14,7 +14,7 @@ R vs RStudio, base-R, package, function, argument, objects, environment (workspa
 
 ## Readings and other preparation
 
-You should install R and RStudio before class. If you already have them installed, please update to the latest versions. Here are some directions on how to [install](https://psyteachr.github.io/ads-v3/app-installing-r.html) (or [update](https://psyteachr.github.io/ads-v3/app-updating-r.html)) these software packages.
+You should install R and RStudio before class. If you already have them installed, please update to the latest versions. Here are some directions on how to [install](https://psyteachr.github.io/RSetGo/) (or update) these software packages.
 
 For our first week, you do not to read ahead of the class period. But you should read these chapters afterward to solidify what we've discussed in class:
 
