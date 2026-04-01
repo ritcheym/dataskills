@@ -809,6 +809,18 @@
     ]
   },
   {
+    "objectID": "modules/01_intro.html#slides",
+    "href": "modules/01_intro.html#slides",
+    "title": "Introduction to R and RStudio",
+    "section": "Slides",
+    "text": "Slides\nSlides have been adapted from the textbook readings using Claude AI.\n\nTuesday’s lecture slides\nThursday’s lecture slides",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Introduction to R and RStudio"
+    ]
+  },
+  {
     "objectID": "modules/01_intro.html#in-class-exercises",
     "href": "modules/01_intro.html#in-class-exercises",
     "title": "Introduction to R and RStudio",
@@ -825,7 +837,7 @@
     "href": "modules/01_intro.html#weekly-assignment",
     "title": "Introduction to R and RStudio",
     "section": "Weekly assignment",
-    "text": "Weekly assignment\nCreate the demo_report project following the instructions in the textbook under Exercises (2.8.1-2.8.7), with one modification: Focus on a job you might like to have in the future. In your description, include any ideas about how programming might be able to help you in that job. Include the rest of the information that is requested in the instructions.\nIn addition, find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries (one, two) showing off plots created with the ggplot2 package in R. In a couple of weeks, we’ll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here’s a more info about how that works.\nOnce you are done, you will zip the demo_report folder (instructions: mac, windows) containing your R project, html file, and Rmd file and upload it through the link provided.",
+    "text": "Weekly assignment\nCreate the demo_report project following the instructions in the textbook under Exercises (2.7). You will complete this on your own, and you can ignore the instructions to share it on Teams (you will upload it through the link on BruinLearn instead). Include all of the information that is requested in the instructions for your CV.\nIn addition:\n\nPlease also include a sentence or two describing how programming might be able to help you in the future (e.g., in school or in a job).\nFind an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries (one, two) showing off plots created with the ggplot2 package in R. In a few weeks, we’ll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here’s more info about how that works.\n\nOnce you are done, you will zip the demo_report folder (instructions: mac, windows) containing your R project, html file, and Rmd file and upload it through the link provided.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",

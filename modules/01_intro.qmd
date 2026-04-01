@@ -21,14 +21,24 @@ For our first week, you do not to read ahead of the class period. But you should
 -   *Applied Data Skills -* [Chapter 1: Intro to R and RStudio](https://psyteachr.github.io/ads-v3/01-intro.html)
 -   *Applied Data Skills -* [Chapter 2: Reports with R Markdown](https://psyteachr.github.io/ads-v3/02-reports.html)
 
+## Slides
+
+Slides have been adapted from the textbook readings using Claude AI.
+
+-   [Tuesday's lecture slides](../slides/01_intro.qmd){target="_blank"}
+-   [Thursday's lecture slides](../slides/02_reports.qmd){target="_blank"}
+
 ## In-class exercises
 
 We will follow along with the examples given in the textbook. In addition, we will make sure everyone is set up with the software and with Canvas.
 
 ## Weekly assignment
 
-Create the `demo_report` project following the instructions in the textbook under [Exercises](https://psyteachr.github.io/ads-v3/02-reports.html#sec-exercises-reports) (2.8.1-2.8.7), with one modification: Focus on a job you might like to have *in the future*. In your description, include any ideas about how programming might be able to help you in that job. Include the rest of the information that is requested in the instructions.
+Create the `demo_report` project following the instructions in the textbook under [Exercises](https://psyteachr.github.io/ads-v3/02-reports.html#sec-exercises-reports) (2.7). You will complete this on your own, and you can ignore the instructions to share it on Teams (you will upload it through the link on BruinLearn instead). Include all of the information that is requested in the instructions for your CV.
 
-In addition, find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries ([one](https://r-graph-gallery.com/ggplot2-package.html), [two](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)) showing off plots created with the `ggplot2` package in R. In a couple of weeks, we'll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here's a [more info](https://psyteachr.github.io/ads-v3/02-reports.html#sec-exercises-reports-images) about how that works.
+In addition:
+
+1.  Please also include a sentence or two describing how programming might be able to help you in the future (e.g., in school or in a job).
+2.  Find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries ([one](https://r-graph-gallery.com/ggplot2-package.html), [two](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)) showing off plots created with the `ggplot2` package in R. In a few weeks, we'll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here's [more info](https://psyteachr.github.io/ads-v3/02-reports.html#sec-md-images) about how that works.
 
 Once you are done, you will zip the `demo_report` folder (instructions: [mac](https://support.apple.com/guide/mac-help/zip-and-unzip-files-and-folders-on-mac-mchlp2528/mac), [windows](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5)) containing your R project, html file, and Rmd file and upload it through the link provided.

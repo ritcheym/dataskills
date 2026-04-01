@@ -7,6 +7,7 @@ project:
   resources:
     - files/*.Rmd
     - files/*.html
+    - slides/*.html
     
 website:
   title: "Data Skills for Psychology"

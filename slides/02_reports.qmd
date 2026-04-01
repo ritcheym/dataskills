@@ -1,0 +1,789 @@
+---
+title: "Quarto Reports"
+subtitle: "Data Skills for Psychology — Module 2"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+---
+
+# Welcome Back! {background-color="#2c3e50"}
+
+These slides are adapted from [Applied Data Skills Ch. 2](https://psyteachr.github.io/ads-v3/02-reports.html).
+
+## Today's Goals
+
+By the end of this class, you will be able to:
+
+-   Structure a project in RStudio
+-   Render a simple reproducible report with Quarto
+-   Create code chunks, tables, images, and inline R
+-   Customize your report with YAML options
+
+# Reproducibility {background-color="#2c3e50"}
+
+## Why Reproducibility Matters
+
+**Reproducibility** means that others (and *future you*) can understand and check your work.
+
+. . .
+
+::::: columns
+::: {.column width="50%"}
+### Without reproducibility
+
+-   "I clicked some buttons..."
+-   "I think I deleted those rows..."
+-   "It worked on my computer..."
+:::
+
+::: {.column width="50%"}
+### With reproducibility
+
+-   Code documents every step
+-   Anyone can re-run your analysis
+-   Results are verifiable
+:::
+:::::
+
+## Discussion: Reproducibility in Psychology
+
+::: callout-tip
+## Think-Pair-Share
+
+1.  **Think**: Why might reproducibility be especially important in psychology research?
+2.  **Pair**: Discuss with your neighbor for 1 minute
+3.  **Share**: What did you come up with?
+:::
+
+. . .
+
+*Hint: Think about the [replication crisis](https://en.wikipedia.org/wiki/Replication_crisis)...*
+
+## Why Reproducible Reports?
+
+Now let's put reproducibility into practice.
+
+. . .
+
+Imagine you need to produce a monthly analytics report. You could:
+
+::::: columns
+::: {.column width="50%"}
+### The old way
+
+1.  Run analysis in R
+2.  Copy results into Word
+3.  Format tables by hand
+4.  Paste in plots
+5.  *Repeat every month*
+:::
+
+::: {.column width="50%"}
+### The Quarto way
+
+1.  Write code + text together
+2.  Click **Render**
+3.  Done!
+4.  New data? Render again.
+:::
+:::::
+
+# Projects {background-color="#2c3e50"}
+
+## Why Use Projects?
+
+Projects in RStudio group all the files you need for one piece of work: scripts, data, images, and outputs.
+
+. . .
+
+Without projects:
+
+-   Files scattered everywhere
+-   Broken file paths
+-   "It works on *my* computer..."
+
+. . .
+
+With projects:
+
+-   Everything in one folder
+-   Relative paths just work
+-   Easy to share and reproduce
+
+## The File System
+
+Your computer stores files in a hierarchy of **directories** (folders).
+
+. . .
+
+A **file path** describes where a file lives:
+
+```         
+/Users/maureenritchey/Documents/dataskills-26/data/mydata.csv
+```
+
+. . .
+
+The `~` shortcut represents your home directory:
+
+```         
+~/Documents/dataskills-26/data/mydata.csv
+```
+
+## Activity: Set Up Your R Projects Folder
+
+::: callout-tip
+## Do this now!
+
+1.  Create a new folder on your computer called `dataskills-26` (no spaces!)
+2.  Put it somewhere easy to find (Desktop, Documents, or a cloud drive)
+3.  In RStudio: **Tools \> Global Options \> General**
+4.  Set "Default working directory" to your new `dataskills-26` folder
+:::
+
+## Activity: Create a New Project
+
+::: callout-tip
+## Follow along!
+
+1.  **File \> New Project...**
+2.  Select **New Directory** \> **New Project**
+3.  Name it `Week01`
+4.  Save it inside your `dataskills-26` folder
+5.  Click **Create Project**
+
+Check the **Files** tab — you should see `Week01.Rproj`
+:::
+
+. . .
+
+::: callout-warning
+Never save a project **inside** another project folder!
+:::
+
+## Naming Things Well
+
+Good file names make life easier for both humans and computers.
+
+. . .
+
+::::: columns
+::: {.column width="50%"}
+### Bad names
+
+-   `report.doc`
+-   `report final.doc`
+-   `Data (Nov 15).xls`
+-   `final report2.doc`
+:::
+
+::: {.column width="50%"}
+### Good names
+
+-   `report_v1.doc`
+-   `report_v2.doc`
+-   `data_customer_2021-11-15.xls`
+-   `_project-notes.txt`
+:::
+:::::
+
+## Naming Rules
+
+-   Only letters, numbers, dashes `-`, and underscores `_`
+-   **No spaces!**
+-   Be consistent with capitalization (lowercase is easiest)
+-   Use `_` to separate parts, `-` to separate words
+-   Use numbers to control sort order
+
+. . .
+
+::: callout-tip
+## Discussion
+
+Look at some files on your own computer. What would you rename?
+:::
+
+# Quarto {background-color="#2c3e50"}
+
+## What is Quarto?
+
+Quarto lets you combine **text** and **code** in one document to create reproducible reports.
+
+. . .
+
+-   Text is written in **Markdown** (simple formatting syntax)
+-   Code goes in **code chunks** (grey boxes)
+-   Output can be HTML, PDF, Word, slides, and more!
+
+. . .
+
+::: callout-note
+If you've used **R Markdown** before, Quarto is basically a newer, more powerful version. The syntax is very similar — you can even rename `.Rmd` files to `.qmd` and they'll usually work.
+:::
+
+## Activity: Create Your First Quarto Document
+
+::: callout-tip
+## Follow along!
+
+1.  **File \> New File \> Quarto Document...**
+2.  Title it `Reports`
+3.  Keep the output format as **HTML**
+4.  Click **Create**
+5.  Save the file as `02-reports.qmd`
+:::
+
+## The YAML Header
+
+At the top of every Quarto document is a **YAML header** between triple dashes:
+
+``` yaml
+---
+title: "Reports"
+author: "Maureen Ritchey"
+date: 2026-04-01
+format: html
+---
+```
+
+. . .
+
+This tells Quarto *how* to build your document — title, author, output format, and more.
+
+. . .
+
+::: callout-warning
+YAML is very picky about spacing and indentation! Watch those spaces carefully.
+:::
+
+## Source vs. Visual Editor
+
+RStudio has two editing modes:
+
+::::: columns
+::: {.column width="50%"}
+### Source Editor
+
+-   See the raw Markdown
+-   Hashes, asterisks, backticks visible
+-   More control
+-   **We'll use this one**
+:::
+
+::: {.column width="50%"}
+### Visual Editor
+
+-   Looks like Word
+-   WYSIWYG formatting
+-   Easier for beginners
+-   Toggle at top of source pane
+:::
+:::::
+
+. . .
+
+::: callout-note
+The examples in the textbook use the **source editor**, so we'll stick with that for consistency.
+:::
+
+# Markdown {background-color="#2c3e50"}
+
+## Basic Markdown Syntax
+
+``` markdown
+## This is a Header
+
+This is a paragraph. Leave blank lines between paragraphs.
+
+* bullet point one
+* bullet point two
+
+1. numbered item
+2. another item
+
+[link text](https://example.com)
+```
+
+## Activity: Write Some Markdown
+
+::: callout-tip
+## Replace the template text with this:
+
+``` markdown
+## Basic Markdown
+
+Now I can make:
+
+* headers
+* paragraphs
+* lists
+* [links](https://psyteachr.github.io/ads-v3/)
+```
+
+Try rendering your document (**Render** button) to see how it looks!
+:::
+
+## Text Formatting
+
+| What you type       | What you get      |
+|---------------------|-------------------|
+| `**bold**`          | **bold**          |
+| `*italic*`          | *italic*          |
+| `~~strikethrough~~` | ~~strikethrough~~ |
+| `` `code` ``        | `code`            |
+| `H~2~O`             | H~2~O             |
+| `x^2^`              | x^2^              |
+
+. . .
+
+::: callout-tip
+## Try it!
+
+Add a few of these to your document and render to see the result.
+:::
+
+# Code Chunks {background-color="#2c3e50"}
+
+## What is a Code Chunk?
+
+A code chunk is where you put your R code inside a Quarto document.
+
+. . .
+
+```` markdown
+```{{r}}
+# this is a code chunk
+name <- "Maureen"
+age <- 42
+```
+````
+
+. . .
+
+-   Everything between the triple backticks is treated as **code**
+-   Everything outside is treated as **text**
+-   On most themes, code chunks appear with a grey background
+
+## Activity: Add a Code Chunk
+
+::: callout-tip
+## Add this to your document
+
+Create a new code chunk with the objects from last week:
+
+```{r}
+#| eval: false
+#| echo: true
+name <- "Maureen"
+age <- 42
+today <- Sys.Date()
+halloween <- as.Date("2026-10-31")
+```
+
+Run it using **Cmd/Ctrl + Shift + Enter** (runs the whole chunk)
+:::
+
+## Running Code — Three Ways
+
+1.  **Keyboard shortcut**: `Cmd/Ctrl + Enter` (one line) or `Cmd/Ctrl + Shift + Enter` (whole chunk)
+
+2.  **Green play button**: Click the ▶ at the top-right of the chunk
+
+3.  **Menu**: Run \> Run Selected Line(s)
+
+. . .
+
+::: callout-tip
+## Quick poll
+
+Which method do you find most convenient? The keyboard shortcut is worth learning — it'll save a lot of time!
+:::
+
+## The Setup Chunk
+
+Most Quarto documents should start with a **setup chunk** that loads packages:
+
+```` markdown
+```{{r}}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+```
+````
+
+. . .
+
+-   `label: setup` names this as the setup chunk
+-   `include: false` means this chunk won't appear in the rendered document
+-   Always load packages here — don't bury `library()` calls deep in your script
+
+# Inline Code {background-color="#16a085"}
+
+## What is Inline Code?
+
+Inline code lets you **insert R values directly into your text** — no more copy-pasting results!
+
+. . .
+
+You write:
+
+```{verbatim}
+My name is `r name` and I am `r age` years old.
+```
+
+. . .
+
+And Quarto renders:
+
+> My name is Maureen and I am 42 years old.
+
+## Activity: Try Inline Code
+
+::: callout-tip
+## Add this text below your code chunk
+
+```{verbatim}
+My name is `r name` and I am `r age` years old.
+It is `r halloween - today` days until Halloween.
+```
+
+Render the document. The code should be replaced with actual values!
+:::
+
+. . .
+
+::: callout-warning
+## Order matters!
+
+The code chunk that *creates* the objects must come **before** the inline code that uses them. Try moving the code chunk below the text — what happens when you render?
+:::
+
+## Discussion: Why Inline Code Matters
+
+::: callout-tip
+## Think about this
+
+You run a study with 247 participants. You write in your paper:
+
+> "Our sample consisted of 247 participants."
+
+Then you clean the data and drop 12 people. Now what?
+
+. . .
+
+With inline code, writing this in your text automatically updates the number!
+
+```{verbatim}
+Our sample consisted of `r nrow(clean_data)` participants.
+```
+:::
+
+# Loading Data {background-color="#2c3e50"}
+
+## Reading in Data
+
+We can load data from a URL or a local file using `read_csv()`:
+
+```{r}
+#| eval: false
+#| echo: true
+# From a URL
+smalldata <- read_csv("https://psyteachr.github.io/ads-v3/data/smalldata.csv")
+
+# From a local file
+smalldata <- read_csv("data/smalldata.csv")
+```
+
+. . .
+
+::: callout-note
+-   The file path must be in quotes
+-   Use forward slashes `/` (even on Windows!)
+-   Use **tab auto-complete** inside quotes to avoid typos
+:::
+
+## Activity: Load and Explore Data
+
+::: callout-tip
+## Step by step
+
+1.  Create a `data` folder inside your project
+2.  Download [smalldata.csv](https://psyteachr.github.io/ads-v3/data/smalldata.csv) and save it there
+3.  Add a code chunk to load the data:
+
+```{r}
+#| eval: false
+#| echo: true
+smalldata <- read_csv("data/smalldata.csv")
+```
+
+4.  Explore the data — try each of these in the **console**:
+
+```{r}
+#| eval: false
+#| echo: true
+head(smalldata)
+summary(smalldata)
+str(smalldata)
+View(smalldata)
+```
+:::
+
+## Activity: Discuss What You Found
+
+::: callout-tip
+## Compare
+
+-   How many rows and columns does the data have?
+-   What are the variable names?
+-   What does each function (`head`, `summary`, `str`, `View`) tell you that the others don't?
+:::
+
+# Writing Your Report {background-color="#2c3e50"}
+
+## Combining Code and Text
+
+A report in Quarto weaves **narrative** and **analysis** together:
+
+. . .
+
+````{verbatim}
+## Data Analysis
+
+```{r}
+group_counts <- count(smalldata, group)
+```
+
+The control group had `r group_counts$n[1]` participants.
+````
+
+. . .
+
+The `$` sign accesses a column: `group_counts$n`
+
+Square brackets pick a specific value: `$n[1]` = first value
+
+## Activity: Build Your Analysis Section
+
+::: callout-tip
+## Add to your report
+
+1.  Create a heading "Data Analysis"
+2.  Add a code chunk:
+
+```{r}
+#| eval: false
+#| echo: true
+group_counts <- count(smalldata, group)
+```
+
+3.  Below the chunk, add this text:
+
+```{verbatim}
+The total number of participants in the **control**
+condition was `r group_counts$n[1]`.
+```
+
+4.  Add a similar line for the experimental condition
+5.  Render and check!
+:::
+
+## Code Comments
+
+Use `#` to add explanatory notes inside code chunks:
+
+```{r}
+#| echo: true
+#| eval: false
+# Calculate key statistics
+n <- nrow(smalldata)            # total participants
+mean_pre <- mean(smalldata$pre)  # mean pre-test score
+mean_post <- mean(smalldata$post) # mean post-test score
+```
+
+. . .
+
+::: callout-tip
+## Pro tip
+
+If you name objects clearly (`mean_pre` instead of `x`), you need fewer comments. But when you're learning, comment everything — it helps solidify your understanding!
+:::
+
+# Images & Tables {background-color="#2c3e50"}
+
+## Adding Plots from Code
+
+You can generate plots directly in your document. We will go over this in detail in a few weeks, but here is a quick copy-and-paste example.
+
+```{r}
+#| eval: false
+#| echo: true
+ggplot(data = smalldata,
+       mapping = aes(x = pre,
+                     y = post,
+                     color = group)) +
+  geom_point() +
+  labs(x = "Pre-test Score",
+       y = "Post-test Score")
+```
+
+. . .
+
+When you render, the plot appears right in your report!
+
+## Adding External Images
+
+Use Markdown syntax to embed images:
+
+``` markdown
+![Caption text](path/to/image.png){width="300px"}
+```
+
+. . .
+
+Or from a URL:
+
+``` markdown
+![ADS Logo](https://psyteachr.github.io/images/ads.png){width="200px"}
+```
+
+. . .
+
+::: callout-note
+Always add **alt text** for accessibility: `{fig-alt="Description of image"}`
+:::
+
+## Tables
+
+The simplest way to display data as a table — just print the object:
+
+```{r}
+#| eval: false
+#| echo: true
+smalldata
+```
+
+. . .
+
+Make it look nicer by adding to your YAML header:
+
+``` yaml
+format:
+  html:
+    df-print: kable
+```
+
+# Refining Your Report {background-color="#16a085"}
+
+## Execution Options (YAML)
+
+Control default behavior for all code chunks in the YAML header:
+
+``` yaml
+---
+execute:
+  echo: false       # hide code in output
+  message: false    # hide messages
+  warning: false    # hide warnings
+  fig-width: 8      # figure width (inches)
+  fig-height: 5     # figure height (inches)
+---
+```
+
+. . .
+
+::: callout-tip
+## Try it!
+
+Add these to your YAML, then toggle `echo` between `true` and `false`. Render each time to see the difference.
+:::
+
+## Themes and Appearance
+
+``` yaml
+---
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+---
+```
+
+. . .
+
+Built-in themes include: default, cerulean, cosmo, darkly, flatly, journal, lumen, sandstone, simplex, united, yeti, and more!
+
+. . .
+
+::: callout-tip
+## Activity
+
+Try changing your theme — pick one you like! Browse options at [bootswatch.com](https://bootswatch.com/).
+:::
+
+## Embedding Resources
+
+By default, rendered HTML files need a companion `_files` folder. To make a **single, self-contained file**:
+
+``` yaml
+---
+format:
+  html:
+    embed-resources: true
+---
+```
+
+. . .
+
+This is essential when you want to email or submit your report as one file!
+
+## Output Formats
+
+Quarto can render to many formats:
+
+| Format           | YAML value |
+|------------------|------------|
+| HTML webpage     | `html`     |
+| PDF document     | `pdf`      |
+| Word document    | `docx`     |
+| PowerPoint       | `pptx`     |
+| Reveal.js slides | `revealjs` |
+
+. . .
+
+::: callout-note
+In this class, we will default to using HTML for our output format.
+:::
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## Key Takeaways
+
+-   **Projects** keep your work organized with relative file paths
+-   **Quarto** combines text (Markdown) and code (R) in one document
+-   **Code chunks** run R code; **inline code** inserts values into text
+-   The **YAML header** controls document settings and appearance
+-   **Render** to produce HTML, PDF, Word, and more
+-   Name your files well — no spaces, be consistent!
+
+## Before Next Time
+
+📖 **Read**: Chapter 2 of *Applied Data Skills* (to solidify today's material)
+
+✍️ **Assignment**: Create the `demo_report` project following the instructions on the Module page.
+
+❓ **Questions?**

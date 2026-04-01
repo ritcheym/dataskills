@@ -1,0 +1,497 @@
+---
+title: "Introduction to R and RStudio"
+subtitle: "Data Skills for Psychology — Module 1"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+---
+
+# Welcome! {background-color="#2c3e50"}
+
+These slides are adapted from [Applied Data Skills Ch. 1](https://psyteachr.github.io/ads-v3/01-intro.html).
+
+## Today's Goals
+
+By the end of this class, you will be able to:
+
+-   Install R and RStudio
+-   Install add-on packages
+-   Get help for packages and functions
+-   Create objects by writing and running code in the console
+
+## What is R?
+
+R is a **programming language** designed for statistics and data analysis.
+
+. . .
+
+Think of R as the **engine** of a car — it does all the work under the hood.
+
+. . .
+
+::: callout-tip
+## Why R?
+
+-   Free and open-source
+-   Thousands of add-on packages
+-   Massive community (especially in psychology!)
+-   Makes your work **reproducible**
+:::
+
+## What is RStudio?
+
+RStudio is an **Integrated Development Environment** (IDE) — it makes working with R much easier.
+
+. . .
+
+If R is the engine, RStudio is the **dashboard, steering wheel, and GPS** all in one.
+
+. . .
+
+::: callout-warning
+Always launch **RStudio**, not R directly!
+:::
+
+# 🛠️ Setup Check {background-color="#16a085"}
+
+## Activity: Installation Check
+
+::: callout-tip
+## Do this now!
+
+1.  Open **RStudio** on your computer
+2.  Check: do you see four panes?
+3.  Give a thumbs up when you're ready!
+
+If you haven't installed R and RStudio yet, follow the [installation guide](https://psyteachr.github.io/RSetGo/).
+:::
+
+# The RStudio IDE {background-color="#2c3e50"}
+
+## The Four Panes
+
+::::: columns
+::: {.column width="50%"}
+**Upper Left: Source**
+
+-   Write and edit code
+-   View data tables
+
+**Lower Left: Console**
+
+-   Type commands directly
+-   See output
+:::
+
+::: {.column width="50%"}
+**Upper Right: Environment**
+
+-   See your objects
+-   View your data
+
+**Lower Right: Files/Plots/Help**
+
+-   File browser
+-   Plot viewer
+-   Help documentation
+-   Package manager
+:::
+:::::
+
+## Activity: Explore the Panes
+
+::: callout-tip
+## Try it!
+
+1.  Find the **Console** pane — type `1 + 1` and press Enter
+2.  Find the **Environment** pane — is it empty?
+3.  Find the **Help** pane — type `?mean` in the console
+4.  Where did the help appear?
+:::
+
+. . .
+
+::: callout-note
+You can rearrange panes under **Tools \> Global Options \> Pane Layout**
+:::
+
+# ⚙️ RStudio Settings {background-color="#16a085"}
+
+## Critical Settings to Change
+
+You should **always start with a clean workspace** — no leftover objects from last time!
+
+. . .
+
+::: callout-tip
+## Do this now!
+
+Go to **Tools \> Global Options \> General**:
+
+1.  [ ] **Uncheck** "Restore .RData into workspace at start-up"
+2.  Set "Save workspace to .RData on exit" to **Never**
+:::
+
+. . .
+
+::: callout-warning
+You'll need to change these settings every time you update RStudio.
+:::
+
+# 📦 Packages {background-color="#2c3e50"}
+
+## What are Packages?
+
+R comes with built-in functions ("base R") — like the default apps on your phone.
+
+. . .
+
+**Packages** are add-ons created by the R community — like apps you download from the App Store.
+
+. . .
+
+There are thousands of packages for:
+
+-   Data visualization 📊
+-   Machine learning 🤖
+-   Web scraping 🌐
+-   Interactive dashboards 📱
+-   Even playing Sudoku! 🧩
+
+## Install vs. Load: A Key Distinction
+
+::::: columns
+::: {.column width="50%"}
+### `install.packages()`
+
+📲 Like **downloading** an app
+
+-   Do it **once**
+-   Only from the **console**
+-   Stays until you remove it
+:::
+
+::: {.column width="50%"}
+### `library()`
+
+🚀 Like **launching** an app
+
+-   Do it **every session**
+-   Put it in your **script**
+-   Only lasts until you close R
+:::
+:::::
+
+## Activity: Install Your First Packages
+
+::: callout-tip
+## Run these in the console (not a script!)
+
+```{r}
+#| eval: false
+#| echo: true
+install.packages("tidyverse")
+install.packages("beepr")
+```
+:::
+
+. . .
+
+::: callout-caution
+## Important!
+
+**Never** put `install.packages()` inside a script — only run it from the console. Why? You might accidentally reinstall and update a package, which could break your code.
+:::
+
+## Activity: Load and Use a Package
+
+::: callout-tip
+## Try it!
+
+```{r}
+#| eval: false
+#| echo: true
+# Load the package
+library(beepr)
+
+# Use a function from the package
+beep()
+```
+
+🔊 Make sure your sound is on! What did you hear?
+:::
+
+. . .
+
+::: callout-tip
+## Now try this:
+
+```{r}
+#| eval: false
+#| echo: true
+beep(sound = 8)
+```
+
+What changed? Try values 1 through 11!
+:::
+
+# Functions {background-color="#2c3e50"}
+
+## Anatomy of a Function
+
+A **function** is a named piece of reusable code. It takes **arguments** (inputs) and produces output.
+
+```{r}
+#| eval: false
+#| echo: true
+function_name(argument1 = value1, argument2 = value2)
+```
+
+. . .
+
+For example:
+
+```{r}
+#| eval: false
+#| echo: true
+beep(sound = 8)
+#     ^         ^
+#     |         |
+#  argument   value
+```
+
+## The Tidyverse
+
+`tidyverse` is a "meta-package" — a bundle of packages we'll use throughout this course:
+
+| Package     | Purpose                 |
+|-------------|-------------------------|
+| `ggplot2`   | Data visualization      |
+| `dplyr`     | Data manipulation       |
+| `tidyr`     | Data tidying            |
+| `readr`     | Reading data files      |
+| `stringr`   | Working with text       |
+| `forcats`   | Working with categories |
+| `lubridate` | Working with dates      |
+
+## Getting Help
+
+There are several ways to get help with a function:
+
+```{r}
+#| eval: false
+#| echo: true
+# If the package is loaded
+?beep
+
+# If you're not sure about the package
+??beep
+
+# The full specification
+?beepr::beep
+```
+
+. . .
+
+Every help page has the same structure: **Description → Usage → Arguments → Details → Examples**
+
+## Tab Auto-Complete
+
+One of RStudio's best features! Start typing a function name and press **Tab**:
+
+-   RStudio will show you matching functions
+-   Select a function and press Tab again to see its arguments
+-   Each argument comes with a brief description
+
+. . .
+
+::: callout-tip
+## Try it!
+
+Type `sam` in the console and press Tab. Select `sample(` and press Tab again to see the arguments.
+:::
+
+# Arguments In Practice {background-color="#2c3e50"}
+
+## Example: `sample()`
+
+```{r}
+#| echo: true
+# Randomly pick 5 letters
+sample(x = letters, size = 5)
+```
+
+. . .
+
+```{r}
+#| echo: true
+# Allow duplicates
+sample(x = letters, size = 5, replace = TRUE)
+```
+
+## Named vs. Positional Arguments
+
+These two lines do the **same thing**:
+
+```{r}
+#| eval: false
+#| echo: true
+# Named arguments (explicit)
+sample(x = letters, size = 5, replace = TRUE)
+
+# Positional arguments (implicit)
+sample(letters, 5, TRUE)
+```
+
+. . .
+
+With named arguments, **order doesn't matter**:
+
+```{r}
+#| eval: false
+#| echo: true
+sample(size = 5, replace = TRUE, x = letters)
+```
+
+. . .
+
+::: callout-note
+When learning, use named arguments — they make your code easier to read!
+:::
+
+# Objects {background-color="#2c3e50"}
+
+## Creating Objects
+
+Objects **store things** — numbers, text, dates, results. Use `<-` to assign values:
+
+```{r}
+#| echo: true
+name <- "Maureen"
+age <- 42
+today <- Sys.Date()
+halloween <- as.Date("2026-10-31")
+```
+
+. . .
+
+To see what's inside an object, type its name:
+
+```{r}
+#| echo: true
+name
+today
+```
+
+## Types of Data
+
+| Object | Type | Key Rule |
+|------------------------|------------------------|------------------------|
+| `name <- "Maureen"` | Character (text) | Must use quotes `" "` |
+| `age <- 42` | Numeric (number) | No quotes |
+| `today <- Sys.Date()` | Date (dynamic) | Changes each day! |
+| `halloween <- as.Date("2026-10-31")` | Date (fixed) | Wrapped in `as.Date()` |
+
+. . .
+
+Check the **Environment pane** — your objects should appear there!
+
+## Objects Can Interact
+
+```{r}
+#| echo: true
+name <- "Maureen"
+age <- 42
+today <- Sys.Date()
+halloween <- as.Date("2026-10-31")
+
+decade <- age + 10
+full_name <- paste(name, "Ritchey")
+how_long <- halloween - today
+```
+
+. . .
+
+```{r}
+#| echo: true
+decade
+full_name
+how_long
+```
+
+## Activity: Create Your Own Objects
+
+::: callout-tip
+## Type this into your console
+
+1.  Create objects for **your** name, age, and a date you're looking forward to
+2.  Calculate how many days until that date
+3.  Use `paste()` to create a sentence like: *"Hi \[name\] — there are \[X\] days until \[event\]!"*
+
+```{r}
+#| eval: false
+#| echo: true
+# Example structure
+name <- "Your Name"
+today <- Sys.Date()
+my_date <- as.Date("2026-12-25")
+days_left <- my_date - today
+message <- paste("Hi", name, "— there are",
+                 days_left, "days to go!")
+message
+```
+:::
+
+# Getting Help {background-color="#2c3e50"}
+
+## Your Help Toolkit
+
+| Resource                    | When to Use                     |
+|-----------------------------|---------------------------------|
+| `?function_name`            | Know the function, need details |
+| `??search_term`             | Not sure which function to use  |
+| Google + "R" or "tidyverse" | Stuck on a concept              |
+| AI tools (responsibly!)     | Need examples or explanations   |
+| Package vignettes           | Want a tutorial-style guide     |
+| Your classmates!            | Always a good idea              |
+
+## A Note on AI
+
+AI tools can help with coding — but be careful while you're building foundational skills.
+
+. . .
+
+> Using AI to do your exercises is like getting a forklift to lift weights at the gym for you. It defeats the purpose!
+
+. . .
+
+Build your skills first, then use AI to **accelerate** your work — not replace your learning.
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## Key Takeaways
+
+-   **R** is the language; **RStudio** is the tool that makes it easier
+-   Always start with a **clean workspace**
+-   `install.packages()` = download once; `library()` = load each session
+-   **Functions** take arguments; use `?` to learn about them
+-   **Objects** store your data; use `<-` to create them
+-   When stuck: restart R, check help, Google it, ask a friend!
+
+## Before Next Time
+
+📖 **Read**: Chapter 1 of *Applied Data Skills* to lock in what we learned today
+
+❓ **Questions?**
