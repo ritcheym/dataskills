@@ -27,6 +27,7 @@ Slides have been adapted from the textbook readings using Claude AI.
 
 -   [Tuesday's lecture slides](../slides/01_intro.qmd){target="_blank"}
 -   [Thursday's lecture slides](../slides/02_reports.qmd){target="_blank"}
+-   [Flashcards](../files/flashcards-ch1-2.html)
 
 ## In-class exercises
 

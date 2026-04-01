@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards — Chapters 1 &amp; 2 | Data Skills for Psychology</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Source Sans Pro", "Segoe UI", system-ui, sans-serif;
+    background: #f0f2f5;
+    color: #2c3e50;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header {
+    width: 100%;
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1.5rem 1rem 1rem;
+  }
+  header h1 { font-size: 1.5rem; font-weight: 600; }
+  header p { font-size: 0.9rem; opacity: 0.8; margin-top: 0.3rem; }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    max-width: 800px;
+    width: 100%;
+  }
+  .chip {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 2px solid #2c3e50;
+    background: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .chip:hover { background: #ecf0f1; }
+  .chip.active { background: #2c3e50; color: white; }
+
+  .action-row {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  .btn {
+    padding: 0.45rem 1.1rem;
+    border-radius: 8px;
+    border: 2px solid #2c3e50;
+    background: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .btn:hover { background: #2c3e50; color: white; }
+  .btn.primary { background: #16a085; color: white; border-color: #16a085; }
+  .btn.primary:hover { background: #1abc9c; border-color: #1abc9c; }
+
+  .progress-bar {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-bottom: 0.3rem;
+  }
+
+  .card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 600px;
+    height: 340px;
+    margin: 0.5rem 1rem 1rem;
+    cursor: pointer;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+  }
+  .card.flipped { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  .card-front {
+    background: white;
+    border-top: 5px solid #2c3e50;
+  }
+  .card-back {
+    background: #2c3e50;
+    color: white;
+    transform: rotateY(180deg);
+    border-top: 5px solid #16a085;
+  }
+
+  .card-category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+  .card-front .card-category { color: #2c3e50; }
+  .card-back .card-category { color: #1abc9c; opacity: 0.8; }
+
+  .card-text {
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+  .card-back .card-text { font-size: 1.05rem; }
+
+  .card-text code {
+    background: rgba(255,255,255,0.15);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-family: "Fira Code", "Consolas", monospace;
+    font-size: 0.9em;
+  }
+  .card-front .card-text code {
+    background: #ecf0f1;
+    color: #e74c3c;
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    opacity: 0.4;
+    margin-top: 1.2rem;
+  }
+
+  .nav-row {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #95a5a6;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 640px) {
+    .card-container { height: 300px; }
+    .card-text { font-size: 1rem; }
+    .card-face { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Flashcards: Chapters 1 &amp; 2</h1>
+  <p>Data Skills for Psychology</p>
+</header>
+
+<div class="controls" id="filters"></div>
+<div class="action-row">
+  <button class="btn primary" onclick="shuffle()">Shuffle</button>
+  <button class="btn" onclick="resetDeck()">Reset</button>
+</div>
+<div class="progress-bar" id="progress"></div>
+
+<div class="card-container" id="cardContainer" onclick="flip()">
+  <div class="card" id="card">
+    <div class="card-face card-front" id="front"></div>
+    <div class="card-face card-back" id="back"></div>
+  </div>
+</div>
+
+<div class="nav-row">
+  <button class="btn" onclick="prev()">← Previous</button>
+  <button class="btn primary" onclick="next()">Next →</button>
+</div>
+
+<script>
+const ALL_CARDS = [
+  // ── Chapter 1: Key Terms ──
+  {
+    q: "What is R?",
+    a: "R is a programming language designed for statistics and data analysis. Think of it as the <em>engine</em> of a car.",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is RStudio?",
+    a: "An Integrated Development Environment (IDE) that makes working with R easier — like a dashboard, steering wheel, and GPS for the R engine.",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is a <strong>package</strong> in R?",
+    a: "An add-on that extends R's functionality, like an app you download to your phone. Packages are installed from CRAN or GitHub.",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is a <strong>function</strong>?",
+    a: "A named piece of reusable code. Functions take <em>arguments</em> (inputs) inside parentheses and produce output. Example: <code>sample(x = letters, size = 5)</code>",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is an <strong>argument</strong>?",
+    a: "An option you pass to a function inside the parentheses. Some are required, some have default values. Example: in <code>sample(x, size, replace = FALSE)</code>, <code>replace</code> defaults to <code>FALSE</code>.",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is an <strong>object</strong> in R?",
+    a: "A named container that stores data — numbers, text, dates, or results. Created with <code>&lt;-</code>, e.g., <code>name &lt;- \"Maureen\"</code>.",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is the <strong>tidyverse</strong>?",
+    a: "A meta-package that bundles several popular packages: ggplot2, dplyr, tidyr, readr, stringr, forcats, lubridate, and purrr.",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+  {
+    q: "What is the <strong>Environment</strong> pane?",
+    a: "The upper-right pane in RStudio that lists all objects currently defined in your R session (their names, types, and values).",
+    cat: "Ch 1 — Terms", ch: 1
+  },
+
+  // ── Chapter 1: Practical ──
+  {
+    q: "What's the difference between <code>install.packages()</code> and <code>library()</code>?",
+    a: "<code>install.packages()</code> downloads a package <em>once</em> (like installing an app). <code>library()</code> loads it for the current session (like launching an app). You must call <code>library()</code> every time you start R.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "Where should you run <code>install.packages()</code>?",
+    a: "Only in the <strong>console</strong> — never inside a script. Otherwise you might accidentally reinstall and update a package every time you run the script.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "How do you look up help for a function?",
+    a: "Type <code>?function_name</code> or <code>help(\"function_name\")</code> in the console. Use <code>??term</code> to search when you don't know the exact function name.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "What is <strong>tab auto-complete</strong> in RStudio?",
+    a: "When you start typing a function name and press Tab, RStudio shows matching functions and their arguments with brief descriptions — like auto-complete on your phone.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "What's the difference between <code>character</code> and <code>numeric</code> data?",
+    a: "Character data is text and must be in quotes: <code>\"hello\"</code>. Numeric data is a number and must <em>not</em> be in quotes: <code>42</code>.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "What does <code>Sys.Date()</code> return?",
+    a: "Your computer's current date. Unlike hard-coded values, it updates dynamically every time you run it.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "What does the <code>#</code> symbol do in R code?",
+    a: "It creates a <strong>comment</strong>. R ignores everything from the <code>#</code> to the end of the line. Comments are for human readers, not the computer.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+  {
+    q: "What keyboard shortcut runs a line of code in RStudio?",
+    a: "<code>Cmd-Enter</code> (Mac) or <code>Ctrl-Enter</code> (PC). This runs the line where your cursor is, then moves to the next line.",
+    cat: "Ch 1 — Practical", ch: 1
+  },
+
+  // ── Chapter 2: Key Terms ──
+  {
+    q: "What is <strong>Quarto</strong>?",
+    a: "A system for creating reproducible documents that combine text (Markdown) and code (R) in a single <code>.qmd</code> file. It can render to HTML, PDF, Word, slides, and more.",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What is <strong>Markdown</strong>?",
+    a: "A lightweight syntax for formatting text using simple symbols: <code>#</code> for headers, <code>**bold**</code>, <code>*italic*</code>, <code>-</code> for bullet lists, etc.",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What is a <strong>code chunk</strong>?",
+    a: "A block of R code inside a Quarto document, surrounded by triple backticks with <code>{r}</code>. Code chunks are executed when the document is rendered.",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What is <strong>YAML</strong>?",
+    a: "The header at the top of a Quarto document (between <code>---</code> lines) that sets metadata and options: title, author, output format, themes, etc. Very picky about spacing!",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What does <strong>rendering</strong> mean?",
+    a: "Converting your <code>.qmd</code> file into a finished document (HTML, PDF, etc.). Quarto runs all code, combines it with text, and produces the output.",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What is <strong>inline code</strong>?",
+    a: "R code embedded directly in your text using backtick-r syntax. It lets you insert computed values into sentences so they update automatically when data changes.",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What is a <strong>working directory</strong>?",
+    a: "The folder R looks in by default when reading/writing files. Using RStudio Projects sets this automatically to the project folder.",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+  {
+    q: "What is a <strong>relative path</strong> vs. an <strong>absolute path</strong>?",
+    a: "A relative path is relative to the working directory: <code>data/file.csv</code>. An absolute path starts from the root: <code>/Users/me/project/data/file.csv</code>. Always use relative paths for reproducibility!",
+    cat: "Ch 2 — Terms", ch: 2
+  },
+
+  // ── Chapter 2: Practical ──
+  {
+    q: "How do you create a new RStudio Project?",
+    a: "<em>File &gt; New Project &gt; New Directory &gt; New Project</em>. Give it a name (no spaces!), choose a location, and click Create Project.",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "What are the rules for naming files well?",
+    a: "Only letters, numbers, dashes, and underscores. No spaces! Be consistent with capitalization. Use <code>_</code> between parts and <code>-</code> between words. Example: <code>data_customer_2024-11-15.csv</code>",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "What does the chunk option <code>#| echo: false</code> do?",
+    a: "It hides the code in the rendered output — readers see the <em>results</em> (plots, tables, text) but not the code that produced them.",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "What do <code>head()</code>, <code>summary()</code>, <code>str()</code>, and <code>View()</code> do?",
+    a: "<code>head()</code> shows the first few rows. <code>summary()</code> gives descriptive stats. <code>str()</code> shows the data structure and types. <code>View()</code> opens a spreadsheet viewer.",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "How do you make a table look nice in a rendered Quarto document?",
+    a: "Add <code>df-print: kable</code> (or <code>paged</code>) under the <code>html:</code> section of your YAML header. You can also use the flextable package for fancier tables.",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "How do you add an image in Markdown?",
+    a: "<code>![Caption](path/to/image.png){width=\"300px\" fig-alt=\"Description\"}</code>. The path can be local or a URL. Always include alt-text for accessibility!",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "What does <code>embed-resources: true</code> do in the YAML header?",
+    a: "It bundles all images, CSS, and JavaScript <em>inside</em> the HTML file, so you can share a single self-contained file without needing the companion <code>_files</code> folder.",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "You get this error:<br><code>Error: could not find function \"read_csv\"</code><br>What went wrong?",
+    a: "You haven't loaded tidyverse yet! Run <code>library(tidyverse)</code> first. Make sure it's in your setup chunk so it runs before any code that uses tidyverse functions.",
+    cat: "Ch 2 — Practical", ch: 2
+  },
+  {
+    q: "Why should you <strong>never</strong> nest one RStudio Project inside another?",
+    a: "It causes hard-to-diagnose problems with file paths, working directories, and environment settings. Keep each project in its own separate folder.",
+    cat: "Ch 2 — Practical", ch: 2
+  }
+];
+
+// ── State ──
+let cards = [...ALL_CARDS];
+let idx = 0;
+let flippedState = false;
+let activeFilters = new Set();
+
+// ── Categories ──
+const categories = [...new Set(ALL_CARDS.map(c => c.cat))];
+
+function buildFilters() {
+  const el = document.getElementById("filters");
+  el.innerHTML = "";
+  categories.forEach(cat => {
+    const chip = document.createElement("span");
+    chip.className = "chip" + (activeFilters.size === 0 || activeFilters.has(cat) ? " active" : "");
+    chip.textContent = cat;
+    chip.onclick = () => toggleFilter(cat);
+    el.appendChild(chip);
+  });
+}
+
+function toggleFilter(cat) {
+  if (activeFilters.has(cat)) {
+    activeFilters.delete(cat);
+  } else {
+    activeFilters.add(cat);
+  }
+  // If all or none selected, show all
+  if (activeFilters.size === 0 || activeFilters.size === categories.length) {
+    activeFilters.clear();
+  }
+  applyFilters();
+}
+
+function applyFilters() {
+  if (activeFilters.size === 0) {
+    cards = [...ALL_CARDS];
+  } else {
+    cards = ALL_CARDS.filter(c => activeFilters.has(c.cat));
+  }
+  idx = 0;
+  flippedState = false;
+  buildFilters();
+  render();
+}
+
+// ── Navigation ──
+function flip() {
+  flippedState = !flippedState;
+  document.getElementById("card").classList.toggle("flipped", flippedState);
+}
+
+function next() {
+  if (cards.length === 0) return;
+  idx = (idx + 1) % cards.length;
+  flippedState = false;
+  render();
+}
+
+function prev() {
+  if (cards.length === 0) return;
+  idx = (idx - 1 + cards.length) % cards.length;
+  flippedState = false;
+  render();
+}
+
+function shuffle() {
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  idx = 0;
+  flippedState = false;
+  render();
+}
+
+function resetDeck() {
+  activeFilters.clear();
+  applyFilters();
+}
+
+// ── Render ──
+function render() {
+  const container = document.getElementById("cardContainer");
+  const cardEl = document.getElementById("card");
+  const front = document.getElementById("front");
+  const back = document.getElementById("back");
+  const progress = document.getElementById("progress");
+
+  cardEl.classList.remove("flipped");
+
+  if (cards.length === 0) {
+    container.style.display = "none";
+    progress.textContent = "No cards match the selected filters.";
+    return;
+  }
+
+  container.style.display = "block";
+  const c = cards[idx];
+
+  front.innerHTML =
+    '<div class="card-category">' + c.cat + '</div>' +
+    '<div class="card-text">' + c.q + '</div>' +
+    '<div class="hint">Click to flip</div>';
+
+  back.innerHTML =
+    '<div class="card-category">' + c.cat + '</div>' +
+    '<div class="card-text">' + c.a + '</div>' +
+    '<div class="hint">Click to flip back</div>';
+
+  progress.textContent = (idx + 1) + " / " + cards.length + " cards";
+}
+
+// ── Keyboard ──
+document.addEventListener("keydown", e => {
+  if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); next(); }
+  if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); prev(); }
+  if (e.key === "s" || e.key === "S") { shuffle(); }
+});
+
+// ── Init ──
+buildFilters();
+render();
+</script>
+</body>
+</html>
