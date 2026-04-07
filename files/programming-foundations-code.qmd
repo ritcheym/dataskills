@@ -1,0 +1,426 @@
+---
+title: "Programming Foundations — In-Class Code"
+author: "Data Skills for Psychology"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-overflow: wrap
+    df-print: kable
+---
+
+## Variables
+
+### Numeric Data
+
+```{r}
+n_items <- 20
+n_items
+```
+
+```{r}
+item_time <- 15
+survey_time <- n_items * item_time
+survey_time
+```
+
+Updating a variable using its current value:
+
+```{r}
+consent_time <- 100
+survey_time <- survey_time + consent_time
+survey_time
+```
+
+### Character Data
+
+```{r}
+survey_type <- "multiple choice"
+survey_type
+```
+
+Counting characters in a string:
+
+```{r}
+nchar(survey_type)
+```
+
+### Logical Data
+
+```{r}
+2 + 2 == 4
+2 + 2 == 5
+```
+
+Comparison operators:
+
+```{r}
+2 + 2 != 5
+3 < 5
+5 <= 5
+```
+
+Logical operators — NOT, OR, AND:
+
+```{r}
+age <- 12
+adult <- age >= 18
+adult
+```
+
+```{r}
+!adult
+```
+
+```{r}
+minor <- TRUE
+disability <- FALSE
+minor | disability
+```
+
+```{r}
+consent <- TRUE
+complete <- FALSE
+consent & complete
+```
+
+### Activity: Logical Practice
+
+```{r}
+attention_check_1 <- "passed"
+attention_check_2 <- "failed"
+
+# create variable use_data
+```
+
+### Special Values
+
+```{r}
+1 / 0     # Inf
+0 / 0     # NaN
+NA        # missing data
+NULL      # no value
+```
+
+## Vectors
+
+### Creating Vectors
+
+```{r}
+scale_name <- c("depression", "anxiety", "stress")
+scale_name
+```
+
+```{r}
+raw_score <- c(12, 3, 8)
+raw_score
+```
+
+```{r}
+length(scale_name)
+class(raw_score)
+```
+
+### Extracting Elements
+
+```{r}
+scale_name[1]
+scale_name[2]
+```
+
+Multiple elements:
+
+```{r}
+scale_name[c(1, 2)]
+scale_name[1:2]
+```
+
+Removing elements:
+
+```{r}
+scale_name[-3]
+```
+
+### Editing Vectors
+
+```{r}
+scale_name <- c("depression", "anxpiety", "stress")
+scale_name[2]
+```
+
+```{r}
+scale_name[2] <- "anxiety"
+scale_name
+```
+
+### Vector Operations
+
+```{r}
+raw_score / 42
+```
+
+Element-by-element operations with two vectors:
+
+```{r}
+correction <- c(1.05, 1.02, 0.99)
+raw_score * correction
+```
+
+### Logical Indexing
+
+```{r}
+keep <- c(TRUE, TRUE, FALSE)
+raw_score[keep]
+```
+
+Generating a logical vector with a comparison:
+
+```{r}
+ages <- c(19, 34, 7, 67)
+adults <- ages >= 18
+ages[adults]
+```
+
+### Activity: Vector Practice
+
+```{r}
+age <- c(19, 34, 7, 67)
+age[2]
+age[c(2, 3)]
+```
+
+```{r}
+gender <- c("female", "male", "non-binary", "female")
+adult <- age >= 18
+gender[adult]
+```
+
+## Loops
+
+### The `while` Loop
+
+```{r}
+x <- 0
+while (x < 1000) {
+  x <- x + 179
+}
+x
+```
+
+Tracing the loop with print:
+
+```{r}
+x <- 0
+while (x < 1000) {
+  x <- x + 179
+  print(x)
+}
+```
+
+### The `for` Loop
+
+```{r}
+for (value in 1:5) {
+  answer <- 137 * value
+  print(answer)
+}
+```
+
+### Looping Over Character Vectors
+
+```{r}
+words <- c("it", "was", "the", "dirty", "end", "of", "winter")
+
+for (this_word in words) {
+  n_letters <- nchar(this_word)
+  block_word <- toupper(this_word)
+  cat(block_word, "has", n_letters, "letters\n")
+}
+```
+
+### Activity: Loop Practice
+
+Times table:
+
+```{r}
+for (i in 1:10) {
+  print(7 * i)
+}
+```
+
+Telegram — loop until STOP:
+
+```{r}
+telegram <- c("All", "is", "well", "here",
+              "STOP", "This", "is", "fine")
+
+word <- ""
+ind <- 0
+while (word != "STOP") {
+  ind <- ind + 1
+  word <- telegram[ind]
+  print(word)
+}
+```
+
+## Branches
+
+### `if` and `else`
+
+```{r}
+today <- "Monday"
+
+if (today == "Monday") {
+  print("I don't like Mondays")
+} else {
+  print("I'm a happy little automaton")
+}
+```
+
+### Chaining with `else if`
+
+```{r}
+today <- "Wednesday"
+
+if (today == "Monday") {
+  print("I don't like Mondays")
+} else if (today == "Wednesday") {
+  print("Wednesday is beige")
+} else {
+  print("eh, I have no feelings")
+}
+```
+
+### Combining Loops and Branches
+
+```{r}
+days <- c("Monday", "Tuesday", "Wednesday",
+          "Thursday", "Friday")
+
+for (today in days) {
+  if (today == "Friday") {
+    cat(today, ": TGIF!\n")
+  } else {
+    cat(today, ": keep going...\n")
+  }
+}
+```
+
+### Activity: Grade Calculator
+
+```{r}
+score <- 85
+
+if (score >= 90) {
+  print("A")
+} else if (score >= 80) {
+  print("B")
+} else if (score >= 70) {
+  print("C")
+} else if (score >= 60) {
+  print("D")
+} else {
+  print("F")
+}
+```
+
+Grading a whole vector:
+
+```{r}
+scores <- c(95, 72, 58, 83, 67)
+
+for (s in scores) {
+  if (s >= 90) {
+    g <- "A"
+  } else if (s >= 80) {
+    g <- "B"
+  } else if (s >= 70) {
+    g <- "C"
+  } else if (s >= 60) {
+    g <- "D"
+  } else {
+    g <- "F"
+  }
+  cat("Score:", s, "→ Grade:", g, "\n")
+}
+```
+
+## Functions
+
+### A Simple Function
+
+```{r}
+quadruple <- function(x) {
+  y <- x * 4
+  return(y)
+}
+
+quadruple(10)
+quadruple(25)
+```
+
+### Default Arguments
+
+```{r}
+pow <- function(x, y = 1) {
+  out <- x ^ y
+  return(out)
+}
+
+pow(x = 4, y = 2)
+pow(x = 3)
+```
+
+### Activity: `round_sqrt`
+
+```{r}
+round_sqrt <- function(x, digits = 0) {
+  result <- sqrt(x)
+  result <- round(result, digits = digits)
+  return(result)
+}
+
+round_sqrt(17)
+round_sqrt(17, digits = 2)
+```
+
+### Putting It All Together
+
+A grading function:
+
+```{r}
+grade <- function(score) {
+  if (score >= 90) return("A")
+  if (score >= 80) return("B")
+  if (score >= 70) return("C")
+  if (score >= 60) return("D")
+  return("F")
+}
+
+scores <- c(95, 72, 58, 83, 67)
+for (s in scores) {
+  cat("Score:", s, "→ Grade:", grade(s), "\n")
+}
+```
+
+### Activity: FizzBuzz
+
+```{r}
+fizzbuzz <- function(n) {
+  if (n %% 3 == 0 & n %% 5 == 0) {
+    cat("FizzBuzz\n")
+  } else if (n %% 3 == 0) {
+    cat("Fizz\n")
+  } else if (n %% 5 == 0) {
+    cat("Buzz\n")
+  } else {
+    cat(n, "\n")
+  }
+}
+
+for (i in 1:20) {
+  fizzbuzz(i)
+}
+```

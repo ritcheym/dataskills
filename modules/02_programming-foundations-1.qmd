@@ -23,6 +23,12 @@ You should read these chapters before you come to class:
 
 Don't worry, each chapter is short!
 
+## Slides
+
+Slides have been adapted from the textbook readings using Claude AI.
+
+-   [This module's lecture slides](../slides/02_programming-foundations.qmd){target="_blank"}
+
 ## In-class exercises
 
 We will follow along with the examples given in the textbook. Create an R project called `programming-foundations` for this section of the course, and save today's work in an R markdown report called `part-1.Rmd`.

@@ -1,0 +1,767 @@
+---
+title: "Programming Foundations"
+subtitle: "Data Skills for Psychology — Module 2"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+execute:
+  echo: true
+  eval: false
+---
+
+# Welcome! {background-color="#2c3e50"}
+
+These slides are adapted from [R for Psychological Science](https://psyr.djnavarro.net/) by Danielle Navarro.
+
+## Today's Goals
+
+By the end of this class, you will be able to:
+
+-   Create and work with **variables** (numeric, character, logical)
+-   Store multiple values in **vectors**
+-   Automate repetitive tasks with **loops**
+-   Make decisions in code with **conditional statements**
+-   Write your own **functions**
+
+## Why Programming Foundations?
+
+These five concepts — variables, vectors, loops, branches, and functions — are the building blocks of *every* programming language.
+
+. . .
+
+Once you understand them in R, you'll recognize them everywhere: Python, JavaScript, even Excel formulas use the same ideas.
+
+. . .
+
+Today we're learning to "speak the computer's language."
+
+# Variables {background-color="#2c3e50"}
+
+## What is a Variable?
+
+A **variable** is a label for a piece of information. Think of it as a named container.
+
+. . .
+
+```{r}
+n_items <- 20
+```
+
+We say: `n_items` **gets** the value 20.
+
+. . .
+
+To see what's stored, just type the name:
+
+```{r}
+n_items
+```
+
+## Variables Can Do Math
+
+Since `n_items` holds a number, we can use it in calculations:
+
+```{r}
+item_time <- 15
+survey_time <- n_items * item_time
+survey_time
+```
+
+. . .
+
+We can also **update** a variable using its current value:
+
+```{r}
+consent_time <- 100
+survey_time <- survey_time + consent_time
+survey_time
+```
+
+## Activity: Create Your Own Variables
+
+::: callout-tip
+## Try it!
+
+Imagine you're designing a survey. Create variables for:
+
+1.  Number of items in your survey
+2.  Estimated seconds per item
+3.  Total survey time (calculated from the first two!)
+
+Print the total time. Then add 60 seconds for instructions and update your total.
+:::
+
+## Three Types of Data
+
+:::::: columns
+::: {.column width="33%"}
+### Numeric
+
+```{r}
+age <- 20
+```
+
+Numbers — no quotes!
+:::
+
+::: {.column width="33%"}
+### Character
+
+```{r}
+name <- "Maureen"
+```
+
+Text — must use quotes!
+:::
+
+::: {.column width="33%"}
+### Logical
+
+```{r}
+consent <- TRUE
+```
+
+`TRUE` or `FALSE` only
+:::
+::::::
+
+## Character Data
+
+Text data must be enclosed in quotes — single or double:
+
+```{r}
+survey_type <- "multiple choice"
+```
+
+. . .
+
+R has functions for working with text. For example, `nchar()` counts characters:
+
+```{r}
+nchar(survey_type)
+```
+
+Note: the space between words counts as a character!
+
+## Logical Data and Comparisons
+
+Logical values arise from **tests** — asking R true-or-false questions:
+
+```{r}
+2 + 2 == 4
+2 + 2 == 5
+```
+
+. . .
+
+The `==` is the **equality operator**. Don't confuse it with `=` (assignment)!
+
+## Comparison Operators
+
+| Operator | Meaning               | Example  | Result  |
+|----------|-----------------------|----------|---------|
+| `==`     | equal to              | `5 == 5` | `TRUE`  |
+| `!=`     | not equal to          | `5 != 3` | `TRUE`  |
+| `<`      | less than             | `3 < 5`  | `TRUE`  |
+| `<=`     | less than or equal    | `5 <= 5` | `TRUE`  |
+| `>`      | greater than          | `3 > 5`  | `FALSE` |
+| `>=`     | greater than or equal | `5 >= 3` | `TRUE`  |
+
+## Logical Operators: NOT, OR, AND
+
+```{r}
+age <- 12
+adult <- age >= 18
+adult
+```
+
+. . .
+
+```{r}
+!adult          # NOT: flips TRUE to FALSE
+```
+
+. . .
+
+```{r}
+minor <- TRUE
+disability <- FALSE
+minor | disability   # OR: TRUE if either is TRUE
+```
+
+. . .
+
+```{r}
+consent <- TRUE
+complete <- FALSE
+consent & complete   # AND: TRUE only if both are TRUE
+```
+
+## Activity: Logical Practice
+
+::: callout-tip
+## Try this
+
+You ran an online experiment. You want to keep data only from participants who were actively paying attention during your experiment. Write some code to help you find who to exclude. 
+
+```{r}
+#| eval: false
+attention_check_1 <- "passed"
+attention_check_2 <- "failed"
+```
+
+Create a variable `use_data` that is `FALSE` if they failed either attention check.
+
+:::
+
+## Naming Your Variables
+
+Rules R enforces:
+
+-   Only letters, numbers, `.` and `_` (no spaces!)
+-   Must start with a letter
+-   Case sensitive: `Survey` ≠ `survey`
+-   Can't use reserved words (`if`, `TRUE`, `for`, etc.)
+
+. . .
+
+Good conventions:
+
+-   Be **informative**: `n_items` not `x`
+-   Be **brief**: `n_items` not `number_of_survey_items`
+-   Be **consistent**: pick a style and stick with it (we'll use `snake_case`)
+
+## Special Values
+
+R has four special values you'll encounter:
+
+| Value  | Meaning         | Example                   |
+|--------|-----------------|---------------------------|
+| `Inf`  | Infinity        | `1 / 0`                   |
+| `NaN`  | Not a Number    | `0 / 0`                   |
+| `NA`   | Missing data    | Data lost or not recorded |
+| `NULL` | No value at all | Variable doesn't exist    |
+
+. . .
+
+`NA` is the one you'll see most often in real data analysis — it means the data is missing.
+
+# Vectors {background-color="#2c3e50"}
+
+## What is a Vector?
+
+A **vector** is a variable that stores **multiple values**. Create one with `c()` (combine):
+
+```{r}
+scale_name <- c("depression", "anxiety", "stress")
+scale_name
+```
+
+. . .
+
+Vectors can contain character or numeric data:
+
+```{r}
+raw_score <- c(12, 3, 8)
+raw_score
+```
+
+. . .
+
+Check length and type:
+
+```{r}
+length(scale_name)
+class(raw_score)
+```
+
+## Extracting Elements from a Vector
+
+Use **square brackets** `[]` with an index number:
+
+```{r}
+scale_name[1]
+scale_name[2]
+```
+
+. . .
+
+Extract multiple elements:
+
+```{r}
+scale_name[c(1, 2)]
+scale_name[1:2]       # shorthand for 1, 2
+```
+
+. . .
+
+Remove elements with negative indices:
+
+```{r}
+scale_name[-3]        # everything except the 3rd
+```
+
+## Editing Vectors
+
+Change a single element by assigning to its index:
+
+```{r}
+scale_name <- c("depression", "anxpiety", "stress")
+scale_name[2]
+```
+
+. . .
+
+Oops! Let's fix that typo:
+
+```{r}
+scale_name[2] <- "anxiety"
+scale_name
+```
+
+## Vector Operations
+
+R applies operations to **every element** at once:
+
+```{r}
+raw_score / 42    # divide all scores by 42
+```
+
+. . .
+
+Two vectors of the same length operate element-by-element:
+
+```{r}
+correction <- c(1.05, 1.02, 0.99)
+raw_score * correction
+```
+
+The first element of `raw_score` is multiplied by the first element of `correction`, and so on.
+
+## Logical Indexing
+
+This is one of the most powerful ideas in R. You can use a logical vector to filter another vector:
+
+```{r}
+keep <- c(TRUE, TRUE, FALSE)
+raw_score[keep]
+```
+
+. . .
+
+Even more useful — generate the logical vector with a comparison:
+
+```{r}
+ages <- c(19, 34, 7, 67)
+adults <- ages >= 18
+ages[adults]
+```
+
+## Activity: Vector Practice
+
+::: callout-tip
+## Try these
+
+1.  Create a numeric vector `age` with four ages: 19, 34, 7, 67
+2.  Print the age of the second person
+3.  Print the ages of the 2nd and 3rd persons
+4.  Create a character vector `gender` for those four people
+5.  Create a logical vector `adult` using `>=`
+6.  Use logical indexing to print only the genders of adult participants
+:::
+
+# Loops {background-color="#2c3e50"}
+
+## What is a Loop?
+
+A **loop** repeats a block of code over and over until a condition is met.
+
+. . .
+
+Without a loop:
+
+```         
+do step 1 → do step 2 → do step 3 → done
+```
+
+With a loop:
+
+```         
+do step 1 → check: keep going? → yes → do step 1 again → check...
+```
+
+. . .
+
+Two types: `while` loops and `for` loops.
+
+## The `while` Loop
+
+A `while` loop keeps going as long as a condition is `TRUE`:
+
+``` r
+while (CONDITION) {
+  # do something
+}
+```
+
+. . .
+
+Example:
+
+```{r}
+x <- 0
+while (x < 1000) {
+  x <- x + 179
+}
+x
+```
+
+R keeps adding 179 to `x` until `x` is no longer less than 1000.
+
+## Activity: Trace the `while` Loop
+
+::: callout-tip
+## Let's trace it together
+
+```{r}
+x <- 0
+while (x < 1000) {
+  x <- x + 179
+  print(x)
+}
+```
+
+Before running this: **predict** how many times the loop will run. Then check!
+:::
+
+## The `for` Loop
+
+A `for` loop runs a **fixed number of times**, once for each element in a vector:
+
+``` r
+for (VAR in VECTOR) {
+  # do something with VAR
+}
+```
+
+. . .
+
+Example: 
+
+```{r}
+for (value in 1:5) {
+  answer <- 137 * value
+  print(answer)
+}
+```
+
+## `for` Loops Over Character Vectors
+
+Loops aren't just for numbers! You can loop over any vector:
+
+```{r}
+words <- c("it", "was", "the", "dirty", "end", "of", "winter")
+
+for (this_word in words) {
+  n_letters <- nchar(this_word)
+  block_word <- toupper(this_word)
+  cat(block_word, "has", n_letters, "letters\n")
+}
+```
+
+What will this produce?
+
+## Activity: Loop Practice
+
+::: callout-tip
+## Try these
+
+1.  Write a `for` loop that prints the numbers 1 through 10, each multiplied by 7 (a times table!)
+
+2.  Given this vector:
+
+```{r}
+#| eval: false
+telegram <- c("All", "is", "well", "here",
+              "STOP", "This", "is", "fine")
+```
+
+Write a `while` loop that prints each word until it hits `"STOP"`.
+:::
+
+## `while` vs. `for`: When to Use Which?
+
+::::: columns
+::: {.column width="50%"}
+### `for` loop
+
+-   You know **how many times** to repeat
+-   Looping over items in a vector
+-   *"Do this for each item"*
+:::
+
+::: {.column width="50%"}
+### `while` loop
+
+-   You don't know in advance when to stop
+-   Looping until a condition changes
+-   *"Keep going until..."*
+:::
+:::::
+
+# Branches {background-color="#2c3e50"}
+
+## What is a Conditional Statement?
+
+A **conditional statement** lets your code make decisions: do different things depending on whether a condition is true or false.
+
+. . .
+
+``` r
+if (CONDITION) {
+  # do this if TRUE
+}
+```
+
+. . .
+
+The condition must produce a single `TRUE` or `FALSE` value.
+
+## `if` and `else`
+
+``` r
+if (CONDITION) {
+  # do this if TRUE
+} else {
+  # do this if FALSE
+}
+```
+
+. . .
+
+Example: 
+
+```{r}
+today <- "Monday"
+
+if (today == "Monday") {
+  print("I don't like Mondays")
+} else {
+  print("I'm a happy little automaton")
+}
+```
+
+## Chaining: `else if`
+
+You can chain multiple conditions together:
+
+```{r}
+today <- "Wednesday"
+
+if (today == "Monday") {
+  print("I don't like Mondays")
+} else if (today == "Wednesday") {
+  print("Wednesday is beige")
+} else {
+  print("eh, I have no feelings")
+}
+```
+
+. . .
+
+R checks each condition in order. As soon as one is `TRUE`, it runs that block and skips the rest.
+
+## Combining Loops and Branches
+
+The real power comes from combining these ideas:
+
+```{r}
+days <- c("Monday", "Tuesday", "Wednesday",
+          "Thursday", "Friday")
+
+for (today in days) {
+  if (today == "Friday") {
+    cat(today, ": TGIF!\n")
+  } else {
+    cat(today, ": keep going...\n")
+  }
+}
+```
+
+## Activity: Write Your Own Branching Code
+
+::: callout-tip
+## Try it!
+
+1.  Write an `if`/`else` statement that prints "Pass" if a variable `score` is 60 or above, and "Fail" otherwise. Test it with different values.
+
+2.  Extend it with `else if` to print "A" for 90+, "B" for 80+, "C" for 70+, "D" for 60+, and "F" below 60.
+
+3.  **Challenge**: Put it inside a `for` loop that grades a whole vector of scores:
+
+```{r}
+#| eval: false
+scores <- c(95, 72, 58, 83, 67)
+```
+:::
+
+# Functions {background-color="#2c3e50"}
+
+## What is a Function (Again)?
+
+We've been *using* functions all along (`print()`, `nchar()`, `c()`...). Now let's *write our own*.
+
+. . .
+
+``` r
+FNAME <- function(ARG1, ARG2) {
+  # do something
+  return(VALUE)
+}
+```
+
+. . .
+
+-   `FNAME` is the name you give your function
+-   `ARG1`, `ARG2` are the inputs (arguments)
+-   `return()` sends the result back to the caller
+
+## A Simple Example
+
+```{r}
+quadruple <- function(x) {
+  y <- x * 4
+  return(y)
+}
+```
+
+. . .
+
+Now use it just like any built-in function:
+
+```{r}
+quadruple(10)
+quadruple(25)
+```
+
+. . .
+
+::: callout-note
+The variables `x` and `y` exist only *inside* the function — they don't appear in your environment. This is called **local scope**.
+:::
+
+## Default Arguments
+
+You can give arguments **default values**:
+
+```{r}
+pow <- function(x, y = 1) {
+  out <- x ^ y
+  return(out)
+}
+```
+
+. . .
+
+What will these produce?
+
+```{r}
+pow(x = 4, y = 2)    # 4 squared
+pow(x = 3)            # y defaults to 1, so 3^1
+```
+
+. . .
+
+If an argument has no default and you don't provide it, R will throw an error.
+
+## Activity: Write Your Own Functions
+
+::: callout-tip
+## Try these
+
+1.  Write a function `round_sqrt` that takes a number `x`, computes the square root, rounds it to the nearest whole number, and returns the result.
+
+2.  Add a `digits` argument so the user can control how many decimal places to round to. Give it a default value of 0.
+
+3.  Test it: `round_sqrt(17)` should return 4. `round_sqrt(17, digits = 2)` should return 4.12.
+:::
+
+## Putting It All Together
+
+Functions become extremely powerful when combined with loops and branches. Consider this:
+
+```{r}
+grade <- function(score) {
+  if (score >= 90) return("A")
+  if (score >= 80) return("B")
+  if (score >= 70) return("C")
+  if (score >= 60) return("D")
+  return("F")
+}
+```
+
+. . .
+
+Now we can grade an entire class with a loop:
+
+```{r}
+scores <- c(95, 72, 58, 83, 67)
+for (s in scores) {
+  cat("Score:", s, "→ Grade:", grade(s), "\n")
+}
+```
+
+## Activity: The Big Challenge
+
+::: callout-tip
+## Combine everything you've learned!
+
+Write a function `fizzbuzz` that takes a number `n` and:
+
+-   Prints "Fizz" if `n` is divisible by 3
+-   Prints "Buzz" if `n` is divisible by 5
+-   Prints "FizzBuzz" if divisible by both
+-   Otherwise prints the number itself
+
+Then use a `for` loop to run `fizzbuzz` on the numbers 1 through 20.
+
+*Hint: the modulo operator `%%` gives the remainder. So `n %% 3 == 0` checks divisibility by 3.*
+:::
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## The Five Building Blocks
+
+| Concept       | What it does          | Key syntax                |
+|---------------|-----------------------|---------------------------|
+| **Variables** | Store a single value  | `x <- 10`                 |
+| **Vectors**   | Store multiple values | `c(1, 2, 3)`              |
+| **Loops**     | Repeat code           | `for (i in 1:10) { }`     |
+| **Branches**  | Make decisions        | `if (x > 0) { } else { }` |
+| **Functions** | Reusable code blocks  | `f <- function(x) { }`    |
+
+. . .
+
+These five ideas combine to let you automate almost anything!
+
+## Before Next Time
+
+📖 **Read**: The chapters on Variables, Vectors, Loops, and Branches from *R for Psychological Science*
+
+✍️ **Assignment**: Complete the exercises from each chapter, plus the additional problems on the module page
+
+🧠 **Remember**: These are foundational skills — practice makes them second nature!
+
+❓ **Questions?**
