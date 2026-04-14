@@ -489,7 +489,7 @@
     "href": "modules/04_data-visualization.html#weekly-assignment",
     "title": "Data Visualization",
     "section": "Weekly assignment",
-    "text": "Weekly assignment\nThis week, you will recreate figures from the following paper:\n\nPrzybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. Psychological Science, 28(2), 204-215. link\n\nYour goal is to use ggplot to recreate Figures 1 and 2 from this paper as closely as possible. Use the starter notebook to get started (right-click &gt; Save Link As). This notebook will take care of the preliminary processing steps necessary to get the dataset ready for visualization. In addition to recreating Figures 1 and 2, you will also generate a new visualization of your choice, using a different kind of geom.\nSee also the screentime page for more information about the dataset.",
+    "text": "Weekly assignment\nThis week, you will recreate figures from the following paper:\n\nPrzybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. Psychological Science, 28(2), 204-215. link\n\nYour goal is to use ggplot to recreate Figures 1 and 2 from this paper as closely as possible. Use the starter notebook to get started (right-click &gt; Save Link As). This notebook will take care of the preliminary processing steps necessary to get the dataset ready for visualization. In addition to recreating Figures 1 and 2, you will also generate a new visualization of your choice, using a different kind of geom.\nSee also the screentime page for more information about the dataset.\nFinal project preparation: Refer to the instructions for the final project. You should get started on finding an openly available dataset. Please include in your Markdown report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -537,7 +537,7 @@
     "href": "modules/02_programming-foundations-1.html#slides",
     "title": "Programming Foundations Part 1",
     "section": "Slides",
-    "text": "Slides\nSlides have been adapted from the textbook readings using Claude AI.\n\nThis module’s lecture slides",
+    "text": "Slides\nSlides have been adapted from the textbook readings using Claude AI.\n\nThis module’s lecture slides\nCompanion code",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -573,7 +573,7 @@
     "href": "modules/00_programming-workshop.html",
     "title": "Programming Foundations Workshop",
     "section": "",
-    "text": "This week we will take a breather to review and practice what we’ve learned so far.",
+    "text": "Today we will take a breather to review and practice what we’ve learned so far.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -585,7 +585,7 @@
     "href": "modules/00_programming-workshop.html#objectives",
     "title": "Programming Foundations Workshop",
     "section": "",
-    "text": "This week we will take a breather to review and practice what we’ve learned so far.",
+    "text": "Today we will take a breather to review and practice what we’ve learned so far.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -597,19 +597,7 @@
     "href": "modules/00_programming-workshop.html#in-class-exercises",
     "title": "Programming Foundations Workshop",
     "section": "In-class exercises",
-    "text": "In-class exercises\nYou will work together in groups to solve the following problems. First sketch out your plan on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called programming-foundations, and save today’s work in an R markdown report called workshop.Rmd.\n\nProgramming to the max\nCreate your own function for finding the maximum value of a vector. The input will be a vector, and the output should be the maximum value.\nDid you use the sort() function in your solution? Now try to write the function without it.\n\n\nBitcoin millionaires\nYou’ve taken the plunge and invested in Bitcoin. Write a function that calculates how much money you’ve made. The inputs should be the amount that you invested and the percentage increase since then, and the output should be your total profit.\nHow would you adjust this function if you wanted to calculate your profit over time, factoring in the rate of increase each month? Your inputs will be your initial investment, the rate of increase each month, and the number of months since your investment.\n\n\nPalindrome finder\nYou are obsessed with palindromes, and you want a function that will automatically figure out if a given word is a palindrome. Create a function that will return TRUE if the input is a palindrome and FALSE otherwise. Hint: you will probably have to look up some functions that will help you manipulate the text.\n\n\nTips\n\nFocus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.\nWhile you’re brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., c(5,1,4,10,2)), and then imagine what is going to happen to that vector at each step of your function.\nWhen testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn’t designed only for positive integers.",
-    "crumbs": [
-      "Home",
-      "<b>Modules</b>",
-      "Programming Foundations Workshop"
-    ]
-  },
-  {
-    "objectID": "modules/00_programming-workshop.html#weekly-assignment",
-    "href": "modules/00_programming-workshop.html#weekly-assignment",
-    "title": "Programming Foundations Workshop",
-    "section": "Weekly assignment",
-    "text": "Weekly assignment\nAs always, your R markdown report should be organized with headings and comments explaining your work, as well as disclosures about any use of AI tools. Please also include a table of contents.\n\nAdditional programming practice\n\nWrite a function that counts the number of words contained in a string of text, such as, “Karma is my boyfriend, karma is a god, karma is the breeze in my hair on the weekend. Karma’s a relaxing thought. Aren’t you envious that for you it’s not?” Hint: You will probably want to use the strsplit command. Read the help page or do a search to find out more about this function. How would you adapt this function to tell you how many times a particular word (e.g., “karma”) appears?\nWrite some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word “Fizz” instead of the number. If the number can be divided by five evenly, then store the word “Buzz” instead of the number. Finally, if the number can be divided by three and five evenly, then store “FizzBuzz” instead of the number. For example, the first five elements of your vector should look like this: c(1,2,\"Fizz\",4,\"Buzz\").\n\nSome of these problems were adapted from this website.",
+    "text": "In-class exercises\nYou will work together in groups to solve the following problems. First sketch out your plan on paper or on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called programming-foundations, and save today’s work in an R markdown report called workshop.Rmd.\n\nProgramming to the max\nCreate your own function for finding the maximum value of a vector. The input will be a vector, and the output should be the maximum value.\nDid you use the sort() function in your solution? Now try to write the function without it. Hint: a for-loop might be useful.\n\n\nBitcoin millionaires\nYou’ve taken the plunge and invested in Bitcoin. Write a function that calculates how much money you’ve made. The inputs should be the amount that you invested and the percentage increase since then, and the output should be your total profit.\nHow would you adjust this function if you wanted to calculate your profit over time, factoring in the rate of increase each month? Your inputs will be your initial investment, the rate of increase each month, and the number of months since your investment.\n\n\nPalindrome finder\nYou are obsessed with palindromes, and you want a function that will automatically figure out if a given word is a palindrome. Create a function that will return TRUE if the input is a palindrome and FALSE otherwise. Hint: you will probably have to look up some functions that will help you manipulate the text.\n\n\nTips\n\nFocus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.\nWhile you’re brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., c(5,1,4,10,2)), and then imagine what is going to happen to that vector at each step of your function.\nWhen testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn’t designed only for positive integers.\n\n\n\nAdditional programming practice\n\nWrite a function that counts the number of words contained in a string of text, such as, “Karma is my boyfriend, karma is a god, karma is the breeze in my hair on the weekend. Karma’s a relaxing thought. Aren’t you envious that for you it’s not?” Hint: You will probably want to use the strsplit command. Read the help page or do a search to find out more about this function. How would you adapt this function to tell you how many times a particular word (e.g., “karma”) appears?\nWrite some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word “Fizz” instead of the number. If the number can be divided by five evenly, then store the word “Buzz” instead of the number. Finally, if the number can be divided by three and five evenly, then store “FizzBuzz” instead of the number. For example, the first five elements of your vector should look like this: c(1,2,\"Fizz\",4,\"Buzz\").\n\nSome of these problems were adapted from this website.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -921,7 +909,7 @@
     "href": "modules/05_data-summaries.html",
     "title": "Data Summaries",
     "section": "",
-    "text": "R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you’ll include when building a script for data analysis.\n\n\n\n\n\n\nKey concepts\n\n\n\ncsv files, importing data, the $ operator, pipes (%&gt;%), count, summarize",
+    "text": "R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you’ll include when building a script for data analysis.\n\n\n\n\n\n\nKey concepts\n\n\n\ncsv files, importing data, the $ operator, pipes (|&gt; and %&gt;%), count, summarize, factors, vectors, tibbles, dataframes",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -933,7 +921,7 @@
     "href": "modules/05_data-summaries.html#objectives",
     "title": "Data Summaries",
     "section": "",
-    "text": "R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you’ll include when building a script for data analysis.\n\n\n\n\n\n\nKey concepts\n\n\n\ncsv files, importing data, the $ operator, pipes (%&gt;%), count, summarize",
+    "text": "R and RStudio have their roots in statistical programming, a type of programming focused on solving data analysis problems. In this module, we will learn how to import data files into R and how to summarize their contents. These are usually the first steps you’ll include when building a script for data analysis.\n\n\n\n\n\n\nKey concepts\n\n\n\ncsv files, importing data, the $ operator, pipes (|&gt; and %&gt;%), count, summarize, factors, vectors, tibbles, dataframes",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -953,11 +941,23 @@
     ]
   },
   {
+    "objectID": "modules/05_data-summaries.html#slides",
+    "href": "modules/05_data-summaries.html#slides",
+    "title": "Data Summaries",
+    "section": "Slides",
+    "text": "Slides\nSlides have been adapted from the textbook readings using Claude AI.\n\nThis module’s lecture slides\nCompanion code",
+    "crumbs": [
+      "Home",
+      "<b>Modules</b>",
+      "Data Summaries"
+    ]
+  },
+  {
     "objectID": "modules/05_data-summaries.html#in-class-exercises",
     "href": "modules/05_data-summaries.html#in-class-exercises",
     "title": "Data Summaries",
     "section": "In-class exercises",
-    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called data-summaries, and save today’s work in an R markdown report called summary.Rmd. We will also practice reading in a csv file and summarizing key variables using the screentime dataset.\nIn addition, we will review data visualization techniques by writing whiteboard code for three example plots (a bar plot, scatterplot, and histogram), recapping the key components of building up plot layers with the ggplot package.",
+    "text": "In-class exercises\nWe will follow along with the examples given in the textbook. Create an R project called data-summaries, and save today’s work in an R markdown report called summary.Rmd.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -969,7 +969,7 @@
     "href": "modules/05_data-summaries.html#weekly-assignment",
     "title": "Data Summaries",
     "section": "Weekly assignment",
-    "text": "Weekly assignment\nTBD\nFinal project preparation: Refer to the instructions for the final project. You should get started on finding an openly available dataset. Please include in your Markdown report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.",
+    "text": "Weekly assignment\nFor your homework, you will also practice reading in a csv file and summarizing key variables using the screentime dataset. See the screentime page for more information about this dataset.\nDownload the screentime-summaries.qmd file to get started. You will submit your own version of this file, with code and markdown text filled in.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -1293,47 +1293,5 @@
     "title": "Styles",
     "section": "Interactive questions",
     "text": "Interactive questions\nSee this website: https://web.mat.upc.edu/joaquim.puig/posts/webexercises-quiz/"
-  },
-  {
-    "objectID": "files/programming-foundations-code.html",
-    "href": "files/programming-foundations-code.html",
-    "title": "Programming Foundations — In-Class Code",
-    "section": "",
-    "text": "n_items &lt;- 20\nn_items\n\n[1] 20\n\n\n\nitem_time &lt;- 15\nsurvey_time &lt;- n_items * item_time\nsurvey_time\n\n[1] 300\n\n\nUpdating a variable using its current value:\n\nconsent_time &lt;- 100\nsurvey_time &lt;- survey_time + consent_time\nsurvey_time\n\n[1] 400\n\n\n\n\n\n\nsurvey_type &lt;- \"multiple choice\"\nsurvey_type\n\n[1] \"multiple choice\"\n\n\nCounting characters in a string:\n\nnchar(survey_type)\n\n[1] 15\n\n\n\n\n\n\n2 + 2 == 4\n\n[1] TRUE\n\n2 + 2 == 5\n\n[1] FALSE\n\n\nComparison operators:\n\n2 + 2 != 5\n\n[1] TRUE\n\n3 &lt; 5\n\n[1] TRUE\n\n5 &lt;= 5\n\n[1] TRUE\n\n\nLogical operators — NOT, OR, AND:\n\nage &lt;- 12\nadult &lt;- age &gt;= 18\nadult\n\n[1] FALSE\n\n\n\n!adult\n\n[1] TRUE\n\n\n\nminor &lt;- TRUE\ndisability &lt;- FALSE\nminor | disability\n\n[1] TRUE\n\n\n\nconsent &lt;- TRUE\ncomplete &lt;- FALSE\nconsent & complete\n\n[1] FALSE\n\n\n\n\n\n\nattention_check_1 &lt;- \"passed\"\nattention_check_2 &lt;- \"failed\"\n\n# create variable use_data\n\n\n\n\n\n1 / 0     # Inf\n\n[1] Inf\n\n0 / 0     # NaN\n\n[1] NaN\n\nNA        # missing data\n\n[1] NA\n\nNULL      # no value\n\nNULL"
-  },
-  {
-    "objectID": "files/programming-foundations-code.html#variables",
-    "href": "files/programming-foundations-code.html#variables",
-    "title": "Programming Foundations — In-Class Code",
-    "section": "",
-    "text": "n_items &lt;- 20\nn_items\n\n[1] 20\n\n\n\nitem_time &lt;- 15\nsurvey_time &lt;- n_items * item_time\nsurvey_time\n\n[1] 300\n\n\nUpdating a variable using its current value:\n\nconsent_time &lt;- 100\nsurvey_time &lt;- survey_time + consent_time\nsurvey_time\n\n[1] 400\n\n\n\n\n\n\nsurvey_type &lt;- \"multiple choice\"\nsurvey_type\n\n[1] \"multiple choice\"\n\n\nCounting characters in a string:\n\nnchar(survey_type)\n\n[1] 15\n\n\n\n\n\n\n2 + 2 == 4\n\n[1] TRUE\n\n2 + 2 == 5\n\n[1] FALSE\n\n\nComparison operators:\n\n2 + 2 != 5\n\n[1] TRUE\n\n3 &lt; 5\n\n[1] TRUE\n\n5 &lt;= 5\n\n[1] TRUE\n\n\nLogical operators — NOT, OR, AND:\n\nage &lt;- 12\nadult &lt;- age &gt;= 18\nadult\n\n[1] FALSE\n\n\n\n!adult\n\n[1] TRUE\n\n\n\nminor &lt;- TRUE\ndisability &lt;- FALSE\nminor | disability\n\n[1] TRUE\n\n\n\nconsent &lt;- TRUE\ncomplete &lt;- FALSE\nconsent & complete\n\n[1] FALSE\n\n\n\n\n\n\nattention_check_1 &lt;- \"passed\"\nattention_check_2 &lt;- \"failed\"\n\n# create variable use_data\n\n\n\n\n\n1 / 0     # Inf\n\n[1] Inf\n\n0 / 0     # NaN\n\n[1] NaN\n\nNA        # missing data\n\n[1] NA\n\nNULL      # no value\n\nNULL"
-  },
-  {
-    "objectID": "files/programming-foundations-code.html#vectors",
-    "href": "files/programming-foundations-code.html#vectors",
-    "title": "Programming Foundations — In-Class Code",
-    "section": "Vectors",
-    "text": "Vectors\n\nCreating Vectors\n\nscale_name &lt;- c(\"depression\", \"anxiety\", \"stress\")\nscale_name\n\n[1] \"depression\" \"anxiety\"    \"stress\"    \n\n\n\nraw_score &lt;- c(12, 3, 8)\nraw_score\n\n[1] 12  3  8\n\n\n\nlength(scale_name)\n\n[1] 3\n\nclass(raw_score)\n\n[1] \"numeric\"\n\n\n\n\nExtracting Elements\n\nscale_name[1]\n\n[1] \"depression\"\n\nscale_name[2]\n\n[1] \"anxiety\"\n\n\nMultiple elements:\n\nscale_name[c(1, 2)]\n\n[1] \"depression\" \"anxiety\"   \n\nscale_name[1:2]\n\n[1] \"depression\" \"anxiety\"   \n\n\nRemoving elements:\n\nscale_name[-3]\n\n[1] \"depression\" \"anxiety\"   \n\n\n\n\nEditing Vectors\n\nscale_name &lt;- c(\"depression\", \"anxpiety\", \"stress\")\nscale_name[2]\n\n[1] \"anxpiety\"\n\n\n\nscale_name[2] &lt;- \"anxiety\"\nscale_name\n\n[1] \"depression\" \"anxiety\"    \"stress\"    \n\n\n\n\nVector Operations\n\nraw_score / 42\n\n[1] 0.28571429 0.07142857 0.19047619\n\n\nElement-by-element operations with two vectors:\n\ncorrection &lt;- c(1.05, 1.02, 0.99)\nraw_score * correction\n\n[1] 12.60  3.06  7.92\n\n\n\n\nLogical Indexing\n\nkeep &lt;- c(TRUE, TRUE, FALSE)\nraw_score[keep]\n\n[1] 12  3\n\n\nGenerating a logical vector with a comparison:\n\nages &lt;- c(19, 34, 7, 67)\nadults &lt;- ages &gt;= 18\nages[adults]\n\n[1] 19 34 67\n\n\n\n\nActivity: Vector Practice\n\nage &lt;- c(19, 34, 7, 67)\nage[2]\n\n[1] 34\n\nage[c(2, 3)]\n\n[1] 34  7\n\n\n\ngender &lt;- c(\"female\", \"male\", \"non-binary\", \"female\")\nadult &lt;- age &gt;= 18\ngender[adult]\n\n[1] \"female\" \"male\"   \"female\""
-  },
-  {
-    "objectID": "files/programming-foundations-code.html#loops",
-    "href": "files/programming-foundations-code.html#loops",
-    "title": "Programming Foundations — In-Class Code",
-    "section": "Loops",
-    "text": "Loops\n\nThe while Loop\n\nx &lt;- 0\nwhile (x &lt; 1000) {\n  x &lt;- x + 179\n}\nx\n\n[1] 1074\n\n\nTracing the loop with print:\n\nx &lt;- 0\nwhile (x &lt; 1000) {\n  x &lt;- x + 179\n  print(x)\n}\n\n[1] 179\n[1] 358\n[1] 537\n[1] 716\n[1] 895\n[1] 1074\n\n\n\n\nThe for Loop\n\nfor (value in 1:5) {\n  answer &lt;- 137 * value\n  print(answer)\n}\n\n[1] 137\n[1] 274\n[1] 411\n[1] 548\n[1] 685\n\n\n\n\nLooping Over Character Vectors\n\nwords &lt;- c(\"it\", \"was\", \"the\", \"dirty\", \"end\", \"of\", \"winter\")\n\nfor (this_word in words) {\n  n_letters &lt;- nchar(this_word)\n  block_word &lt;- toupper(this_word)\n  cat(block_word, \"has\", n_letters, \"letters\\n\")\n}\n\nIT has 2 letters\nWAS has 3 letters\nTHE has 3 letters\nDIRTY has 5 letters\nEND has 3 letters\nOF has 2 letters\nWINTER has 6 letters\n\n\n\n\nActivity: Loop Practice\nTimes table:\n\nfor (i in 1:10) {\n  print(7 * i)\n}\n\n[1] 7\n[1] 14\n[1] 21\n[1] 28\n[1] 35\n[1] 42\n[1] 49\n[1] 56\n[1] 63\n[1] 70\n\n\nTelegram — loop until STOP:\n\ntelegram &lt;- c(\"All\", \"is\", \"well\", \"here\",\n              \"STOP\", \"This\", \"is\", \"fine\")\n\nword &lt;- \"\"\nind &lt;- 0\nwhile (word != \"STOP\") {\n  ind &lt;- ind + 1\n  word &lt;- telegram[ind]\n  print(word)\n}\n\n[1] \"All\"\n[1] \"is\"\n[1] \"well\"\n[1] \"here\"\n[1] \"STOP\""
-  },
-  {
-    "objectID": "files/programming-foundations-code.html#branches",
-    "href": "files/programming-foundations-code.html#branches",
-    "title": "Programming Foundations — In-Class Code",
-    "section": "Branches",
-    "text": "Branches\n\nif and else\n\ntoday &lt;- \"Monday\"\n\nif (today == \"Monday\") {\n  print(\"I don't like Mondays\")\n} else {\n  print(\"I'm a happy little automaton\")\n}\n\n[1] \"I don't like Mondays\"\n\n\n\n\nChaining with else if\n\ntoday &lt;- \"Wednesday\"\n\nif (today == \"Monday\") {\n  print(\"I don't like Mondays\")\n} else if (today == \"Wednesday\") {\n  print(\"Wednesday is beige\")\n} else {\n  print(\"eh, I have no feelings\")\n}\n\n[1] \"Wednesday is beige\"\n\n\n\n\nCombining Loops and Branches\n\ndays &lt;- c(\"Monday\", \"Tuesday\", \"Wednesday\",\n          \"Thursday\", \"Friday\")\n\nfor (today in days) {\n  if (today == \"Friday\") {\n    cat(today, \": TGIF!\\n\")\n  } else {\n    cat(today, \": keep going...\\n\")\n  }\n}\n\nMonday : keep going...\nTuesday : keep going...\nWednesday : keep going...\nThursday : keep going...\nFriday : TGIF!\n\n\n\n\nActivity: Grade Calculator\n\nscore &lt;- 85\n\nif (score &gt;= 90) {\n  print(\"A\")\n} else if (score &gt;= 80) {\n  print(\"B\")\n} else if (score &gt;= 70) {\n  print(\"C\")\n} else if (score &gt;= 60) {\n  print(\"D\")\n} else {\n  print(\"F\")\n}\n\n[1] \"B\"\n\n\nGrading a whole vector:\n\nscores &lt;- c(95, 72, 58, 83, 67)\n\nfor (s in scores) {\n  if (s &gt;= 90) {\n    g &lt;- \"A\"\n  } else if (s &gt;= 80) {\n    g &lt;- \"B\"\n  } else if (s &gt;= 70) {\n    g &lt;- \"C\"\n  } else if (s &gt;= 60) {\n    g &lt;- \"D\"\n  } else {\n    g &lt;- \"F\"\n  }\n  cat(\"Score:\", s, \"→ Grade:\", g, \"\\n\")\n}\n\nScore: 95 → Grade: A \nScore: 72 → Grade: C \nScore: 58 → Grade: F \nScore: 83 → Grade: B \nScore: 67 → Grade: D"
-  },
-  {
-    "objectID": "files/programming-foundations-code.html#functions",
-    "href": "files/programming-foundations-code.html#functions",
-    "title": "Programming Foundations — In-Class Code",
-    "section": "Functions",
-    "text": "Functions\n\nA Simple Function\n\nquadruple &lt;- function(x) {\n  y &lt;- x * 4\n  return(y)\n}\n\nquadruple(10)\n\n[1] 40\n\nquadruple(25)\n\n[1] 100\n\n\n\n\nDefault Arguments\n\npow &lt;- function(x, y = 1) {\n  out &lt;- x ^ y\n  return(out)\n}\n\npow(x = 4, y = 2)\n\n[1] 16\n\npow(x = 3)\n\n[1] 3\n\n\n\n\nActivity: round_sqrt\n\nround_sqrt &lt;- function(x, digits = 0) {\n  result &lt;- sqrt(x)\n  result &lt;- round(result, digits = digits)\n  return(result)\n}\n\nround_sqrt(17)\n\n[1] 4\n\nround_sqrt(17, digits = 2)\n\n[1] 4.12\n\n\n\n\nPutting It All Together\nA grading function:\n\ngrade &lt;- function(score) {\n  if (score &gt;= 90) return(\"A\")\n  if (score &gt;= 80) return(\"B\")\n  if (score &gt;= 70) return(\"C\")\n  if (score &gt;= 60) return(\"D\")\n  return(\"F\")\n}\n\nscores &lt;- c(95, 72, 58, 83, 67)\nfor (s in scores) {\n  cat(\"Score:\", s, \"→ Grade:\", grade(s), \"\\n\")\n}\n\nScore: 95 → Grade: A \nScore: 72 → Grade: C \nScore: 58 → Grade: F \nScore: 83 → Grade: B \nScore: 67 → Grade: D \n\n\n\n\nActivity: FizzBuzz\n\nfizzbuzz &lt;- function(n) {\n  if (n %% 3 == 0 & n %% 5 == 0) {\n    cat(\"FizzBuzz\\n\")\n  } else if (n %% 3 == 0) {\n    cat(\"Fizz\\n\")\n  } else if (n %% 5 == 0) {\n    cat(\"Buzz\\n\")\n  } else {\n    cat(n, \"\\n\")\n  }\n}\n\nfor (i in 1:20) {\n  fizzbuzz(i)\n}\n\n1 \n2 \nFizz\n4 \nBuzz\nFizz\n7 \n8 \nFizz\nBuzz\n11 \nFizz\n13 \n14 \nFizzBuzz\n16 \n17 \nFizz\n19 \nBuzz"
   }
 ]

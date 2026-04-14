@@ -1,0 +1,84 @@
+---
+title: "Digital Screentime and Mental Well-Being"
+author: Your Name Here
+format:
+  html:
+    df-print: kable
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    embed-resources: true
+execute:
+  echo: true
+  editor: source
+---
+
+# Getting started
+
+In order to run this script, you will need to first [download the data](https://osf.io/49rmq/files/osfstorage/5846cc6f9ad5a101fed9a052) from OSF. Look for the download symbol in the upper right-hand side of the webpage. Save it to the project directory containing this script.
+
+You will also want to download the corresponding [paper](https://doi.org/10.1177/0956797616678438).
+
+More information about the `screentime` dataset can be found on the course website [here](https://ritcheym.github.io/dataskills/datasets/screentime.html).
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+library(tidyverse)
+```
+
+# Load data
+```{r}
+df <- read_csv('data.csv')
+```
+
+# Process data
+Select to keep only the columns that we are going to consider.
+Filter to keep only the rows that have data for well-being scores and aggregate screentime measures. 
+```{r}
+df <- df |>
+  select(mwbi,male,minority,deprived,weekday_screen,weekend_screen,
+         watch_wd,watch_we,play_wd,play_we,comp_wd,comp_we,sp_wd,sp_we) |>
+  filter(!is.na(mwbi) & !is.na(weekday_screen) & !is.na(weekend_screen)) 
+```
+
+There are `r nrow(df)` observations in the dataset.
+
+# Get to know your data!
+## Use the commands that you've learned about to explore a dataset
+```{r}
+# FILL IN YOUR CODE HERE
+```
+## What variables are there? What data types are they?
+WRITE A SUMMARY HERE
+
+## Count the number of participants included from different demographic subsets.
+```{r}
+# FILL IN YOUR CODE HERE
+```
+
+## What percentage of the sample is male?
+```{r}
+# FILL IN YOUR CODE HERE
+```
+
+# Summarize the data
+## Calculate the following summary statistics for the mental wellbeing index (MWBI): mean, minimum, maximum. 
+```{r}
+# FILL IN YOUR CODE HERE
+```
+
+## Calculate the mean MWBI for different demographic subsets.
+```{r}
+# FILL IN YOUR CODE HERE
+```
+
+## Create a new variable called `screen_avg` that averages together weekday and weekend screentime, using the `mutate` function.
+```{r}
+# FILL IN YOUR CODE HERE
+```
+
+## Now calculate the summary statistics for your new `screen_avg` variable.
+```{r}
+# FILL IN YOUR CODE HERE
+```
+
+Do you notice any patterns in the data? If so, DESCRIBE THEM HERE.

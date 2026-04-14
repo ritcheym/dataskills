@@ -28,6 +28,7 @@ Don't worry, each chapter is short!
 Slides have been adapted from the textbook readings using Claude AI.
 
 -   [This module's lecture slides](../slides/02_programming-foundations.qmd){target="_blank"}
+-   [Companion code](../_code/programming-foundations-code.qmd)
 
 ## In-class exercises
 

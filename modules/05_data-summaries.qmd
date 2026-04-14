@@ -9,7 +9,7 @@ R and RStudio have their roots in statistical programming, a type of programming
 ::: {.callout-note icon="false"}
 ## Key concepts
 
-csv files, importing data, the `$` operator, pipes (`%>%`), count, summarize
+csv files, importing data, the `$` operator, pipes (`|>` and `%>%`), count, summarize, factors, vectors, tibbles, dataframes
 :::
 
 ## Readings
@@ -18,14 +18,22 @@ You should read this chapter before you come to class:
 
 -   *Applied Data Skills -* [Chapter 4: Data Summaries](https://psyteachr.github.io/ads-v3/04-summary.html)
 
+## Slides
+
+Slides have been adapted from the textbook readings using Claude AI.
+
+-   [This module's lecture slides](../slides/05_data-summaries.qmd){target="_blank"}
+-   [Companion code](../_code/data-summaries-code.qmd)
+
 ## In-class exercises
 
-We will follow along with the examples given in the textbook. Create an R project called `data-summaries`, and save today's work in an R markdown report called `summary.Rmd`. We will also practice reading in a csv file and summarizing key variables using the `screentime` dataset.
-
-In addition, we will review data visualization techniques by writing whiteboard code for three example plots (a bar plot, scatterplot, and histogram), recapping the key components of building up plot layers with the `ggplot` package.
+We will follow along with the examples given in the textbook. Create an R project called `data-summaries`, and save today's work in an R markdown report called `summary.Rmd`.
 
 ## Weekly assignment
 
-TBD
+For your homework, you will also practice reading in a csv file and summarizing key variables using the `screentime` dataset. See the [`screentime`](../datasets/screentime.html) page for more information about this dataset.
 
-*Final project preparation:* Refer to the instructions for the final [project](../projects/final-project.html). You should get started on finding an openly available dataset. Please include in your Markdown report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.
+Download the [`screentime-summaries.qmd`](../_code/screentime-summaries.qmd) file to get started. You will submit your own version of this file, with code and markdown text filled in.
+
+
+

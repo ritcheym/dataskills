@@ -4,17 +4,17 @@ title: "Programming Foundations Workshop"
 
 ## Objectives
 
-This week we will take a breather to review and practice what we've learned so far.
+Today we will take a breather to review and practice what we've learned so far.
 
 ## In-class exercises
 
-You will work together in groups to solve the following problems. First sketch out your plan on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `workshop.Rmd`.
+You will work together in groups to solve the following problems. First sketch out your plan on paper or on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `workshop.Rmd`.
 
 ### Programming to the max
 
 Create your own function for finding the maximum value of a vector. The input will be a vector, and the output should be the maximum value.
 
-Did you use the `sort()` function in your solution? Now try to write the function without it.
+Did you use the `sort()` function in your solution? Now try to write the function without it. Hint: a for-loop might be useful.
 
 ### Bitcoin millionaires
 
@@ -31,10 +31,6 @@ You are obsessed with palindromes, and you want a function that will automatical
 -   Focus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.
 -   While you're brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., `c(5,1,4,10,2)`), and then imagine what is going to happen to that vector at each step of your function.
 -   When testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn't designed only for positive integers.
-
-## Weekly assignment
-
-As always, your R markdown report should be organized with headings and comments explaining your work, as well as disclosures about any use of AI tools. Please also include a table of contents.
 
 ### Additional programming practice
 

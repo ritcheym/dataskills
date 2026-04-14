@@ -1,0 +1,453 @@
+---
+title: "Data Summaries — In-Class Code"
+author: "Data Skills for Psychology"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-overflow: wrap
+    df-print: kable
+---
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+library(janitor)
+```
+
+## Data Types
+
+### Numeric data
+
+```{r}
+typeof(10)    # double (the default)
+typeof(10.0)  # also double
+typeof(10L)   # integer (the L suffix forces it)
+```
+
+```{r}
+is.numeric(10)
+is.numeric("10")   # quotes make it text, not a number!
+```
+
+### Character data
+
+```{r}
+typeof("hello")
+typeof("123")       # still a character — it has quotes!
+```
+
+```{r}
+greeting <- "Hello, world"
+greeting <- 'Hello, world'   # same thing
+```
+
+### Logical data
+
+```{r}
+class(TRUE)
+class(FALSE)
+```
+
+```{r}
+10 > 5
+10 == 5
+```
+
+### Activity: What type is it?
+
+Predict what type R will report for each of these, then check with `typeof()` or `class()`.
+
+```{r}
+# Try each one:
+100
+
+100L
+
+"100"
+
+TRUE
+
+"TRUE"
+
+1 == 2
+```
+
+### Factors
+
+```{r}
+seasons <- factor("Spring",
+                  levels = c("Spring", "Summer",
+                             "Fall", "Winter"))
+seasons
+```
+
+```{r}
+typeof(seasons)    # integer!
+class(seasons)     # factor
+```
+
+### Dates and times
+
+```{r}
+today <- as.Date("2025-01-15")
+class(today)     # Date
+```
+
+## Containers
+
+### Vectors
+
+```{r}
+ages <- c(19, 34, 7, 67)
+names <- c("Alice", "Bob", "Carol", "Dave")
+```
+
+#### What happens when you mix types?
+
+```{r}
+mixed <- c(1, "two", TRUE)
+mixed    # everything becomes character!
+```
+
+### Selecting from vectors
+
+```{r}
+ages[1]          # first element
+ages[c(2, 4)]   # second and fourth
+ages[-3]         # everything except the third
+```
+
+```{r}
+adults <- ages >= 18
+ages[adults]
+```
+
+### Lists
+
+```{r}
+participant <- list(
+  id = 101,
+  name = "Maureen",
+  scores = c(85, 92, 78),
+  consent = TRUE
+)
+```
+
+```{r}
+participant$name
+participant[["scores"]]
+```
+
+### Tables (tibbles)
+
+```{r}
+survey <- tibble(
+  id = 1:3,
+  name = c("Alice", "Bob", "Carol"),
+  score = c(85, 92, 78)
+)
+survey
+```
+
+```{r}
+nrow(survey)     # number of rows
+ncol(survey)     # number of columns
+glimpse(survey)  # quick overview
+```
+
+### Activity: Build a tibble
+
+1.  Create a tibble called `pets` with three columns: `name` (character), `species` (character), and `age` (numeric). Include at least 3 rows.
+2.  Use `glimpse()` to check the column types.
+3.  Use `$` to extract just the `name` column.
+4.  **Bonus**: What class is the column you extracted?
+
+```{r}
+# Your code here:
+
+```
+
+## Importing Data
+
+### Basic import
+
+```{r}
+#| message: true
+
+# To use this method, the csv file must be in a folder called "data" that lives in the same folder as this Quarto file. You can download it from here: https://psyteachr.github.io/ads-v3/04-summary.html#sec-import-data
+# births <- read_csv("data/12.1_delivery.csv")
+
+# Alternatively, if the data file is online, we can download it directly:
+births <- read_csv("https://psyteachr.github.io/ads-v3/data/12.1_delivery.csv")
+```
+
+### Checking the import
+
+```{r}
+spec(births)
+```
+
+```{r}
+glimpse(births)
+```
+
+### Activity: Load and explore
+
+1.  Load the births dataset.
+2.  Run `spec()` and `glimpse()` — how many rows and columns?
+3.  Are there any columns that look useless?
+
+```{r}
+# Your code here:
+
+```
+
+### Skipping columns on import
+
+```{r}
+#| message: false
+
+# cols refers to "columns"
+# Here we are telling R about the data columns BEFORE we load the data
+birth_cols <- cols(
+  SIMDQuintileQF = col_skip()
+)
+
+# Now reload
+births <- read_csv("https://psyteachr.github.io/ads-v3/data/12.1_delivery.csv",
+                   col_types = birth_cols)
+```
+
+### Setting factor levels on import
+
+```{r}
+#| message: false
+
+# Again, here we're telling R about the data columns BEFORE we load the data
+birth_cols <- cols(
+  SIMDQuintileQF = col_skip(),
+  AgeGroup = col_factor(
+    levels = c("Under 25", "25-34",
+               "35 and over", "Unknown")),
+  Induced = col_factor(
+    levels = c("Not Induced", "Induced", "Unknown"))
+)
+
+# Now reload
+births <- read_csv("https://psyteachr.github.io/ads-v3/data/12.1_delivery.csv",
+                   col_types = birth_cols)
+```
+
+### Cleaning column names
+
+```{r}
+births <- clean_names(births)
+colnames(births)
+```
+
+## The `$` Operator
+
+```{r}
+years <- births$financial_year
+years
+```
+
+```{r}
+births$financial_year[1]
+births$livebirths[c(20, 30, 40)]
+```
+
+## Pipes
+
+### Without pipes — intermediate objects
+
+```{r}
+c_sections <- filter(births,
+                     delivery == "Caesarean - Emergency")
+
+c_per_year <- summarise(c_sections,
+                        n = sum(livebirths),
+                        .by = financial_year)
+
+c_sorted <- arrange(c_per_year, desc(n))
+
+head(c_sorted)
+```
+
+### With pipes — one clean chain
+
+```{r}
+c_per_year <- births |>
+  filter(delivery == "Caesarean - Emergency") |>
+  summarise(n = sum(livebirths),
+            .by = financial_year) |>
+  arrange(desc(n))
+
+head(c_per_year)
+```
+
+### How to read a pipe
+
+```{r}
+births |>                                     # start with births AND THEN
+  filter(delivery == "Caesarean - Emergency") |>  # keep only emergency c-sections AND THEN
+  summarise(n = sum(livebirths),                  # sum up livebirths AND THEN
+            .by = financial_year) |>
+  arrange(desc(n))                                # sort largest to smallest
+```
+
+### Activity: Rewrite with pipes
+
+Rewrite the code below as a single piped chain. For now, don't worry too much about what each step does — pay attention to the way the variables are passed from one line to the next.
+
+```{r}
+# Original code to rewrite:
+# spontaneous <- filter(births, delivery == "Spontaneous")
+# spont_by_age <- summarise(spontaneous, n = sum(livebirths), .by = age_group)
+# spont_sorted <- arrange(spont_by_age, desc(n))
+
+# Your piped version here:
+
+```
+
+## Counting
+
+### Basic counts
+
+```{r}
+count(births, delivery)
+```
+
+```{r}
+count(births, induced, sort = TRUE)
+```
+
+### Counting multiple variables
+
+```{r}
+count(births, age_group, induced, sort = TRUE)
+```
+
+### Adding percentages
+
+```{r}
+count(births, delivery) |>
+  mutate(percent = n / sum(n),
+         percent = round(100 * percent))
+```
+
+### Activity: Counting practice
+
+1.  Count the number of rows per `age_group`.
+2.  Count the number of rows by `delivery` and `age_group` together.
+3.  Add a percentage column to your delivery counts.
+
+Which delivery type is most common in the data?
+
+```{r}
+# Your code here:
+
+```
+
+## Summarize
+
+### The `summarize()` function
+
+```{r}
+summarize(births,
+          total_births = sum(livebirths))
+```
+
+### Handling missing values
+
+```{r}
+values <- c(1, 2, 4, 3, NA, 2)
+mean(values)              # returns NA!
+mean(values, na.rm = TRUE) # removes NAs first
+```
+
+## Grouping
+
+### `group_by()` + `summarize()`
+
+```{r}
+births |>
+  group_by(delivery) |>
+  summarize(total = sum(livebirths)) |>
+  ungroup()
+```
+
+### Activity: Summarize the data
+
+1.  What is the total number of live births across the whole dataset?
+2.  What is the total number of live births per age group?
+3.  What is the mean number of live births per row, broken down by delivery type?
+
+```{r}
+# Your code here:
+
+```
+
+### Sorting with `arrange()`
+
+```{r}
+births |>
+  group_by(delivery) |>
+  summarise(total = sum(livebirths)) |>
+  ungroup() |>
+  arrange(desc(total))
+```
+
+### Multiple groupings
+
+```{r}
+births |>
+  group_by(delivery, financial_year) |>
+  summarise(n = sum(livebirths)) |>
+  ungroup()
+```
+
+## Putting It All Together
+
+### Full analysis pipeline
+
+```{r}
+births_per_year_type_age <- births |>
+  mutate(
+    year = str_extract(financial_year, ".{4}"),
+    year = as.integer(year)
+  ) |>
+  filter(age_group != "Unknown",
+         delivery != "Not Known") |>
+  summarise(
+    n = sum(livebirths),
+    .by = c(year, delivery, age_group)
+  ) |>
+  mutate(
+    pcnt = n / sum(n) * 100,
+    .by = c(year, age_group)
+  )
+
+head(births_per_year_type_age)
+```
+
+### Visualizing the result
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+births_per_year_type_age |>
+  ggplot(aes(x = year, y = pcnt, color = age_group)) +
+  geom_line() +
+  facet_wrap(~delivery, scales = "free_y") +
+  geom_hline(yintercept = 0, color = "transparent") +
+  labs(x = NULL,
+       y = "Percent of Live Births per Year",
+       color = "Age Group") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
