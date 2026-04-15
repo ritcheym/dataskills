@@ -40,16 +40,32 @@ df <- df |>
   filter(!is.na(mwbi) & !is.na(weekday_screen) & !is.na(weekend_screen)) 
 ```
 
-There are `r nrow(df)` observations in the dataset.
-
 # Get to know your data!
 ## Use the commands that you've learned about to explore a dataset
 ```{r}
 # FILL IN YOUR CODE HERE
 ```
+
 ## What variables are there? What data types are they?
 WRITE A SUMMARY HERE
 
+## How many rows and columns are there? 
+```{r}
+# FILL IN YOUR CODE HERE TO CALCULATE
+```
+
+Add in-line Markdown HERE to say how many rows and columns there are.
+
+## Calculate the following summary statistics for the mental wellbeing index (MWBI): mean, minimum, maximum. 
+```{r}
+# FILL IN YOUR CODE HERE
+# Hint: you can use the $ operator to access the mwbi column
+```
+
+## End of this week's material
+You are welcome to continue on and try to solve the rest! But it will involve functions we have not covered yet in class.
+
+# Counting data
 ## Count the number of participants included from different demographic subsets.
 ```{r}
 # FILL IN YOUR CODE HERE
@@ -61,10 +77,6 @@ WRITE A SUMMARY HERE
 ```
 
 # Summarize the data
-## Calculate the following summary statistics for the mental wellbeing index (MWBI): mean, minimum, maximum. 
-```{r}
-# FILL IN YOUR CODE HERE
-```
 
 ## Calculate the mean MWBI for different demographic subsets.
 ```{r}

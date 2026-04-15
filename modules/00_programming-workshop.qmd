@@ -6,9 +6,152 @@ title: "Programming Foundations Workshop"
 
 Today we will take a breather to review and practice what we've learned so far.
 
-## In-class exercises
-
 You will work together in groups to solve the following problems. First sketch out your plan on paper or on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `workshop.Rmd`.
+
+## Homework recap
+
+List all of the prime numbers from 1 to 1000. Start by writing out your plan in comment form, and then fill in the code.
+
+Create a **function** `is_prime()` that helps you solve this problem.
+
+**How did you solve this?**
+
+## Read and understand existing code
+
+::: callout-tip
+### Tips
+
+-   For each question, first try to guess what the code will produce:
+    -   Read each line in order.
+    -   Notice which variables are created and updated on each line. What values should they now have?
+    -   If there is a loop: try to figure out how many times the loop will run. How will the variables change on each iteration of the loop?
+    -   Once you have gone through each line, see if you can tell what is the overall goal of the code.
+-   Then see if you are correct by running the code on your own.
+:::
+
+### Data types
+
+**Basic practice**
+
+```{r eval=FALSE}
+age <- 21
+name <- "Alex"
+is_student <- TRUE
+
+class(age)
+class(name)
+class(is_student)
+```
+
+**Level up**
+
+```{r eval=FALSE}
+n_trials <- 10
+label <- "trial"
+complete <- TRUE
+
+nchar(label)
+class(c(n_trials, label))
+```
+
+### Indexing
+
+**Basic practice**
+
+```{r eval=FALSE}
+scores <- c(88, 72, 95, 60, 83)
+
+scores[3]
+scores[c(1, 4)]
+scores[1:3]
+```
+
+**Level up**
+
+```{r eval=FALSE}
+conditions <- c("baseline", "practice", "test", "retest", "followup")
+rt <- c(620, 540, 495, 505, 480)
+
+conditions[-1]
+rt[2:4]
+conditions[rt < 500]
+```
+
+### Conditional statements
+
+**Basic practice**
+
+```{r eval=FALSE}
+rt <- 520
+
+if (rt < 500) {
+  label <- "fast"
+} else {
+  label <- "slow"
+}
+
+label
+```
+
+**Level up**
+
+```{r eval=FALSE}
+score <- 82
+attempts <- 3
+
+if (score >= 90) {
+  grade <- "A"
+} else if (score >= 80 & attempts == 1) {
+  grade <- "B"
+} else if (score >= 80) {
+  grade <- "B-"
+} else {
+  grade <- "needs review"
+}
+
+grade
+```
+
+### For loops
+
+**Basic practice**
+
+```{r eval=FALSE}
+scores <- c(4, 7, 2, 9)
+total <- 0
+
+for (s in scores) {
+  total <- total + s
+}
+
+total
+```
+
+**Level up**
+
+```{r eval=FALSE}
+participants <- c("p01", "p02", "p03", "p04")
+excluded <- c("p02", "p04")
+kept <- c()
+
+for (id in participants) {
+  if (id != excluded[1] & id != excluded[2]) {
+    kept <- c(kept, id)
+  }
+}
+
+kept
+```
+
+## Plan and write your own code
+
+::: callout-tip
+### Tips
+
+-   Focus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.
+-   While you're brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., `c(5,1,4,10,2)`), and then imagine what is going to happen to that vector at each step of your function.
+-   When testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn't designed only for positive integers.
+:::
 
 ### Programming to the max
 
@@ -18,23 +161,18 @@ Did you use the `sort()` function in your solution? Now try to write the functio
 
 ### Bitcoin millionaires
 
-You've taken the plunge and invested in Bitcoin. Write a function that calculates how much money you've made. The inputs should be the amount that you invested and the percentage increase since then, and the output should be your total profit.
+You've taken the plunge and invested in Bitcoin. Write a function that calculates how much money you've made. The inputs should be the amount that you invested and the total percentage increase since then, and the output should be your total profit.
 
 How would you adjust this function if you wanted to calculate your profit over time, factoring in the rate of increase each month? Your inputs will be your initial investment, the rate of increase each month, and the number of months since your investment.
+
+### FizzBuzz
+
+Write some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word "Fizz" instead of the number. If the number can be divided by five evenly, then store the word "Buzz" instead of the number. Finally, if the number can be divided by three and five evenly, then store "FizzBuzz" instead of the number. For example, the first five elements of your vector should look like this: `c(1,2,"Fizz",4,"Buzz")`.
 
 ### Palindrome finder
 
 You are obsessed with palindromes, and you want a function that will automatically figure out if a given word is a palindrome. Create a function that will return TRUE if the input is a palindrome and FALSE otherwise. Hint: you will probably have to look up some functions that will help you manipulate the text.
 
-### Tips
+------------------------------------------------------------------------
 
--   Focus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.
--   While you're brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., `c(5,1,4,10,2)`), and then imagine what is going to happen to that vector at each step of your function.
--   When testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn't designed only for positive integers.
-
-### Additional programming practice
-
-1.  Write a function that counts the number of words contained in a string of text, such as, "Karma is my boyfriend, karma is a god, karma is the breeze in my hair on the weekend. Karma's a relaxing thought. Aren't you envious that for you it's not?" Hint: You will probably want to use the `strsplit` command. Read the help page or do a search to find out more about this function. How would you adapt this function to tell you how many times a particular word (e.g., "karma") appears?
-2.  Write some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word "Fizz" instead of the number. If the number can be divided by five evenly, then store the word "Buzz" instead of the number. Finally, if the number can be divided by three and five evenly, then store "FizzBuzz" instead of the number. For example, the first five elements of your vector should look like this: `c(1,2,"Fizz",4,"Buzz")`.
-
-Some of these problems were adapted from this [website](https://www.crumplab.com/rstatsforpsych/practice-problems.html).
+*Some of these problems were adapted from this [website](https://www.crumplab.com/rstatsforpsych/practice-problems.html).*

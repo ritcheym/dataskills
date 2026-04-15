@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -267,13 +301,20 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
-  <li><a href="#in-class-exercises" id="toc-in-class-exercises" class="nav-link" data-scroll-target="#in-class-exercises">In-class exercises</a>
+  <li><a href="#homework-recap" id="toc-homework-recap" class="nav-link" data-scroll-target="#homework-recap">Homework recap</a></li>
+  <li><a href="#read-and-understand-existing-code" id="toc-read-and-understand-existing-code" class="nav-link" data-scroll-target="#read-and-understand-existing-code">Read and understand existing code</a>
+  <ul class="collapse">
+  <li><a href="#data-types" id="toc-data-types" class="nav-link" data-scroll-target="#data-types">Data types</a></li>
+  <li><a href="#indexing" id="toc-indexing" class="nav-link" data-scroll-target="#indexing">Indexing</a></li>
+  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements">Conditional statements</a></li>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops">For loops</a></li>
+  </ul></li>
+  <li><a href="#plan-and-write-your-own-code" id="toc-plan-and-write-your-own-code" class="nav-link" data-scroll-target="#plan-and-write-your-own-code">Plan and write your own code</a>
   <ul class="collapse">
   <li><a href="#programming-to-the-max" id="toc-programming-to-the-max" class="nav-link" data-scroll-target="#programming-to-the-max">Programming to the max</a></li>
   <li><a href="#bitcoin-millionaires" id="toc-bitcoin-millionaires" class="nav-link" data-scroll-target="#bitcoin-millionaires">Bitcoin millionaires</a></li>
+  <li><a href="#fizzbuzz" id="toc-fizzbuzz" class="nav-link" data-scroll-target="#fizzbuzz">FizzBuzz</a></li>
   <li><a href="#palindrome-finder" id="toc-palindrome-finder" class="nav-link" data-scroll-target="#palindrome-finder">Palindrome finder</a></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#additional-programming-practice" id="toc-additional-programming-practice" class="nav-link" data-scroll-target="#additional-programming-practice">Additional programming practice</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -303,10 +344,160 @@ ul.task-list li input[type="checkbox"] {
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <p>Today we will take a breather to review and practice what we’ve learned so far.</p>
-</section>
-<section id="in-class-exercises" class="level2">
-<h2 class="anchored" data-anchor-id="in-class-exercises">In-class exercises</h2>
 <p>You will work together in groups to solve the following problems. First sketch out your plan on paper or on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called <code>programming-foundations</code>, and save today’s work in an R markdown report called <code>workshop.Rmd</code>.</p>
+</section>
+<section id="homework-recap" class="level2">
+<h2 class="anchored" data-anchor-id="homework-recap">Homework recap</h2>
+<p>List all of the prime numbers from 1 to 1000. Start by writing out your plan in comment form, and then fill in the code.</p>
+<p>Create a <strong>function</strong> <code>is_prime()</code> that helps you solve this problem.</p>
+<p><strong>How did you solve this?</strong></p>
+</section>
+<section id="read-and-understand-existing-code" class="level2">
+<h2 class="anchored" data-anchor-id="read-and-understand-existing-code">Read and understand existing code</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tips
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>For each question, first try to guess what the code will produce:
+<ul>
+<li>Read each line in order.</li>
+<li>Notice which variables are created and updated on each line. What values should they now have?</li>
+<li>If there is a loop: try to figure out how many times the loop will run. How will the variables change on each iteration of the loop?</li>
+<li>Once you have gone through each line, see if you can tell what is the overall goal of the code.</li>
+</ul></li>
+<li>Then see if you are correct by running the code on your own.</li>
+</ul>
+</div>
+</div>
+<section id="data-types" class="level3">
+<h3 class="anchored" data-anchor-id="data-types">Data types</h3>
+<p><strong>Basic practice</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">21</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Alex"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>is_student <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(age)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(name)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(is_student)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Level up</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n_trials <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="st">"trial"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>complete <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(label)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">c</span>(n_trials, label))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indexing" class="level3">
+<h3 class="anchored" data-anchor-id="indexing">Indexing</h3>
+<p><strong>Basic practice</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">88</span>, <span class="dv">72</span>, <span class="dv">95</span>, <span class="dv">60</span>, <span class="dv">83</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scores[<span class="dv">3</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>scores[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>scores[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Level up</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>conditions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"baseline"</span>, <span class="st">"practice"</span>, <span class="st">"test"</span>, <span class="st">"retest"</span>, <span class="st">"followup"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">620</span>, <span class="dv">540</span>, <span class="dv">495</span>, <span class="dv">505</span>, <span class="dv">480</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>conditions[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>rt[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>conditions[rt <span class="sc">&lt;</span> <span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conditional-statements" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-statements">Conditional statements</h3>
+<p><strong>Basic practice</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rt <span class="ot">&lt;-</span> <span class="dv">520</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (rt <span class="sc">&lt;</span> <span class="dv">500</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  label <span class="ot">&lt;-</span> <span class="st">"fast"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  label <span class="ot">&lt;-</span> <span class="st">"slow"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Level up</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>score <span class="ot">&lt;-</span> <span class="dv">82</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>attempts <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">90</span>) {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  grade <span class="ot">&lt;-</span> <span class="st">"A"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">80</span> <span class="sc">&amp;</span> attempts <span class="sc">==</span> <span class="dv">1</span>) {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  grade <span class="ot">&lt;-</span> <span class="st">"B"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (score <span class="sc">&gt;=</span> <span class="dv">80</span>) {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  grade <span class="ot">&lt;-</span> <span class="st">"B-"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  grade <span class="ot">&lt;-</span> <span class="st">"needs review"</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>grade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="for-loops" class="level3">
+<h3 class="anchored" data-anchor-id="for-loops">For loops</h3>
+<p><strong>Basic practice</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">9</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> scores) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> total <span class="sc">+</span> s</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Level up</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>participants <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p01"</span>, <span class="st">"p02"</span>, <span class="st">"p03"</span>, <span class="st">"p04"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>excluded <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p02"</span>, <span class="st">"p04"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>kept <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (id <span class="cf">in</span> participants) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (id <span class="sc">!=</span> excluded[<span class="dv">1</span>] <span class="sc">&amp;</span> id <span class="sc">!=</span> excluded[<span class="dv">2</span>]) {</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    kept <span class="ot">&lt;-</span> <span class="fu">c</span>(kept, id)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>kept</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="plan-and-write-your-own-code" class="level2">
+<h2 class="anchored" data-anchor-id="plan-and-write-your-own-code">Plan and write your own code</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tips
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Focus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.</li>
+<li>While you’re brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., <code>c(5,1,4,10,2)</code>), and then imagine what is going to happen to that vector at each step of your function.</li>
+<li>When testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn’t designed only for positive integers.</li>
+</ul>
+</div>
+</div>
 <section id="programming-to-the-max" class="level3">
 <h3 class="anchored" data-anchor-id="programming-to-the-max">Programming to the max</h3>
 <p>Create your own function for finding the maximum value of a vector. The input will be a vector, and the output should be the maximum value.</p>
@@ -314,28 +505,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="bitcoin-millionaires" class="level3">
 <h3 class="anchored" data-anchor-id="bitcoin-millionaires">Bitcoin millionaires</h3>
-<p>You’ve taken the plunge and invested in Bitcoin. Write a function that calculates how much money you’ve made. The inputs should be the amount that you invested and the percentage increase since then, and the output should be your total profit.</p>
+<p>You’ve taken the plunge and invested in Bitcoin. Write a function that calculates how much money you’ve made. The inputs should be the amount that you invested and the total percentage increase since then, and the output should be your total profit.</p>
 <p>How would you adjust this function if you wanted to calculate your profit over time, factoring in the rate of increase each month? Your inputs will be your initial investment, the rate of increase each month, and the number of months since your investment.</p>
+</section>
+<section id="fizzbuzz" class="level3">
+<h3 class="anchored" data-anchor-id="fizzbuzz">FizzBuzz</h3>
+<p>Write some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word “Fizz” instead of the number. If the number can be divided by five evenly, then store the word “Buzz” instead of the number. Finally, if the number can be divided by three and five evenly, then store “FizzBuzz” instead of the number. For example, the first five elements of your vector should look like this: <code>c(1,2,"Fizz",4,"Buzz")</code>.</p>
 </section>
 <section id="palindrome-finder" class="level3">
 <h3 class="anchored" data-anchor-id="palindrome-finder">Palindrome finder</h3>
 <p>You are obsessed with palindromes, and you want a function that will automatically figure out if a given word is a palindrome. Create a function that will return TRUE if the input is a palindrome and FALSE otherwise. Hint: you will probably have to look up some functions that will help you manipulate the text.</p>
-</section>
-<section id="tips" class="level3">
-<h3 class="anchored" data-anchor-id="tips">Tips</h3>
-<ul>
-<li>Focus on creating a logical step-by-step plan. Think about what kind of input you need for each step, and how you will get that information from the previous step.</li>
-<li>While you’re brainstorming, come up with an example input for your function. For instance, for the custom max function, write out a short vector (e.g., <code>c(5,1,4,10,2)</code>), and then imagine what is going to happen to that vector at each step of your function.</li>
-<li>When testing your function, test out different types of inputs to make sure your function is generalizable to different situations. For example, for the custom max function, test out a vector with values less than 1, or all negative values, to make sure your code isn’t designed only for positive integers.</li>
-</ul>
-</section>
-<section id="additional-programming-practice" class="level3">
-<h3 class="anchored" data-anchor-id="additional-programming-practice">Additional programming practice</h3>
-<ol type="1">
-<li>Write a function that counts the number of words contained in a string of text, such as, “Karma is my boyfriend, karma is a god, karma is the breeze in my hair on the weekend. Karma’s a relaxing thought. Aren’t you envious that for you it’s not?” Hint: You will probably want to use the <code>strsplit</code> command. Read the help page or do a search to find out more about this function. How would you adapt this function to tell you how many times a particular word (e.g., “karma”) appears?</li>
-<li>Write some code to store the numbers from 1 to 100 in a vector with the following constraints. If the number can be divided by three evenly, then store the word “Fizz” instead of the number. If the number can be divided by five evenly, then store the word “Buzz” instead of the number. Finally, if the number can be divided by three and five evenly, then store “FizzBuzz” instead of the number. For example, the first five elements of your vector should look like this: <code>c(1,2,"Fizz",4,"Buzz")</code>.</li>
-</ol>
-<p>Some of these problems were adapted from this <a href="https://www.crumplab.com/rstatsforpsych/practice-problems.html">website</a>.</p>
+<hr>
+<p><em>Some of these problems were adapted from this <a href="https://www.crumplab.com/rstatsforpsych/practice-problems.html">website</a>.</em></p>
 
 
 </section>

@@ -17,7 +17,7 @@ reaction_times <- c(520, 700, 480, 510, 730)
 reaction_times[accuracy == 1]
 ```
 
-### 2: If-else
+### 2: ifelse()
 
 ```{r eval=FALSE}
 condition <- c("A", "B", "A", "B", "A")
@@ -25,7 +25,21 @@ stimulus <- ifelse(condition == "A", "face", "scene")
 stimulus
 ```
 
-### 3: Indexing
+### 3: If-else
+
+```{r eval=FALSE}
+age <- 17
+
+if (age >= 18) {
+  status <- "adult"
+} else {
+  status <- "minor"
+}
+
+status
+```
+
+### 4: Indexing
 
 ```{r eval=FALSE}
 condition <- c("A", "B", "A", "B", "A")
@@ -33,7 +47,7 @@ correct <- c(1, 1, 0, 1, 1)
 condition[correct == 1 & condition == "A"]
 ```
 
-### 4: For loops
+### 5: For loops
 
 ```{r eval=FALSE}
 rt1 <- c(500, 480, 530)
@@ -45,20 +59,19 @@ for (i in 1:length(rt1)) {
 diffs
 ```
 
-### 5: While loops
+### 6: While loops
 
 ```{r eval=FALSE}
-responses <- c(1, 1, 0, 1, 0, 1, 1)
-i <- 1
-count <- 0
-while (responses[i] == 1) {  # pay attention here to what will make the while loop stop
-  count <- count + 1
-  i <- i + 1
+savings <- 100
+years <- 0
+while (savings < 200) {
+  savings <- savings * 1.07
+  years <- years + 1
 }
-count
+years
 ```
 
-### 6: For loops and if-else
+### 7: For loops and if-else
 
 ```{r eval=FALSE}
 rt <- c(480, 610, 700)
@@ -75,7 +88,7 @@ for (i in 1:length(rt)) {
 labels
 ```
 
-### 7: For loops and if-else
+### 8: For loops and if-else
 
 ```{r eval=FALSE}
 rt <- c(350, 560, 720, 450)
@@ -90,7 +103,7 @@ for (i in 1:length(rt)) {
 flags
 ```
 
-### 8: Data manipulation
+### 9: Data manipulation
 
 ```{r eval=FALSE}
 df <- data.frame(
@@ -99,13 +112,13 @@ df <- data.frame(
   rt = c(450, 600, 470, 620)
 ) 
 
-df.new <- df %>%
+df.new <- df |>
   filter(condition == "incongruent")
 
 df.new
 ```
 
-### 9: Data manipulation
+### 10: Data manipulation
 
 ```{r eval=FALSE}
 df <- data.frame(
@@ -114,13 +127,13 @@ df <- data.frame(
   correct = c(TRUE, TRUE, FALSE, TRUE, FALSE)
 )
 
-df.new <- df %>%
+df.new <- df |>
   mutate(score = ifelse(correct, 1, 0))
 
 sum(df.new$score)
 ```
 
-### 10: Functions
+### 11: Functions
 
 ```{r eval=FALSE}
 categorize_rt <- function(rt) {
@@ -136,7 +149,7 @@ categorize_rt <- function(rt) {
 categorize_rt(480)
 ```
 
-### 11: Data manipulation
+### 12: Data manipulation
 
 ```{r eval=FALSE}
 df <- data.frame(
@@ -145,12 +158,12 @@ df <- data.frame(
   rating = c(5, 3, 4, 4, 2)
 )
 
-df %>%
-  filter(emotion == "happy") %>%
+df |>
+  filter(emotion == "happy") |>
   mutate(adjusted = rating + 1)
 ```
 
-### 12: Data summaries
+### 13: Data summaries
 
 ```{r eval=FALSE}
 df <- data.frame(
@@ -159,12 +172,12 @@ df <- data.frame(
   correct = c(1, 0, 1, 1)
 )
 
-df %>%
-  group_by(condition) %>%
+df |>
+  group_by(condition) |>
   summarize(mean_acc = mean(correct))
 ```
 
-### 13: Data manipulation
+### 14: Data manipulation
 
 ```{r eval=FALSE}
 df <- data.frame(
@@ -172,11 +185,11 @@ df <- data.frame(
   rt = c(500, 430, 670, 520)
 )
 
-df %>%
+df |>
   arrange(rt)
 ```
 
-### 14: Data visualization
+### 15: Data visualization
 
 ```{r eval=FALSE}
 df <- data.frame(
@@ -188,7 +201,7 @@ ggplot(df, aes(x = condition, y = rt)) +
   geom_boxplot()
 ```
 
-### 15: Data visualization
+### 16: Data visualization
 
 ```{r eval=FALSE}
 df <- data.frame(
