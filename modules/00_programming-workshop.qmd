@@ -6,7 +6,7 @@ title: "Programming Foundations Workshop"
 
 Today we will take a breather to review and practice what we've learned so far.
 
-You will work together in groups to solve the following problems. First sketch out your plan on paper or on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `workshop.Rmd`.
+You will work together in groups to solve the following problems. First sketch out your plan on paper or on the whiteboard. Then test out the plan by implementing your code in R. Open the R project called `programming-foundations`, and save today's work in a Quarto report called `workshop.qmd`.
 
 ## Homework recap
 

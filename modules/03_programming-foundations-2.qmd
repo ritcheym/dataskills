@@ -21,13 +21,13 @@ You should read these chapters before you come to class:
 
 ## In-class exercises
 
-We will follow along with the examples given in the textbook. Open the R project called `programming-foundations`, and save today's work in an R markdown report called `part-2.Rmd`.
+We will follow along with the examples given in the textbook. Open the R project called `programming-foundations`, and save today's work in a Quarto report called `part-2.qmd`.
 
 ## Weekly assignment
 
-First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.
+First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your Quarto report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.
 
-As always, your R markdown report should be organized with headings and comments explaining your work.
+As always, your Quarto report should be organized with headings and comments explaining your work.
 
 1.  List all of the prime numbers from 1 to 1000. Start by writing out your plan in comment form, and then fill in the code.
     -   Create a **function** `is_prime()` that helps you solve this problem.

@@ -27,7 +27,7 @@ Slides have been adapted from the textbook readings using Claude AI.
 
 ## In-class exercises
 
-We will follow along with the examples given in the textbook. Create an R project called `data-summaries`, and save today's work in an R markdown report called `summary.Rmd`.
+We will follow along with the examples given in the textbook. Create an R project called `data-summaries`, and save today's work in a Quarto report called `summary.qmd`.
 
 ## Weekly assignment
 

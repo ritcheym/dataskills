@@ -32,13 +32,13 @@ Slides have been adapted from the textbook readings using Claude AI.
 
 ## In-class exercises
 
-We will follow along with the examples given in the textbook. Create an R project called `programming-foundations` for this section of the course, and save today's work in an R markdown report called `part-1.Rmd`.
+We will follow along with the examples given in the textbook. Create an R project called `programming-foundations` for this section of the course, and save today's work in a Quarto report called `part-1.qmd`.
 
 ## Weekly assignment
 
-First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your R markdown report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.
+First, make sure you have completed all of the exercises in the above chapters. We will have already completed most of them in class. All of the solutions should be included in your Quarto report. Then, solve these additional problems using the concepts you have learned in class. For now, you should avoid using other predefined functions unless noted below.
 
-As always, your R markdown report should be organized with headings and comments explaining your work.
+As always, your Quarto report should be organized with headings and comments explaining your work.
 
 1.  Find the sum of all the integer numbers from 1 to 100.
     -   You can use the `sum()` function on a vector of numbers.

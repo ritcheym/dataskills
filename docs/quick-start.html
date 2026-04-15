@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Skills for Psychology</title>
+<title>Quick start guide – Data Skills for Psychology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -134,10 +134,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome</a></li>
-  <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">Course description</a></li>
-  <li><a href="#website-information" id="toc-website-information" class="nav-link" data-scroll-target="#website-information">Website information</a></li>
-  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
+  <li><a href="#quick-start-catch-up-guide" id="toc-quick-start-catch-up-guide" class="nav-link active" data-scroll-target="#quick-start-catch-up-guide">Quick-Start Catch-Up Guide</a>
+  <ul class="collapse">
+  <li><a href="#step-1-get-your-software-installed-30-min" id="toc-step-1-get-your-software-installed-30-min" class="nav-link" data-scroll-target="#step-1-get-your-software-installed-30-min">Step 1 — Get your software installed (30 min)</a></li>
+  <li><a href="#step-2-learn-the-rstudio-interface-and-quarto-reports-11.5-hrs" id="toc-step-2-learn-the-rstudio-interface-and-quarto-reports-11.5-hrs" class="nav-link" data-scroll-target="#step-2-learn-the-rstudio-interface-and-quarto-reports-11.5-hrs">Step 2 — Learn the RStudio interface and Quarto reports (1–1.5 hrs)</a></li>
+  <li><a href="#step-3-programming-foundations-variables-vectors-loops-branches-1.52-hrs" id="toc-step-3-programming-foundations-variables-vectors-loops-branches-1.52-hrs" class="nav-link" data-scroll-target="#step-3-programming-foundations-variables-vectors-loops-branches-1.52-hrs">Step 3 — Programming foundations: variables, vectors, loops, branches (1.5–2 hrs)</a></li>
+  <li><a href="#step-4-functions-and-algorithms-1-hr" id="toc-step-4-functions-and-algorithms-1-hr" class="nav-link" data-scroll-target="#step-4-functions-and-algorithms-1-hr">Step 4 — Functions and algorithms (1 hr)</a></li>
+  <li><a href="#step-5-catch-up-to-where-we-are-now-data-summaries-11.5-hrs" id="toc-step-5-catch-up-to-where-we-are-now-data-summaries-11.5-hrs" class="nav-link" data-scroll-target="#step-5-catch-up-to-where-we-are-now-data-summaries-11.5-hrs">Step 5 — Catch up to where we are now: Data Summaries (1–1.5 hrs)</a></li>
+  <li><a href="#step-6-how-to-create-render-and-submit-a-quarto-document" id="toc-step-6-how-to-create-render-and-submit-a-quarto-document" class="nav-link" data-scroll-target="#step-6-how-to-create-render-and-submit-a-quarto-document">Step 6 — How to create, render, and submit a Quarto document</a>
+  <ul class="collapse">
+  <li><a href="#create-an-r-project-one-time-per-assignment" id="toc-create-an-r-project-one-time-per-assignment" class="nav-link" data-scroll-target="#create-an-r-project-one-time-per-assignment">Create an R Project (one time per assignment)</a></li>
+  <li><a href="#create-a-new-quarto-document" id="toc-create-a-new-quarto-document" class="nav-link" data-scroll-target="#create-a-new-quarto-document">Create a new Quarto document</a></li>
+  <li><a href="#render-the-document-to-html" id="toc-render-the-document-to-html" class="nav-link" data-scroll-target="#render-the-document-to-html">Render the document to HTML</a></li>
+  <li><a href="#zip-your-project-and-upload" id="toc-zip-your-project-and-upload" class="nav-link" data-scroll-target="#zip-your-project-and-upload">Zip your project and upload</a></li>
+  </ul></li>
+  <li><a href="#key-reference-pages" id="toc-key-reference-pages" class="nav-link" data-scroll-target="#key-reference-pages">Key reference pages</a></li>
+  <li><a href="#tips-for-catching-up-efficiently" id="toc-tips-for-catching-up-efficiently" class="nav-link" data-scroll-target="#tips-for-catching-up-efficiently">Tips for catching up efficiently</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -146,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Skills for Psychology</h1>
+<h1 class="title">Quick start guide</h1>
 </div>
 
 
@@ -163,29 +176,154 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome" class="level2">
-<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
-<p>This is the course website for <em>Data Skills for Psychology</em>, developed and taught by <a href="https://www.thememolab.org/people/ritchey.html">Dr.&nbsp;Maureen Ritchey</a> in the Department of Psychology at UCLA. This course will be taught in Spring 2026.</p>
-</section>
-<section id="course-description" class="level2">
-<h2 class="anchored" data-anchor-id="course-description">Course description</h2>
-<p>This course will provide an introduction to computer programming and its applications to psychology and neuroscience research. The goal will be to provide you with the skillset to program data analyses, as well as an understanding of how these tools are used to facilitate modern research. We will begin with the basics of how to develop algorithms and implement them with programming logic. In a series of hands-on projects, students will learn to analyze real-world psychology and neuroscience datasets using the R programming language.</p>
-</section>
-<section id="website-information" class="level2">
-<h2 class="anchored" data-anchor-id="website-information">Website information</h2>
-<p>On this website, you can find the course <a href="modules/index.html">modules</a> and assignments. We will also use BruinLearn for managing quizzes and grading.</p>
-</section>
-<section id="acknowledgments" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>This course incorporates open-access materials that have been generously shared by researchers around the world, including:</p>
+<section id="quick-start-catch-up-guide" class="level1">
+<h1>Quick-Start Catch-Up Guide</h1>
+<p>Falling behind? No problem. This guide walks through the minimum steps needed to get caught up to where the class is right now (Week 3: Data Summaries). Work through it in order — each step builds on the one before it. Plan on about 4–6 focused hours.</p>
+<hr>
+<section id="step-1-get-your-software-installed-30-min" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-get-your-software-installed-30-min">Step 1 — Get your software installed (30 min)</h2>
+<p>Before anything else, make sure R and RStudio are installed (or updated) on your laptop.</p>
 <ul>
-<li>Emily Nordmann and Lisa DeBruine. <a href="https://psyteachr.github.io/ads-v3/"><em>Applied Data Skills</em></a>. doi:10.5281/zenodo.6365077</li>
-<li>Danielle Navarro. <a href="https://psyr.djnavarro.net/"><em>R for Psychological Science</em></a>.</li>
+<li>Follow the <a href="https://psyteachr.github.io/RSetGo/">RSetGo install guide</a></li>
+<li>Open RStudio once to confirm it launches</li>
 </ul>
-<p>Some content and assignments were inspired by Matt Crump’s similar <a href="https://www.crumplab.com/psyc3470/">course</a>.</p>
-<p>Course development was supported by a CAREER Award from the National Science Foundation (<a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2047415">BCS-2047415</a>).</p>
+<p>Full Week 1 module page: <a href="https://ritcheym.github.io/dataskills/modules/01_intro.html">Introduction to R and RStudio</a></p>
+</section>
+<section id="step-2-learn-the-rstudio-interface-and-quarto-reports-11.5-hrs" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-learn-the-rstudio-interface-and-quarto-reports-11.5-hrs">Step 2 — Learn the RStudio interface and Quarto reports (1–1.5 hrs)</h2>
+<p>Start with the lecture slides — these cover what happened in class:</p>
+<ul>
+<li><a href="https://ritcheym.github.io/dataskills/slides/01_intro.html">Tuesday’s slides — Intro to R and RStudio</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/slides/02_reports.html">Thursday’s slides — Reports</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/files/flashcards-ch1-2.html">Week 1 flashcards</a></li>
+</ul>
+<p>Need more detail? These chapters from <em>Applied Data Skills</em> are optional deeper reading:</p>
+<ul>
+<li><a href="https://psyteachr.github.io/ads-v3/01-intro.html">Chapter 1: Intro to R and RStudio</a></li>
+<li><a href="https://psyteachr.github.io/ads-v3/02-reports.html">Chapter 2: Reports with R Markdown</a></li>
+</ul>
+<p><strong>Week 1 assignment to complete:</strong> Build the <code>demo_report</code> project per <a href="https://psyteachr.github.io/ads-v3/02-reports.html#sec-exercises-reports">section 2.7 of Chapter 2</a>. Add (1) a sentence or two on how programming might help you in the future, and (2) an embedded data visualization you like. Zip the project folder and submit on BruinLearn. Full instructions on the <a href="https://ritcheym.github.io/dataskills/modules/01_intro.html">Week 1 module page</a>. See Step 6 below for a walkthrough of creating, rendering, and zipping your Quarto document.</p>
+</section>
+<section id="step-3-programming-foundations-variables-vectors-loops-branches-1.52-hrs" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-programming-foundations-variables-vectors-loops-branches-1.52-hrs">Step 3 — Programming foundations: variables, vectors, loops, branches (1.5–2 hrs)</h2>
+<p>Start with the class materials:</p>
+<ul>
+<li><a href="https://ritcheym.github.io/dataskills/slides/02_programming-foundations.html">Week 2 lecture slides</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/_code/programming-foundations-code.html">Companion code</a></li>
+<li>Module page: <a href="https://ritcheym.github.io/dataskills/modules/02_programming-foundations-1.html">Programming Foundations Part 1</a></li>
+</ul>
+<p>For more depth, these short chapters from <em>R for Psychological Science</em> are optional reference reading:</p>
+<ul>
+<li><a href="https://psyr.djnavarro.net/variables.html">Variables</a></li>
+<li><a href="https://psyr.djnavarro.net/vectors.html">Vectors</a></li>
+<li><a href="https://psyr.djnavarro.net/loops.html">Loops</a></li>
+<li><a href="https://psyr.djnavarro.net/branches.html">Branches</a></li>
+</ul>
+<p><strong>Week 2 Part 1 assignment:</strong> Create an R project called <code>programming-foundations</code> with an Rmd called <code>part-1.Rmd</code>, and complete the four exercises listed on the module page (sum 1–100, count words, build 1–100 with a loop and <code>seq()</code>, and sum all multiples of 3 or 5 below 1000).</p>
+</section>
+<section id="step-4-functions-and-algorithms-1-hr" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-functions-and-algorithms-1-hr">Step 4 — Functions and algorithms (1 hr)</h2>
+<p>Work from the module page and its linked slides:</p>
+<ul>
+<li>Module page: <a href="https://ritcheym.github.io/dataskills/modules/03_programming-foundations-2.html">Programming Foundations Part 2</a></li>
+</ul>
+<p>Optional deeper reading from <em>R for Psychological Science</em> if concepts need more explanation:</p>
+<ul>
+<li><a href="https://psyr.djnavarro.net/functions.html">Functions</a></li>
+<li><a href="https://psyr.djnavarro.net/programming.html">Programming</a></li>
+</ul>
+<p><strong>Week 2 Part 2 assignment:</strong> In the same <code>programming-foundations</code> project, save a new <code>part-2.Rmd</code>. Write an <code>is_prime()</code> function and use it to list primes 1–1000, then write your own functions for mean, mode, median, range, and standard deviation.</p>
+</section>
+<section id="step-5-catch-up-to-where-we-are-now-data-summaries-11.5-hrs" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-catch-up-to-where-we-are-now-data-summaries-11.5-hrs">Step 5 — Catch up to where we are now: Data Summaries (1–1.5 hrs)</h2>
+<p>This is the current module. Start with the module page and in-class materials:</p>
+<ul>
+<li>Module page: <a href="https://ritcheym.github.io/dataskills/modules/05_data-summaries.html">Data Summaries</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/slides/05_data-summaries.html">Lecture slides</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/_code/data-summaries-code.html">Companion code</a></li>
+</ul>
+<p>Optional deeper reading from <em>Applied Data Skills</em> if a concept needs more explanation:</p>
+<ul>
+<li><a href="https://psyteachr.github.io/ads-v3/04-summary.html">Chapter 4: Data Summaries</a></li>
+</ul>
+<p><strong>Current assignment preview:</strong> Practice reading in a csv file and summarizing key variables using the <code>screentime</code> dataset. Download the <a href="https://ritcheym.github.io/dataskills/_code/screentime-summaries.qmd"><code>screentime-summaries.qmd</code></a> starter file, fill in the code and markdown, and submit. See the <a href="https://ritcheym.github.io/dataskills/datasets/screentime.html">screentime dataset page</a> for background on the data.</p>
+<hr>
+</section>
+<section id="step-6-how-to-create-render-and-submit-a-quarto-document" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-how-to-create-render-and-submit-a-quarto-document">Step 6 — How to create, render, and submit a Quarto document</h2>
+<p>Every assignment in this class gets turned in as a rendered Quarto report. Here’s the full workflow, start to finish.</p>
+<section id="create-an-r-project-one-time-per-assignment" class="level3">
+<h3 class="anchored" data-anchor-id="create-an-r-project-one-time-per-assignment">Create an R Project (one time per assignment)</h3>
+<ol type="1">
+<li>In RStudio, go to <strong>File → New Project → New Directory → New Project</strong>.</li>
+<li>Name the directory (e.g., <code>demo_report</code>) and pick a location on your computer.</li>
+<li>Click <strong>Create Project</strong>. RStudio will open the new project — you’ll see the project name in the top-right corner.</li>
+</ol>
+<p>Using projects keeps everything for one assignment (data, code, output) in a single folder, which is also what you’ll zip and submit.</p>
+</section>
+<section id="create-a-new-quarto-document" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-new-quarto-document">Create a new Quarto document</h3>
+<ol type="1">
+<li><strong>File → New File → Quarto Document…</strong></li>
+<li>Fill in a title and your name as author, choose <strong>HTML</strong> as the output format, and click <strong>Create</strong>.</li>
+<li>RStudio opens a template <code>.qmd</code> file. <strong>Save it immediately</strong> (File → Save) into your project folder — give it a descriptive name like <code>demo_report.qmd</code>.</li>
+</ol>
+<p>The file has three parts to know:</p>
+<ul>
+<li><strong>YAML header</strong> at the top (between <code>---</code> lines): controls title, author, output format.</li>
+<li><strong>Prose</strong>: regular text written in Markdown — use <code>#</code> for headings, <code>**bold**</code>, <code>*italic*</code>, etc.</li>
+<li><strong>Code chunks</strong>: gray blocks that start with <code>```{r}</code> and end with <code>```</code>. Code inside these runs when the document is rendered.</li>
+</ul>
+<p>Insert a new code chunk with the green <strong>+C</strong> button at the top of the editor, or the shortcut <strong>Cmd/Ctrl + Alt + I</strong>.</p>
+</section>
+<section id="render-the-document-to-html" class="level3">
+<h3 class="anchored" data-anchor-id="render-the-document-to-html">Render the document to HTML</h3>
+<ol type="1">
+<li>Click the <strong>Render</strong> button at the top of the editor (blue arrow icon). Shortcut: <strong>Cmd/Ctrl + Shift + K</strong>.</li>
+<li>RStudio runs every code chunk top-to-bottom and produces an <code>.html</code> file in the same folder as your <code>.qmd</code>.</li>
+<li>A preview opens automatically. If it doesn’t look right, fix the <code>.qmd</code> and render again.</li>
+</ol>
+<p>If rendering fails, read the error message in the <strong>Render</strong> or <strong>Background Jobs</strong> pane — it usually points at the exact line that broke. Common culprits: an un-installed package (<code>install.packages("ggplot2")</code> in the console), a typo in a variable name, or a missing closing backtick on a code chunk.</p>
+</section>
+<section id="zip-your-project-and-upload" class="level3">
+<h3 class="anchored" data-anchor-id="zip-your-project-and-upload">Zip your project and upload</h3>
+<p>Once the <code>.qmd</code> renders cleanly to <code>.html</code>:</p>
+<ol type="1">
+<li>Close the RStudio project (optional, but ensures files are saved).</li>
+<li>Find the project folder in Finder (Mac) or File Explorer (Windows).</li>
+<li>Zip the <strong>entire folder</strong>:
+<ul>
+<li><strong>Mac</strong>: right-click the folder → <strong>Compress “folder-name”</strong>. A <code>.zip</code> file appears next to it.</li>
+<li><strong>Windows</strong>: right-click the folder → <strong>Send to → Compressed (zipped) folder</strong>.</li>
+</ul></li>
+<li>Verify the zip contains the <code>.Rproj</code> file, the <code>.qmd</code> file, the rendered <code>.html</code> file, and any data files used.</li>
+<li>Upload the <code>.zip</code> via the assignment link on BruinLearn.</li>
+</ol>
+<p>One sanity check before submitting: unzip the file somewhere else and open the <code>.html</code> — if it displays correctly in a browser, you’re good to go.</p>
+<hr>
+</section>
+</section>
+<section id="key-reference-pages" class="level2">
+<h2 class="anchored" data-anchor-id="key-reference-pages">Key reference pages</h2>
+<ul>
+<li><a href="https://ritcheym.github.io/dataskills/schedule.html">Full course schedule</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/modules/">All modules</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/syllabus.html">Syllabus</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/exercises.html">Exercises</a></li>
+<li><a href="https://ritcheym.github.io/dataskills/resources.html">Resources</a></li>
+</ul>
+</section>
+<section id="tips-for-catching-up-efficiently" class="level2">
+<h2 class="anchored" data-anchor-id="tips-for-catching-up-efficiently">Tips for catching up efficiently</h2>
+<ul>
+<li>The slides are condensed versions of the readings, so refer to the readings if you need more information.</li>
+<li>Type out the code examples yourself rather than copy-pasting. Muscle memory helps.</li>
+<li>Submit assignments even if incomplete — partial credit beats zero, and feedback is more useful than a blank slate.</li>
+<li>Come to office hours with a specific question and your <code>.qmd</code> file open. That’s the fastest way to get unstuck.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -25,7 +25,7 @@ website:
           - text: Source Code
             href:  https://github.com/ritcheym/dataskills
   back-to-top-navigation: false
-  page-footer: "Last updated March 2026."
+  page-footer: "Last updated April 2026."
     
   sidebar:
     style: "floating"

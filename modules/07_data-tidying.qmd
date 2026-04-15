@@ -20,7 +20,7 @@ You should read this chapter before you come to class:
 
 ## In-class exercises
 
-We will follow along with the examples given in the textbook through section 8.4. Create an R project called `data-tidy`, and save today's work in an R markdown report called `tidy.Rmd`.
+We will follow along with the examples given in the textbook through section 8.4. Create an R project called `data-tidy`, and save today's work in a Quarto report called `tidy.qmd`.
 
 Then we will follow along with a set of exercises to learn about interacting with fMRI data in R. [Download](../files/fmri-data-wrangling.Rmd) the `fmri-data-wrangling.Rmd` file to get started. See also the [`haxby01`](../datasets/haxby01.html) page for more information about the dataset.
 
@@ -28,6 +28,6 @@ Then we will follow along with a set of exercises to learn about interacting wit
 
 Download a modified version of the `fmri-data-wrangling` script [here](../files/fmri-data-wrangling-hw.Rmd). This version does NOT require that you download the original data. Instead, download this [csv file](../files/all_roi_data.csv) that contains summary data for each subject. Put these two files in the same folder, and follow the instructions in the script. You will start from the section cleverly labeled *Start running from here*. Below that section, you will find several questions that you will answer using the data and the skills you have learned so far. Respond to the questions by filling in the chunks that say *FILL IN HERE*.
 
-*Final project preparation:* Read the paper associated with your final project. Download the data and make sure you are able to load it in to R. Your markdown file should include the code that you used to load it into R.
+*Final project preparation:* Read the paper associated with your final project. Download the data and make sure you are able to load it in to R. Your Quarto document should include the code that you used to load it into R.
 
-When you zip your files to submit your assignment, please do *not* include the original data files. You should include only the Rmd and html report files.
+When you zip your files to submit your assignment, please do *not* include the original data files. You should include only the qmd and html report files.

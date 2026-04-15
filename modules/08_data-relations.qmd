@@ -20,11 +20,11 @@ You should read this chapter before you come to class:
 
 ## In-class exercises
 
-We will follow along with the examples given in the textbook. Create an R project called `data-relations`, and save today's work in an R markdown report called `relations.Rmd`.
+We will follow along with the examples given in the textbook. Create an R project called `data-relations`, and save today's work in a Quarto report called `relations.qmd`.
 
 ## Weekly assignment
 
-Solve the following problems using the concepts you have learned in class. As always, your R markdown report should be organized with headings and comments explaining your work.
+Solve the following problems using the concepts you have learned in class. As always, your Quarto report should be organized with headings and comments explaining your work.
 
 1.  Complete the [exercise](https://psyteachr.github.io/ads-v3/05-joins.html#grade-data) described in the chapter from 7.10.1 through 7.10.4.
 

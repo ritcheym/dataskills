@@ -4,12 +4,12 @@ title: "Introduction to R and RStudio"
 
 ## Objectives
 
-This week, we'll get started with familiarizing ourselves with R and RStudio. You should come to class with software already installed on your laptop (see below for instructions). During class, we will learn how to interact the RStudio interface. We'll also talk about what reproducible scientific programming is, and how R markdown reports can be used to make your work reproducible, shareable, and one might even say, beautiful.
+This week, we'll get started with familiarizing ourselves with R and RStudio. You should come to class with software already installed on your laptop (see below for instructions). During class, we will learn how to interact the RStudio interface. We'll also talk about what reproducible scientific programming is, and how Quarto documents can be used to make your work reproducible, shareable, and one might even say, beautiful.
 
 ::: {.callout-note icon="false"}
 ## Key concepts
 
-R vs RStudio, base-R, package, function, argument, objects, environment (workspace), help, R markdown, script, knit, chunk, comments, project
+R vs RStudio, base-R, package, function, argument, objects, environment (workspace), help, Quarto, script, knit, chunk, comments, project
 :::
 
 ## Readings and other preparation
@@ -40,6 +40,6 @@ Create the `demo_report` project following the instructions in the textbook unde
 In addition:
 
 1.  Please also include a sentence or two describing how programming might be able to help you in the future (e.g., in school or in a job).
-2.  Find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries ([one](https://r-graph-gallery.com/ggplot2-package.html), [two](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)) showing off plots created with the `ggplot2` package in R. In a few weeks, we'll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your R markdown report, either by downloading it or by linking to it directly. Here's [more info](https://psyteachr.github.io/ads-v3/02-reports.html#sec-md-images) about how that works.
+2.  Find an example of a data visualization that you like. This can be from any source, but if you need some inspiration, here are a couple of galleries ([one](https://r-graph-gallery.com/ggplot2-package.html), [two](https://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)) showing off plots created with the `ggplot2` package in R. In a few weeks, we'll talk about when you might want to use different kinds of plots and how to create them in R. You should embed the plot into your Quarto report, either by downloading it or by linking to it directly. Here's [more info](https://psyteachr.github.io/ads-v3/02-reports.html#sec-md-images) about how that works.
 
-Once you are done, you will zip the `demo_report` folder (instructions: [mac](https://support.apple.com/guide/mac-help/zip-and-unzip-files-and-folders-on-mac-mchlp2528/mac), [windows](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5)) containing your R project, html file, and Rmd file and upload it through the link provided.
+Once you are done, you will zip the `demo_report` folder (instructions: [mac](https://support.apple.com/guide/mac-help/zip-and-unzip-files-and-folders-on-mac-mchlp2528/mac), [windows](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5)) containing your R project, html file, and qmd file and upload it through the link provided.
