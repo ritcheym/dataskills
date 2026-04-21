@@ -9,7 +9,7 @@ Now that we have our programming foundation in place, let's revisit our goal of 
 ::: {.callout-note icon="false"}
 ## Key concepts
 
-categorical, continuous, ordinal, nominal, numeric, observation, factor, geom, mapping, scales, themes, tidy data
+categorical, continuous, observation, geom, mapping, scales, themes
 :::
 
 ## Readings
@@ -21,6 +21,13 @@ You should read this chapter before you come to class:
 We will also discuss content from this chapter:
 
 -   *Applied Data Skills -* [Chapter 10: Customizing Visualizations](https://psyteachr.github.io/ads-v3/10-custom.html)
+
+## Slides
+
+Slides have been adapted from the textbook readings using Claude AI.
+
+-   [This module's lecture slides](../slides/04_data-visualization.qmd){target="_blank"}
+-   [Companion code](../_code/data-visualization-code.qmd)
 
 ## In-class exercises
 
