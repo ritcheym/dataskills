@@ -2,6 +2,7 @@
 title: "Dataset: screentime"
 sidebar: false
 ---
+
 ## Paper
 
 -   Przybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. *Psychological Science*, 28(2), 204-215. [link](https://doi.org/10.1177/0956797616678438)
@@ -44,4 +45,5 @@ Variables are described in the paper, analysis files, as well as in the [registe
 -   `sp_we`: Linear Smartphone (weekend days)
 
 ## Analysis
-[Download](../files/screentime-starter.Rmd) our starter script for working with this dataset in R.
+
+[Download](../_code/screentime-summaries-plus-viz.qmd) our starter script for working with this dataset in R.

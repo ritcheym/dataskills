@@ -39,8 +39,10 @@ This week, you will recreate figures from the following paper:
 
 -   Przybylski, A. K., & Weinstein, N. (2017). A Large-Scale Test of the Goldilocks Hypothesis: Quantifying the Relations Between Digital-Screen Use and the Mental Well-Being of Adolescents. *Psychological Science*, 28(2), 204-215. [link](https://doi.org/10.1177/0956797616678438)
 
-Your goal is to use `ggplot` to recreate Figures 1 and 2 from this paper as closely as possible. Use the [starter notebook](../files/screentime-starter.Rmd) to get started (right-click \> Save Link As). This notebook will take care of the preliminary processing steps necessary to get the dataset ready for visualization. In addition to recreating Figures 1 and 2, you will also generate a new visualization of your choice, using a different kind of geom.
+Your goal is to use `ggplot` to recreate Figures 1 and 2 from this paper as closely as possible. Use this [Quarto file](../_code/screentime-summaries-plus-viz.qmd) to get started (right-click \> Save Link As). This file builds on what you already did for Data Summaries, and it will take care of the preliminary processing steps necessary to get the dataset ready for visualization.
 
 See also the [`screentime`](../datasets/screentime.html) page for more information about the dataset.
 
-*Final project preparation:* Refer to the instructions for the final [project](../projects/final-project.html). You should get started on finding an openly available dataset. Please include in your Quarto report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.
+*Final project preparation:* Refer to the instructions for the final [project](../projects/final-project.html). You should get started on finding an openly available dataset.
+
+*Optional for this week:* Please include in your Quarto report a link to the dataset and a link to the associated paper. If you are not ready to narrow it down, then include a few possible options. You can change your mind later.
