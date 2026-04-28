@@ -1,0 +1,784 @@
+---
+title: "Data Wrangling"
+subtitle: "Data Skills for Psychology — Module 6"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+execute:
+  echo: true
+  eval: false
+---
+
+# Welcome! {background-color="#2c3e50"}
+
+These slides are adapted from [Applied Data Skills Ch. 9: Data Wrangling](https://psyteachr.github.io/ads-v3/09-wrangle.html).
+
+## Today's Goals
+
+By the end of this class, you will be able to:
+
+-   Select and filter data for relevance
+-   Rename, reorder, and create new columns
+-   Use `case_when()` to recode values with multiple conditions
+-   Handle missing data thoughtfully (convert, ignore, or drop)
+-   Chain wrangling steps together with the pipe (`|>`)
+
+## Setup
+
+Make sure you have these packages loaded:
+
+```{r}
+library(tidyverse)   # readr, dplyr, tidyr, stringr, etc.
+library(readxl)      # read .xlsx files
+library(janitor)     # clean_names(), round_half_up()
+```
+
+::: callout-tip
+You can grab the [Data transformation cheat sheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html) — it's a handy reference for everything we'll cover today.
+:::
+
+## The Dataset
+
+We'll use UN data on **public transport access** (SDG 11.2.1):
+
+> *"Proportion of population that has convenient access to public transport, by sex, age and persons with disabilities."*
+
+. . .
+
+Download `SDG-11.2.1.xlsx` into your `data/` folder:
+
+[psyteachr.github.io/ads-v3/data/SDG-11.2.1.xlsx](https://psyteachr.github.io/ads-v3/data/SDG-11.2.1.xlsx)
+
+```{r}
+transport <- readxl::read_xlsx("data/SDG-11.2.1.xlsx") |>
+  janitor::clean_names()
+```
+
+# The dplyr Toolkit {background-color="#2c3e50"}
+
+## Six Verbs Do Most of the Work
+
+The <pkg>dplyr</pkg> package gives you a small set of verbs that combine to handle most wrangling tasks:
+
+| Verb          | What it does                               |
+|---------------|--------------------------------------------|
+| `select()`    | pick **columns**                           |
+| `filter()`    | pick **rows**                              |
+| `arrange()`   | sort rows                                  |
+| `mutate()`    | add or change columns                      |
+| `summarise()` | collapse rows into summary statistics      |
+| `group_by()`  | apply other verbs separately to each group |
+
+. . .
+
+You already met `summarise()` and `group_by()` before. Today we focus on the other four.
+
+## Exploring First {background-color="#16a085"}
+
+## Glimpse and Count
+
+Before wrangling, look at what you have:
+
+```{r}
+glimpse(transport)
+```
+
+. . .
+
+`count()` is your friend for categorical columns:
+
+```{r}
+count(transport, age, sex)
+```
+
+. . .
+
+It looks like most rows aggregate across age and sex. If we want gender comparisons, we'll need to filter.
+
+## Spotting Useless Columns
+
+Some columns have only `NA`:
+
+```{r}
+count(transport, time_coverage)   # all 2473 rows are NA
+```
+
+. . .
+
+Others have the same value in every row:
+
+```{r}
+count(transport, goal)            # all 2473 rows are 11
+```
+
+. . .
+
+These won't help with analysis — good candidates to drop.
+
+## Activity: Explore the Data
+
+::: callout-tip
+## Try it!
+
+1.  Load the `transport` dataset
+2.  Use `count()` to figure out how many **countries** are in the data
+3.  Use `count()` to figure out how many different **years** are covered
+4.  **Bonus:** Find one more column that has the same value in every row
+:::
+
+# Select {background-color="#2c3e50"}
+
+## Picking Columns by Name
+
+`select()` chooses which columns to keep:
+
+```{r}
+# select a single column
+value_col <- transport |> select(value)
+
+# select several columns, in a new order
+country_year <- transport |>
+  select(geo_area_name, time_period, value)
+```
+
+. . .
+
+You can rename columns at the same time:
+
+```{r}
+country_year <- transport |>
+  select(country = geo_area_name,
+         year    = time_period,
+         value)
+```
+
+## Selecting a Range
+
+Use a colon to grab a span of consecutive columns:
+
+```{r}
+country_year <- transport |>
+  select(geo_area_name:value)
+```
+
+. . .
+
+::: callout-warning
+The colon is fast, but check your output! The columns must already be in the order you want.
+:::
+
+## Un-selecting Columns
+
+Put a minus sign in front to **drop** columns instead:
+
+```{r}
+transport_clean <- transport |>
+  select(-time_coverage,
+         -upper_bound,
+         -lower_bound,
+         -base_period)
+```
+
+. . .
+
+For ranges, wrap in parentheses first:
+
+```{r}
+transport_clean <- transport |>
+  select(-(time_coverage:base_period))
+```
+
+## Select Helpers
+
+When you have many columns, name patterns are powerful:
+
+| function        | what it picks                           |
+|-----------------|-----------------------------------------|
+| `everything()`  | all columns                             |
+| `starts_with()` | columns whose names start with a string |
+| `ends_with()`   | columns whose names end with a string   |
+| `contains()`    | columns whose names contain a string    |
+| `where()`       | columns where a function returns `TRUE` |
+| `all_of()`      | all columns named in a vector           |
+| `any_of()`      | any columns from a vector that exist    |
+
+## Helpers in Action
+
+```{r}
+# all columns starting with "geo_"
+transport |> select(starts_with("geo_"))
+
+# all numeric columns
+transport |> select(where(is.numeric))
+
+# drop a vector of column names
+one_val_cols <- c("goal", "target", "indicator",
+                  "series_code", "time_coverage",
+                  "upper_bound", "lower_bound",
+                  "base_period", "geo_info_url",
+                  "custom_breakdown", "reporting_type",
+                  "units")
+
+transport_clean <- transport |>
+  select(-all_of(one_val_cols))
+```
+
+# Rename and Relocate {background-color="#2c3e50"}
+
+## Cleaner Renames and Reorders
+
+You *can* rename and reorder inside `select()`, but dedicated verbs make pipelines easier to read:
+
+```{r}
+transport_clean <- transport |>
+  select(-all_of(one_val_cols)) |>
+  rename(year    = time_period,
+         country = geo_area_name) |>
+  relocate(age, sex, .after = value) |>
+  relocate(geo_area_code, .before = cities)
+```
+
+. . .
+
+`.after` and `.before` take a column name and tell R where to put the moved columns.
+
+# Filter {background-color="#2c3e50"}
+
+## Filtering Rows
+
+`filter()` keeps rows that meet a condition:
+
+```{r}
+# rows where country is Togo
+transport_clean |> filter(country == "Togo")
+
+# rows where country is NOT Togo
+transport_clean |> filter(country != "Togo")
+
+# rows where value is more than 99
+transport_clean |> filter(value > 99)
+```
+
+. . .
+
+::: callout-warning
+Use `==` (double equals) to compare. A single `=` is for **assignment**.
+:::
+
+## Multiple Conditions
+
+Separate conditions with commas — rows must match **all** of them:
+
+```{r}
+togo_2020 <- transport_clean |>
+  filter(country == "Togo",
+         year == 2020)
+```
+
+. . .
+
+Use `|` for **or** (and `&` if you prefer being explicit about "and"):
+
+```{r}
+extreme_values <- transport_clean |>
+  filter(value < 10 | value > 90)
+```
+
+## The `%in%` Operator
+
+For "match any of these values," use `%in%` rather than chaining lots of `|`s:
+
+```{r}
+islands <- c("Solomon Islands", "Northern Mariana Islands")
+
+only_islands <- transport_clean |>
+  filter(country %in% islands)
+
+# negate with ! before the variable
+no_islands <- transport_clean |>
+  filter(!country %in% islands)
+```
+
+## Comparison Operators
+
+| Operator   | Meaning                      |
+|------------|------------------------------|
+| `A < B`    | A is less than B             |
+| `A <= B`   | A is less than or equal to B |
+| `A > B`    | A is greater than B          |
+| `A >= B`   | A is greater than or equal   |
+| `A == B`   | A exactly equals B           |
+| `A != B`   | A does not equal B           |
+| `A %in% B` | A is an element of vector B  |
+
+## Filtering with Functions
+
+You can pass any function that returns `TRUE`/`FALSE`. For text, `str_detect()` finds substrings:
+
+```{r}
+transport_clean |>
+  filter(str_detect(country, "Island")) |>
+  select(1:6)
+```
+
+. . .
+
+::: callout-note
+`str_detect()` is **case-sensitive**. Use `tolower()` or `toupper()` first if you need to match regardless of case.
+:::
+
+## Always Check Your Filter
+
+::: callout-warning
+`filter()` is powerful — and easy to misuse. With multiple criteria, it's surprisingly common to specify slightly the wrong thing.
+
+**Always check your output.** Use `count()` or `glimpse()` afterwards to confirm you got what you intended.
+:::
+
+```{r}
+transport_filtered <- transport_clean |>
+  filter(sex %in% c("FEMALE", "MALE"),
+         age == "ALLAGE")
+
+# verify: should be only MALE/FEMALE and ALLAGE
+count(transport_filtered, sex, age)
+```
+
+## Activity: Filter Practice
+
+::: callout-tip
+## Try it!
+
+Starting from `transport_clean`:
+
+1.  Filter to rows from the year **2015** only
+2.  Filter to rows where the country name contains **"United"**
+3.  Combine both: rows from 2015 where the country contains "United"
+4.  **Bonus:** Use `count()` to verify each filter returned what you expected
+:::
+
+# Arrange {background-color="#2c3e50"}
+
+## Sorting Rows
+
+`arrange()` sorts your data — alphabetically for text, ascending for numbers:
+
+```{r}
+transport_arranged <- transport_filtered |>
+  arrange(country, desc(year))
+```
+
+. . .
+
+Wrap a column in `desc()` to reverse the order. You can sort by multiple columns — earlier columns take priority.
+
+## Custom Sort Order with Factors
+
+For non-alphabetical category orders, convert to a factor and set the levels:
+
+```{r}
+transport_factor <- transport_filtered |>
+  mutate(sex = factor(sex, levels = c("MALE", "FEMALE")))
+
+transport_factor |>
+  filter(year %in% 2001:2003) |>
+  select(country, year, sex) |>
+  arrange(year, sex)
+```
+
+# Mutate {background-color="#2c3e50"}
+
+## Adding and Changing Columns
+
+`mutate()` creates a new column or overwrites an existing one. Syntax: `new_column = expression`.
+
+```{r}
+transport_data <- transport_factor |>
+  mutate(
+    urban = str_detect(foot_note, "Urban average"),
+    value = as.numeric(value)
+  )
+```
+
+. . .
+
+You can build several columns in one `mutate()`, separated by commas. Later definitions can use earlier ones.
+
+## Mutate with Conditions
+
+A Boolean expression returns `TRUE`/`FALSE`:
+
+```{r}
+transport_data <- transport_factor |>
+  mutate(
+    urban = str_detect(foot_note, "Urban average"),
+    value = as.numeric(value),
+    above_median = value > median(value)
+  )
+```
+
+. . .
+
+::: callout-warning
+If you reuse a column name, you **overwrite** the old column. Make sure that's what you want!
+:::
+
+## `case_when()` for Multiple Categories
+
+When you need more than two outcomes, use `case_when()`:
+
+```{r}
+transport_data <- transport_factor |>
+  mutate(
+    urban = str_detect(foot_note, "Urban average"),
+    value = as.numeric(value),
+    category = case_when(
+      value < 70  ~ "low",
+      value < 85  ~ "average",
+      value >= 85 ~ "high",
+      .default    = NA
+    )
+  )
+```
+
+. . .
+
+R checks each condition top to bottom and assigns the first match.
+
+## Combining Conditions in `case_when()`
+
+You can mix multiple variables in each rule:
+
+```{r}
+transport_data <- transport_factor |>
+  mutate(
+    urban = str_detect(foot_note, "Urban average"),
+    value = as.numeric(value),
+    category = case_when(
+      urban  & value < 75 ~ "low",
+      urban  & value < 85 ~ "average",
+      urban  & value >= 85 ~ "high",
+      !urban & value < 20 ~ "low",
+      !urban & value < 60 ~ "average",
+      !urban & value >= 60 ~ "high",
+      .default = NA
+    )
+  )
+```
+
+::: callout-tip
+`.default` uses `=`, while every other rule uses `~`. Easy to mix up!
+:::
+
+## Activity: Build Your Own Categories
+
+::: callout-tip
+## Try it!
+
+Using `transport_factor` (or your own version):
+
+1.  Make `value` numeric with `as.numeric()`
+2.  Add a column `era` that is:
+    -   `"early"` if year is before 2010
+    -   `"mid"` if year is 2010 to 2019
+    -   `"recent"` if year is 2020 or later
+3.  Use `count()` to see how many rows fall in each era
+4.  **Bonus:** Add a `value_label` column that says `"high"` if value \> 80, otherwise `"not high"`
+:::
+
+# Summarise & Group {background-color="#2c3e50"}
+
+## Quick Refresher: `summarise()`
+
+`summarise()` collapses many rows into one (or one per group). Name each summary on the left:
+
+```{r}
+transport_data |>
+  summarise(
+    mean = mean(value, na.rm = TRUE),
+    min  = min(value, na.rm = TRUE),
+    max  = max(value, na.rm = TRUE)
+  )
+```
+
+. . .
+
+Without grouping, you get a single-row summary of the whole dataset.
+
+
+# Complications {background-color="#2c3e50"}
+
+## Rounding Surprises
+
+```{r}
+round(0.5)   # returns 0 (!)
+round(1.5)   # returns 2
+```
+
+. . .
+
+R rounds **0.5 to the nearest even number** — this prevents bias when many values are halfway. It's not a bug.
+
+. . .
+
+If you want school-style rounding (always up at .5), use <pkg>janitor</pkg>:
+
+```{r}
+round_half_up(0.5)   # returns 1
+round_half_up(1.5)   # returns 2
+```
+
+# Missing Values {background-color="#2c3e50"}
+
+## Why Missing Values Need Care
+
+Best practice: leave missing cells **empty** in your raw data.
+
+. . .
+
+If "missing" appears as a word, the whole column becomes character data — you can't do math on it.
+
+. . .
+
+If 0 or 999 stand in for missing, those values may sneak into calculations as if they were real.
+
+## Recoding "missing" as `NA`
+
+Suppose someone wrote `"missing"` instead of leaving the cell blank:
+
+```{r}
+missing_bad <- transport_data |>
+  mutate(value = case_when(
+    year == 2000 & country == "Uzbekistan" ~ "missing",
+    .default = as.character(value)
+  ))
+```
+
+. . .
+
+Now `mean(value)` errors out — it's a character column, not numeric.
+
+## Fix It with `na_if()`
+
+Convert the bad string to `NA`, then back to numeric:
+
+```{r}
+missing_data <- missing_bad |>
+  mutate(
+    value = na_if(value, "missing"),
+    value = as.numeric(value)
+  )
+```
+
+. . .
+
+Try a summary now:
+
+```{r}
+missing_data |>
+  summarise(
+    mean = mean(value),
+    .by  = country
+  )
+```
+
+You'll get `NA` for any country with a missing value.
+
+## Telling `mean()` to Ignore `NA`s
+
+Most summary functions take `na.rm = TRUE`:
+
+```{r}
+missing_data |>
+  summarise(
+    mean = mean(value, na.rm = TRUE),
+    .by  = country
+  )
+```
+
+. . .
+
+Why isn't this the default? Because `NA` means "I don't know," and the average of *known* values plus *unknown* values is *unknown*. R wants you to make the call deliberately.
+
+## Counting Missing Values
+
+`is.na()` returns `TRUE`/`FALSE` for each value. Combine with `sum()` or `mean()`:
+
+```{r}
+missing_data |>
+  group_by(country) |>
+  summarise(
+    n_valid     = sum(!is.na(value)),
+    n_missing   = sum(is.na(value)),
+    prop_missing = mean(is.na(value))) |>
+  ungroup()
+```
+
+## Dropping Rows with `drop_na()`
+
+```{r}
+# remove any row with any missing value
+complete_data <- missing_data |> drop_na()
+
+# remove only rows missing a specific column
+complete_values <- missing_data |> drop_na(value)
+```
+
+. . .
+
+::: callout-warning
+`drop_na()` with no arguments drops a row if **any** column is missing — including columns you don't care about (notes, comments, etc.). Be specific about which columns matter.
+:::
+
+## Activity: Handle Missing Data
+
+::: callout-tip
+## Try it!
+
+Using `missing_data` (or recreate it from the slides):
+
+1.  Calculate the mean `value` overall, ignoring missing values
+2.  Count how many rows are missing a `value`
+3.  Create `complete_data` that drops only rows missing `value` — leave other columns alone
+4.  **Bonus:** Use `summarise()` to find which country has the highest proportion of missing values
+:::
+
+# Applications to the Screentime dataset {background-color="#2c3e50"}
+
+## Switching Datasets
+
+Let's apply everything to the [`screentime`](../datasets/screentime.html) dataset — over 120,000 adolescents' digital screen time and mental well-being scores (Przybylski & Weinstein, 2017).
+
+. . .
+
+Key columns we'll use:
+
+-   `mwbi` — mental well-being index (composite score)
+-   `WBOptimf`, `WBUseful`, `WBRelxd`, ... — individual well-being items
+-   `male`, `minority`, `deprived` — demographic indicators (1 = yes, 0 = no)
+-   `REGION` — UK region
+
+```{r}
+screentime <- read_csv("data.csv")
+```
+
+## Select: Pick Useful Columns
+
+Several ways to grab what you want:
+
+```{r}
+# specific columns by name
+screentime |>
+  select(REGION, male, minority, deprived, mwbi)
+
+# a range with the colon
+screentime |>
+  select(REGION, male:mwbi)
+
+# combine with a helper
+screentime |>
+  select(REGION, male:mwbi, starts_with("WB"))
+
+# drop a single column
+screentime |>
+  select(-REGION)
+```
+
+## Filter: Keep Useful Rows
+
+The `mwbi` column uses negative numbers as missing-value codes — filter them out:
+
+```{r}
+screentime_select <- screentime |>
+  select(REGION, male:mwbi, starts_with("WB"))
+
+# keep only valid well-being scores
+screentime_select |>
+  filter(mwbi > 0)
+
+# stack conditions: valid scores AND a specific region
+screentime_select |>
+  filter(mwbi > 0,
+         REGION == "East of England")
+```
+
+::: callout-warning
+Always check how missing data is coded in your dataset. Here, "missing" looks like a real (negative) number — easy to miss!
+:::
+
+## Mutate: Build a New Composite
+
+Average two well-being items into a new column:
+
+```{r}
+screentime_select |>
+  filter(mwbi > 0) |>
+  mutate(new_measure = (WBOptimf + WBUseful) / 2)
+
+```
+
+. . .
+
+::: callout-warning
+**Watch out!** `mean(c(WBOptimf, WBUseful))` would average across the *whole column* — giving every row the same value. For a per-row average, use arithmetic (`(a + b) / 2`) or `rowMeans()`.
+:::
+
+## Group and Summarise
+
+Compare mean well-being across demographic groups:
+
+```{r}
+screentime_select |>
+  filter(mwbi > 0) |>
+  mutate(new_measure = (WBOptimf + WBUseful) / 2) |>
+  group_by(male, minority) |>
+  summarise(
+    mean_new = mean(new_measure),
+    n        = n()) |>
+  ungroup()
+```
+
+
+## Putting It All Together
+
+The whole workflow as one pipeline:
+
+```{r}
+screentime |>
+  select(REGION, male:mwbi, starts_with("WB")) |>
+  filter(mwbi > 0,
+         REGION == "East of England") |>
+  mutate(new_measure = (WBOptimf + WBUseful) / 2) |>
+  group_by(male, minority) |>
+  summarise(
+    mean_new = mean(new_measure),
+    n        = n()) |>
+  ungroup()
+```
+
+. . .
+
+Read it top-to-bottom: *take screentime, then select these columns, then filter to valid scores in this region, then make a new measure, then summarise by demographic group.*
+
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## Key Takeaways
+
+-   The dplyr verbs (`select`, `filter`, `arrange`, `mutate`, `summarise`, `group_by`) compose well — chain them with `|>`
+-   **Always check your output** after each step (use `glimpse()`, `count()`, `head()`)
+-   `case_when()` is your friend for multi-way recoding
+-   Missing values aren't bugs — they're information. Decide how to handle them on purpose
+

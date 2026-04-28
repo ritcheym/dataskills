@@ -268,6 +268,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#readings" id="toc-readings" class="nav-link" data-scroll-target="#readings">Readings</a></li>
+  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
   <li><a href="#in-class-exercises" id="toc-in-class-exercises" class="nav-link" data-scroll-target="#in-class-exercises">In-class exercises</a></li>
   <li><a href="#weekly-assignment" id="toc-weekly-assignment" class="nav-link" data-scroll-target="#weekly-assignment">Weekly assignment</a></li>
   </ul>
@@ -297,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>You will notice that we are skipping ahead in the textbook. This is because many of the key concepts for data wrangling are related to what you just learned in the <em>Data Summaries</em> module. In this module, we will learn how to work with datasets in R. In particular, we will focus on functions for creating new variables and for filtering, grouping, and summarizing data. We will string these functions together using “pipes” to create our data processing workflows.</p>
+<p>You will notice that we are skipping ahead in the textbook. This is because many of the key concepts for data wrangling are related to what you learned in the <em>Data Summaries</em> module. In this module, we will learn how to work with datasets in R. In particular, we will focus on functions for creating new variables and for filtering, grouping, and summarizing data. We will string these functions together using “pipes” to create our data processing workflows.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -308,7 +309,7 @@ Key concepts
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>pipes (<code>%&gt;%</code>), summarize, grouping, filter, select, arrange, mutate, missing values</p>
+<p>pipes (<code>|&gt;</code>), summarize, grouping, filter, select, arrange, mutate, missing values</p>
 </div>
 </div>
 </section>
@@ -319,28 +320,27 @@ Key concepts
 <li><em>Applied Data Skills -</em> <a href="https://psyteachr.github.io/ads-v3/09-wrangle.html">Chapter 9: Data Wrangling</a></li>
 </ul>
 </section>
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<p>Slides have been adapted from the textbook readings using Claude AI.</p>
+<ul>
+<li><a href="../slides/06_data-wrangling.html" target="_blank">This module’s lecture slides</a></li>
+<li><a href="../_code/data-wrangling-code.qmd">Companion code</a></li>
+</ul>
+</section>
 <section id="in-class-exercises" class="level2">
 <h2 class="anchored" data-anchor-id="in-class-exercises">In-class exercises</h2>
-<p>We will follow along with the examples given in the textbook. Create an R project called <code>data-wrangling</code>, and save today’s work in a Quarto report called <code>wrangle.qmd</code>. <a href="../files/wrangle.Rmd">Download</a> the version I used in class.</p>
-<p>To keep our programming skills sharp, we will also work in groups to solve the following programming problems.</p>
-<p><strong>Coin flip tracker:</strong> Simulate flipping a coin 1000 times.</p>
-<ol type="1">
-<li>Count how many times it lands on heads. For practice, use a for-loop, even if you can think of a better way to do it.</li>
-<li>Count how many times it switches from heads to tails or vice versa (e.g., heads-heads-tails would include one switch). Again, use a for-loop.</li>
-<li>Bonus: Count how many times there are runs of the same side (e.g., 5 heads in a row). Write a function that includes an input for the run length and returns the number of runs that match or exceed that value.</li>
-</ol>
-<p><a href="../files/coin-flipper.Rmd">Download</a> the <code>coin_flipper</code> file we used in class.</p>
+<p>We will follow along with the examples given in the textbook. Create an R project called <code>data-wrangling</code>, and save today’s work in a Quarto report.</p>
 </section>
 <section id="weekly-assignment" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-assignment">Weekly assignment</h2>
-<p>Solve the following problems using the concepts you have learned in class. As always, your Quarto report should be organized with headings and comments explaining your work.</p>
+<p>For these questions, you will use the <a href="../datasets/screentime.html"><code>screentime</code></a> dataset. You may want to build on the script we worked on in class or the one you submitted with last week’s homework.</p>
 <ol type="1">
-<li><p>Using the <code>switch_counter</code> function you developed in class, figure out how many times it switches as a function of how many coin flips you simulate, setting the number of iterations to 5, 50, 100, 500, and 1000. Use ggplot to plot the results, using whatever format you think is best.</p></li>
-<li><p><em>Extra practice (optional):</em> Using the <code>run_detector</code> function we discussed in class, figure out how many runs occur for all run lengths between (and including) 2 and 10. Use ggplot to plot the results, using whatever format you think is best.</p>
-<p><strong>For the rest of the questions, you will use the <a href="../datasets/screentime.html"><code>screentime</code></a> dataset.</strong> You may want to build on the script we worked on in class (<a href="../files/wrangle.Rmd">download</a>).</p></li>
 <li><p>Which <code>REGION</code> has the most observations? Use the <code>count()</code> function.</p></li>
-<li><p>Calculate a new composite measure of mental well-being, using only 3 questions on the Mental Well-Being Scale (<code>WBIntp</code>,<code>WBClsep</code>, and <code>WBLoved</code>), which all have to do with relationships with other people (see <a href="https://www2.uwe.ac.uk/services/Marketing/students/pdf/Wellbeing-resources/well-being-scale-wemwbs.pdf">scale</a>). Filter out any observations with missing values. Caution - missing values are labeled in a suboptimal way in this dataset.</p></li>
-<li><p>Use the <code>summarize()</code> function to compute the mean and 95% confidence intervals of your new composite measure, split by gender. Plot the results, using whatever format you think is best.</p></li>
+<li><p>Calculate a new composite measure of mental well-being, using only 3 questions on the Mental Well-Being Scale (<code>WBIntp</code>,<code>WBClsep</code>, and <code>WBLoved</code>), which all have to do with relationships with other people (see <a href="https://www2.uwe.ac.uk/services/Marketing/students/pdf/Wellbeing-resources/well-being-scale-wemwbs.pdf">scale</a>).</p></li>
+<li><p>Filter out any observations with missing values. Caution - missing values are labeled in a suboptimal way in this dataset.</p></li>
+<li><p>Use the <code>summarize()</code> function to compute the mean and 95% confidence intervals of your new composite measure, split by gender.</p></li>
+<li><p>Plot the results, using whatever format you think is best.</p></li>
 <li><p><em>Extra practice (optional):</em> How closely does this new measure correspond with the original mental well-being measure (<code>mwbi</code>)? One way to tell is by plotting their relationship with one another.</p></li>
 <li><p><em>Extra practice (optional):</em> What other questions could you answer with this dataset? How would you go about it?</p></li>
 </ol>
