@@ -10,7 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <title>Data Skills for Psychology – Introduction to R and RStudio</title>
+  <title>Data Skills for Psychology – Data Tidying</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -392,8 +392,8 @@
     <div class="slides">
 
 <section data-background-color="#2c3e50" class="quarto-title-block center">
-  <h1 class="title">Introduction to R and RStudio</h1>
-  <p class="subtitle">Data Skills for Psychology — Module 1</p>
+  <h1 class="title">Data Tidying</h1>
+  <p class="subtitle">Data Skills for Psychology — Module 7</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -402,665 +402,442 @@
 <section>
 <section class="title-slide slide level1 center" data-background-color="#2c3e50">
 <h1>Welcome!</h1>
-<p>These slides are adapted from <a href="https://psyteachr.github.io/ads-v3/01-intro.html">Applied Data Skills Ch. 1</a>.</p>
+<p>These slides are adapted from <a href="https://psyteachr.github.io/ads-v3/08-tidy.html">Applied Data Skills Ch. 8: Data Tidying</a>.</p>
 </section>
 <section class="slide level2">
 <h2>Today’s Goals</h2>
 <p>By the end of this class, you will be able to:</p>
 <ul>
-<li>Install R and RStudio</li>
-<li>Install add-on packages</li>
-<li>Get help for packages and functions</li>
-<li>Create objects by writing and running code in the console</li>
+<li>Recognize what makes data “tidy” (and what makes it messy)</li>
+<li>Reshape data between <strong>wide</strong> and <strong>long</strong> formats</li>
+<li>Split a single column into multiple columns</li>
+<li>Chain tidying steps together with the pipe (<code>|&gt;</code>)</li>
 </ul>
 </section>
 <section class="slide level2">
-<h2>What is R?</h2>
-<p>R is a <strong>programming language</strong> designed for statistics and data analysis.</p>
-<div class="fragment">
-<p>Think of R as the <strong>engine</strong> of a car — it does all the work under the hood.</p>
+<h2>Setup</h2>
+<p>Make sure these packages are loaded:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># readr, dplyr, tidyr, stringr, etc.</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)      <span class="co"># read .xlsx files</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)     <span class="co"># clean_names()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Why R?</strong></p>
+<p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
+<p>Grab the <a href="https://rstudio.github.io/cheatsheets/html/tidyr.html">Data tidying cheat sheet</a> — it’s a great reference for the <code>pivot_*</code> and <code>separate*()</code> functions.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Download Today’s Data</h2>
+<p>Save these into your <code>data/</code> folder:</p>
 <ul>
-<li>Free and open-source</li>
-<li>Thousands of add-on packages</li>
-<li>Massive community (especially in psychology!)</li>
-<li>Makes your work <strong>reproducible</strong></li>
+<li><a href="https://psyteachr.github.io/ads-v3/data/tidy.csv">tidy.csv</a></li>
+<li><a href="https://psyteachr.github.io/ads-v3/data/untidy.csv">untidy.csv</a></li>
 </ul>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>What is RStudio?</h2>
-<p>RStudio is an <strong>Integrated Development Environment</strong> (IDE) — it makes working with R much easier.</p>
 <div class="fragment">
-<p>If R is the engine, RStudio is the <strong>dashboard, steering wheel, and GPS</strong> all in one.</p>
-</div>
-<div class="fragment">
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>Always launch <strong>RStudio</strong>, not R directly!</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#16a085">
-<h1>🛠️ Setup Check</h1>
-
-</section>
-<section class="slide level2">
-<h2>Activity: Installation Check</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Do this now!</strong></p>
-</div>
-<div class="callout-content">
-<ol type="1">
-<li>Open <strong>RStudio</strong> on your computer</li>
-<li>Check: do you see four panes?</li>
-<li>Give a thumbs up when you’re ready!</li>
-</ol>
-<p>If you haven’t installed R and RStudio yet, follow the <a href="https://psyteachr.github.io/RSetGo/">installation guide</a>.</p>
-</div>
-</div>
+<p>Both contain the same information — proportion of women in parliaments across countries and years — but stored very differently.</p>
 </div>
 </section></section>
 <section>
 <section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>The RStudio IDE</h1>
+<h1>Why Tidy?</h1>
 
 </section>
 <section class="slide level2">
-<h2>The Four Panes</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Upper Left: Source</strong></p>
-<ul>
-<li>Write and edit code</li>
-<li>View data tables</li>
-</ul>
-<p><strong>Lower Left: Console</strong></p>
-<ul>
-<li>Type commands directly</li>
-<li>See output</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Upper Right: Environment</strong></p>
-<ul>
-<li>See your objects</li>
-<li>View your data</li>
-</ul>
-<p><strong>Lower Right: Files/Plots/Help</strong></p>
-<ul>
-<li>File browser</li>
-<li>Plot viewer</li>
-<li>Help documentation</li>
-<li>Package manager</li>
-</ul>
-</div></div>
-</section>
-<section class="slide level2">
-<h2>Activity: Explore the Panes</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Try it!</strong></p>
-</div>
-<div class="callout-content">
-<ol type="1">
-<li>Find the <strong>Console</strong> pane — type <code>1 + 1</code> and press Enter</li>
-<li>Find the <strong>Environment</strong> pane — is it empty?</li>
-<li>Find the <strong>Help</strong> pane — type <code>?mean</code> in the console</li>
-<li>Where did the help appear?</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>You can rearrange panes under <strong>Tools &gt; Global Options &gt; Pane Layout</strong></p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#16a085">
-<h1>⚙️ RStudio Settings</h1>
-
-</section>
-<section class="slide level2">
-<h2>Critical Settings to Change</h2>
-<p>You should <strong>always start with a clean workspace</strong> — no leftover objects from last time!</p>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Do this now!</strong></p>
-</div>
-<div class="callout-content">
-<p>Go to <strong>Tools &gt; Global Options &gt; General</strong>:</p>
-<ol type="1">
-<li><label><input type="checkbox"><strong>Uncheck</strong> “Restore .RData into workspace at start-up”</label></li>
-<li>Set “Save workspace to .RData on exit” to <strong>Never</strong></li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>You’ll need to change these settings every time you update RStudio.</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>📦 Packages</h1>
-
-</section>
-<section class="slide level2">
-<h2>What are Packages?</h2>
-<p>R comes with built-in functions (“base R”) — like the default apps on your phone.</p>
-<div class="fragment">
-<p><strong>Packages</strong> are add-ons created by the R community — like apps you download from the App Store.</p>
-</div>
-<div class="fragment">
-<p>There are thousands of packages for:</p>
-<ul>
-<li>Data visualization 📊</li>
-<li>Machine learning 🤖</li>
-<li>Web scraping 🌐</li>
-<li>Interactive dashboards 📱</li>
-<li>Even playing Sudoku! 🧩</li>
-</ul>
-</div>
-</section>
-<section class="slide level2">
-<h2>Install vs.&nbsp;Load: A Key Distinction</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3><code>install.packages()</code></h3>
-<p>📲 Like <strong>downloading</strong> an app</p>
-<ul>
-<li>Do it <strong>once</strong></li>
-<li>Only from the <strong>console</strong></li>
-<li>Stays until you remove it</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<h3><code>library()</code></h3>
-<p>🚀 Like <strong>launching</strong> an app</p>
-<ul>
-<li>Do it <strong>every session</strong></li>
-<li>Put it in your <strong>script</strong></li>
-<li>Only lasts until you close R</li>
-</ul>
-</div></div>
-</section>
-<section class="slide level2">
-<h2>Activity: Install Your First Packages</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Run these in the console (not a script!)</strong></p>
-</div>
-<div class="callout-content">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"beepr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-caution callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Important!</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Never</strong> put <code>install.packages()</code> inside a script — only run it from the console. Why? You might accidentally reinstall and update a package, which could break your code.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>Activity: Load and Use a Package</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Try it!</strong></p>
-</div>
-<div class="callout-content">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Load the package</span></span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(beepr)</span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Use a function from the package</span></span>
-<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>🔊 Make sure your sound is on! What did you hear?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Now try this:</strong></p>
-</div>
-<div class="callout-content">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>(<span class="at">sound =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>What changed? Try values 1 through 11!</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Functions</h1>
-
-</section>
-<section class="slide level2">
-<h2>Anatomy of a Function</h2>
-<p>A <strong>function</strong> is a named piece of reusable code. It takes <strong>arguments</strong> (inputs) and produces output.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">function_name</span>(<span class="at">argument1 =</span> value1, <span class="at">argument2 =</span> value2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>For example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>(<span class="at">sound =</span> <span class="dv">8</span>)</span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#     ^         ^</span></span>
-<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#     |         |</span></span>
-<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a><span class="co">#  argument   value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>The Tidyverse</h2>
-<p><code>tidyverse</code> is a “meta-package” — a bundle of packages we’ll use throughout this course:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Package</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>ggplot2</code></td>
-<td>Data visualization</td>
-</tr>
-<tr class="even">
-<td><code>dplyr</code></td>
-<td>Data manipulation</td>
-</tr>
-<tr class="odd">
-<td><code>tidyr</code></td>
-<td>Data tidying</td>
-</tr>
-<tr class="even">
-<td><code>readr</code></td>
-<td>Reading data files</td>
-</tr>
-<tr class="odd">
-<td><code>stringr</code></td>
-<td>Working with text</td>
-</tr>
-<tr class="even">
-<td><code>forcats</code></td>
-<td>Working with categories</td>
-</tr>
-<tr class="odd">
-<td><code>lubridate</code></td>
-<td>Working with dates</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="slide level2">
-<h2>Getting Help</h2>
-<p>There are several ways to get help with a function:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># If the package is loaded</span></span>
-<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>?beep</span>
-<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># If you're not sure about the package</span></span>
-<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>??beep</span>
-<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a aria-hidden="true" tabindex="-1"></a><span class="co"># The full specification</span></span>
-<span id="cb6-8"><a aria-hidden="true" tabindex="-1"></a>?beepr<span class="sc">::</span>beep</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>Every help page has the same structure: <strong>Description → Usage → Arguments → Details → Examples</strong></p>
-</div>
-</section>
-<section class="slide level2">
-<h2>Tab Auto-Complete</h2>
-<p>One of RStudio’s best features! Start typing a function name and press <strong>Tab</strong>:</p>
-<ul>
-<li>RStudio will show you matching functions</li>
-<li>Select a function and press Tab again to see its arguments</li>
-<li>Each argument comes with a brief description</li>
-</ul>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Try it!</strong></p>
-</div>
-<div class="callout-content">
-<p>Type <code>sam</code> in the console and press Tab. Select <code>sample(</code> and press Tab again to see the arguments.</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Arguments In Practice</h1>
-
-</section>
-<section class="slide level2">
-<h2>Example: <code>sample()</code></h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly pick 5 letters</span></span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> letters, <span class="at">size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "z" "j" "h" "v" "c"</code></pre>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Allow duplicates</span></span>
-<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> letters, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "q" "z" "z" "s" "z"</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>Named vs.&nbsp;Positional Arguments</h2>
-<p>These two lines do the <strong>same thing</strong>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Named arguments (explicit)</span></span>
-<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> letters, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Positional arguments (implicit)</span></span>
-<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(letters, <span class="dv">5</span>, <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>With named arguments, <strong>order doesn’t matter</strong>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">x =</span> letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>When learning, use named arguments — they make your code easier to read!</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Objects</h1>
-
-</section>
-<section class="slide level2">
-<h2>Creating Objects</h2>
-<p>Objects <strong>store things</strong> — numbers, text, dates, results. Use <code>&lt;-</code> to assign values:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Maureen"</span></span>
-<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
-<span id="cb13-4"><a aria-hidden="true" tabindex="-1"></a>halloween <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-10-31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>To see what’s inside an object, type its name:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Maureen"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>today</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2026-05-04"</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>Types of Data</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Object</th>
-<th>Type</th>
-<th>Key Rule</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>name &lt;- "Maureen"</code></td>
-<td>Character (text)</td>
-<td>Must use quotes <code>" "</code></td>
-</tr>
-<tr class="even">
-<td><code>age &lt;- 42</code></td>
-<td>Numeric (number)</td>
-<td>No quotes</td>
-</tr>
-<tr class="odd">
-<td><code>today &lt;- Sys.Date()</code></td>
-<td>Date (dynamic)</td>
-<td>Changes each day!</td>
-</tr>
-<tr class="even">
-<td><code>halloween &lt;- as.Date("2026-10-31")</code></td>
-<td>Date (fixed)</td>
-<td>Wrapped in <code>as.Date()</code></td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
-<p>Check the <strong>Environment pane</strong> — your objects should appear there!</p>
-</div>
-</section>
-<section class="slide level2">
-<h2>Objects Can Interact</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Maureen"</span></span>
-<span id="cb18-2"><a aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb18-3"><a aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
-<span id="cb18-4"><a aria-hidden="true" tabindex="-1"></a>halloween <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-10-31"</span>)</span>
-<span id="cb18-5"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a aria-hidden="true" tabindex="-1"></a>decade <span class="ot">&lt;-</span> age <span class="sc">+</span> <span class="dv">10</span></span>
-<span id="cb18-7"><a aria-hidden="true" tabindex="-1"></a>full_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(name, <span class="st">"Ritchey"</span>)</span>
-<span id="cb18-8"><a aria-hidden="true" tabindex="-1"></a>how_long <span class="ot">&lt;-</span> halloween <span class="sc">-</span> today</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>decade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 52</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>full_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Maureen Ritchey"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a>how_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 180 days</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>Activity: Create Your Own Objects</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Type this into your console</strong></p>
-</div>
-<div class="callout-content">
-<ol type="1">
-<li>Create objects for <strong>your</strong> name, age, and a date you’re looking forward to</li>
-<li>Calculate how many days until that date</li>
-<li>Use <code>paste()</code> to create a sentence like: <em>“Hi [name] — there are [X] days until [event]!”</em></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Example structure</span></span>
-<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Your Name"</span></span>
-<span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
-<span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a>my_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-12-25"</span>)</span>
-<span id="cb25-5"><a aria-hidden="true" tabindex="-1"></a>days_left <span class="ot">&lt;-</span> my_date <span class="sc">-</span> today</span>
-<span id="cb25-6"><a aria-hidden="true" tabindex="-1"></a>message <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Hi"</span>, name, <span class="st">"— there are"</span>,</span>
-<span id="cb25-7"><a aria-hidden="true" tabindex="-1"></a>                 days_left, <span class="st">"days to go!"</span>)</span>
-<span id="cb25-8"><a aria-hidden="true" tabindex="-1"></a>message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Getting Help</h1>
-
-</section>
-<section class="slide level2">
-<h2>Your Help Toolkit</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Resource</th>
-<th>When to Use</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>?function_name</code></td>
-<td>Know the function, need details</td>
-</tr>
-<tr class="even">
-<td><code>??search_term</code></td>
-<td>Not sure which function to use</td>
-</tr>
-<tr class="odd">
-<td>Google + “R” or “tidyverse”</td>
-<td>Stuck on a concept</td>
-</tr>
-<tr class="even">
-<td>AI tools (responsibly!)</td>
-<td>Need examples or explanations</td>
-</tr>
-<tr class="odd">
-<td>Package vignettes</td>
-<td>Want a tutorial-style guide</td>
-</tr>
-<tr class="even">
-<td>Your classmates!</td>
-<td>Always a good idea</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="slide level2">
-<h2>A Note on AI</h2>
-<p>AI tools can help with coding — but be careful while you’re building foundational skills.</p>
-<div class="fragment">
+<h2>A Reality Check</h2>
 <blockquote>
-<p>Using AI to do your exercises is like getting a forklift to lift weights at the gym for you. It defeats the purpose!</p>
+<p>“Every messy dataset is messy in its own way.” — Hadley Wickham</p>
 </blockquote>
+<div class="fragment">
+<p>Data tidying is often the <strong>most time-consuming part</strong> of an analysis.</p>
 </div>
 <div class="fragment">
-<p>Build your skills first, then use AI to <strong>accelerate</strong> your work — not replace your learning.</p>
+<p>Moving between formats that are easy for <strong>humans to read</strong> and formats that are easy for <strong>computers to use</strong> takes practice — that conceptual shift is the real skill of this chapter.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Three Words to Pin Down</h2>
+<p><strong>Observation:</strong> all the information about a single “thing” in a single condition (e.g., one country in one year).</p>
+<div class="fragment">
+<p><strong>Variable:</strong> one type of information about that observation (e.g., year, number of MPs).</p>
+</div>
+<div class="fragment">
+<p><strong>Value:</strong> the data for one variable for one observation (e.g., <code>2025</code>).</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>The Three Rules of Tidy Data</h2>
+<p>For data to be “tidy”:</p>
+<ol type="1">
+<li>Each <strong>observation</strong> has its own <strong>row</strong></li>
+<li>Each <strong>variable</strong> has its own <strong>column</strong></li>
+<li>Each <strong>value</strong> has its own <strong>cell</strong></li>
+</ol>
+<div class="fragment">
+<p>When data is tidy, you can keep using the same code patterns even when the dataset grows or changes shape.</p>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>Untidy vs Tidy</h1>
+
+</section>
+<section class="slide level2">
+<h2>An Untidy Example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>untidy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/untidy.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>untidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>What’s “off” about this table?</p>
+<ul>
+<li>The <code>country</code> column squeezes in two values (name and code)</li>
+<li>Each year has its own column (<code>1950</code>, <code>1975</code>, <code>2000</code>, <code>2025</code>)</li>
+<li>Each cell holds <strong>two numbers</strong>: women / members</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2>Why That Hurts</h2>
+<p>Suppose you want the average proportion of women per year. In Excel you would:</p>
+<ol type="1">
+<li>Split each year column into <code>women_*</code> and <code>members_*</code></li>
+<li>Compute proportion for each year (4 new columns)</li>
+<li>Average each new column separately</li>
+</ol>
+<div class="fragment">
+<p>If a new year of data arrives, you redo every step. Painful.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>The Tidy Version</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>tidy_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/tidy.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>tidy_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Each row is one country in one year. Five columns: <code>country_name</code>, <code>country_code</code>, <code>year</code>, <code>members</code>, <code>women</code>.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>And the Calculation Becomes…</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>tidy_data <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop_women =</span> women <span class="sc">/</span> members) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_prop_women =</span> <span class="fu">mean</span>(prop_women),</span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> year</span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>The same code works whether you have 4 years or 40. That’s the power of tidy.</p>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>Reshaping Data</h1>
+
+</section>
+<section class="slide level2">
+<h2>Wide vs Long</h2>
+<p><strong>Wide format</strong>: all measurements about one thing on the same row.</p>
+<p><strong>Long format</strong>: each measurement on its own row.</p>
+<div class="fragment">
+<p>You’ll often need to convert between them. Think of it as the R version of a pivot table in Excel.</p>
+</div>
+</section>
+<section class="slide level2" data-background-color="#16a085">
+<h2><code>pivot_longer()</code>: Wide → Long</h2>
+</section>
+<section class="slide level2">
+<h2>The Idea</h2>
+<p><code>pivot_longer()</code> takes several columns and stacks them into two new columns:</p>
+<ul>
+<li>one for the <strong>old column names</strong></li>
+<li>one for the <strong>values</strong> that were in those columns</li>
+</ul>
+<div class="fragment">
+<p>Three key arguments:</p>
+<ul>
+<li><code>cols</code> — which columns to “fold up”</li>
+<li><code>names_to</code> — name of the new column for the old headers</li>
+<li><code>values_to</code> — name of the new column for the old values</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2>In Code</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> untidy,</span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="st">`</span><span class="at">1950</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2025</span><span class="st">`</span>,</span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"women_members"</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Now there’s one row per country-year, with <code>year</code> as a real variable.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Because the column names are <strong>numbers</strong>, you must wrap them in backticks. Without them, R thinks <code>1950:2025</code> means “columns 1950 through 2025.”</p>
+<pre><code>Error in `pivot_longer()`:
+! Can't select columns past the end.
+ℹ Locations 1950, 1951, …, 2025 don't exist.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Activity: Sketch a Long Version</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it!</strong></p>
+</div>
+<div class="callout-content">
+<p>Convert this table to long format. You don’t need to write code — just sketch it on paper or in a spreadsheet.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">band</th>
+<th style="text-align: left;">twitter</th>
+<th style="text-align: left;">instagram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">The Beatles</td>
+<td style="text-align: left;">3.8</td>
+<td style="text-align: left;">3.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The Rolling Stones</td>
+<td style="text-align: left;">3.4</td>
+<td style="text-align: left;">3.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">One Direction</td>
+<td style="text-align: left;">31.3</td>
+<td style="text-align: left;">22.8</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li>How many rows should the long version have?</li>
+<li>What should the new column names be?</li>
+<li><strong>Bonus:</strong> What would the long version look like if we <em>also</em> had a <code>youtube</code> column?</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2" data-background-color="#16a085">
+<h2><code>pivot_wider()</code>: Long → Wide</h2>
+</section>
+<section class="slide level2">
+<h2>The Idea</h2>
+<p><code>pivot_wider()</code> is the reverse — it spreads one column’s <strong>values</strong> into new column <strong>names</strong>.</p>
+<div class="fragment">
+<p>Three key arguments:</p>
+<ul>
+<li><code>id_cols</code> — column(s) that uniquely identify each new row</li>
+<li><code>names_from</code> — column whose values become the new headers</li>
+<li><code>values_from</code> — column whose values fill the new cells</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2>In Code</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>wide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(</span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> long,</span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">id_cols =</span> year,</span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> country,</span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> women_members</span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a>wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Now each row is a year, and each country has its own column. Useful for some kinds of comparison or display.</p>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>One Value Per Cell</h1>
+
+</section>
+<section class="slide level2">
+<h2>The Problem</h2>
+<p>Look back at our <code>long</code> data — the <code>women_members</code> column still holds <strong>two values</strong> in each cell, like <code>"3 / 257"</code>.</p>
+<div class="fragment">
+<p>Tidy data needs <strong>one value per cell</strong>, so we need to split this column.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2><code>separate()</code> to the Rescue</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>split_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(</span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> long,</span>
+<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> women_members,        <span class="co"># the column to split</span></span>
+<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"women"</span>, <span class="st">"members"</span>),  <span class="co"># the new column names</span></span>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">" / "</span>,                <span class="co"># how to split</span></span>
+<span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">remove =</span> <span class="cn">TRUE</span>,              <span class="co"># drop the original column?</span></span>
+<span id="cb8-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">convert =</span> <span class="cn">TRUE</span>              <span class="co"># try to fix data types?</span></span>
+<span id="cb8-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a aria-hidden="true" tabindex="-1"></a>split_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><code>convert = TRUE</code> is handy — it’ll turn <code>"3"</code> and <code>"257"</code> into actual numbers automatically.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Activity: Split the <code>country</code> Column</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it!</strong></p>
+</div>
+<div class="callout-content">
+<p>The <code>country</code> column still combines two pieces of information (<code>"Argentina (ARG)"</code>).</p>
+<ol type="1">
+<li>Use <code>separate()</code> to split it into <code>country_name</code> and <code>country_code</code></li>
+<li>By default, <code>separate()</code> splits at any non-letter, non-number character</li>
+<li>You may need the <code>extra = "drop"</code> argument to handle the trailing <code>)</code></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>tidy_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(</span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> split_data,</span>
+<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> country,</span>
+<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"country_name"</span>, <span class="st">"country_code"</span>),</span>
+<span id="cb9-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">extra =</span> <span class="st">"drop"</span></span>
+<span id="cb9-6"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>Pipes in Action</h1>
+
+</section>
+<section class="slide level2">
+<h2>The Same Workflow, Without Pipes</h2>
+<p>Here’s everything we did, written as separate steps:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>untidy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/untidy.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a>long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(untidy,</span>
+<span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">cols =</span> <span class="st">`</span><span class="at">1950</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2025</span><span class="st">`</span>,</span>
+<span id="cb10-5"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb10-6"><a aria-hidden="true" tabindex="-1"></a>                     <span class="at">values_to =</span> <span class="st">"women_members"</span>)</span>
+<span id="cb10-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a aria-hidden="true" tabindex="-1"></a>split_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(long,</span>
+<span id="cb10-9"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">col =</span> women_members,</span>
+<span id="cb10-10"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"women"</span>, <span class="st">"members"</span>),</span>
+<span id="cb10-11"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">sep =</span> <span class="st">" / "</span>,</span>
+<span id="cb10-12"><a aria-hidden="true" tabindex="-1"></a>                       <span class="at">convert =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-13"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a aria-hidden="true" tabindex="-1"></a>tidy_data <span class="ot">&lt;-</span> <span class="fu">separate</span>(split_data,</span>
+<span id="cb10-15"><a aria-hidden="true" tabindex="-1"></a>                      <span class="at">col =</span> country,</span>
+<span id="cb10-16"><a aria-hidden="true" tabindex="-1"></a>                      <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"country_name"</span>, <span class="st">"country_code"</span>),</span>
+<span id="cb10-17"><a aria-hidden="true" tabindex="-1"></a>                      <span class="at">extra =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Four intermediate objects. Easy to lose track of which one is “current.”</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>The Pipe Version</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>tidy_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/untidy.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">1950</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2025</span><span class="st">`</span>,</span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"women_members"</span></span>
+<span id="cb11-6"><a aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
+<span id="cb11-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> women_members,</span>
+<span id="cb11-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"women"</span>, <span class="st">"members"</span>),</span>
+<span id="cb11-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">" / "</span>,</span>
+<span id="cb11-11"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">convert =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-12"><a aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
+<span id="cb11-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> country,</span>
+<span id="cb11-15"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"country_name"</span>, <span class="st">"country_code"</span>),</span>
+<span id="cb11-16"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">extra =</span> <span class="st">"drop"</span></span>
+<span id="cb11-17"><a aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>One object, read top-to-bottom: read it, then pivot, then separate, then separate again.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>How to Read a Pipe</h2>
+<ol type="1">
+<li>Read in the data with <code>read_csv()</code> — <strong>and then</strong></li>
+<li>Reshape longer with <code>pivot_longer()</code> — <strong>and then</strong></li>
+<li>Split <code>women_members</code> into two columns — <strong>and then</strong></li>
+<li>Split <code>country</code> into two columns</li>
+</ol>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>You can debug a pipe by highlighting from the start to <strong>just before</strong> the pipe you want to stop at, and running it. The output is the data at that step.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>When to Break the Chain</h2>
+<p>Don’t feel obligated to fit <em>every</em> step into one pipeline.</p>
+<div class="fragment">
+<p>Break it up when:</p>
+<ul>
+<li>The chain gets so long it’s hard to read</li>
+<li>You want to inspect or save an intermediate result</li>
+<li>You’re debugging and need to isolate a step</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Pipes are a tool for clarity, not a contest.</p>
 </div>
 </section></section>
 <section>
@@ -1071,22 +848,19 @@
 <section class="slide level2">
 <h2>Key Takeaways</h2>
 <ul>
-<li><strong>R</strong> is the language; <strong>RStudio</strong> is the tool that makes it easier</li>
-<li>Always start with a <strong>clean workspace</strong></li>
-<li><code>install.packages()</code> = download once; <code>library()</code> = load each session</li>
-<li><strong>Functions</strong> take arguments; use <code>?</code> to learn about them</li>
-<li><strong>Objects</strong> store your data; use <code>&lt;-</code> to create them</li>
-<li>When stuck: restart R, check help, Google it, ask a friend!</li>
+<li><strong>Tidy data</strong>: one observation per row, one variable per column, one value per cell</li>
+<li><code>pivot_longer()</code> stacks wide columns into a single column (great for plotting and summarising)</li>
+<li><code>pivot_wider()</code> does the reverse (great for display)</li>
+<li><code>separate()</code> splits a column with multiple values per cell into several columns</li>
+<li>Chain tidying steps with <code>|&gt;</code> to keep your code readable</li>
 </ul>
-</section>
-<section class="slide level2">
-<h2>Before Next Time</h2>
-<p>📖 <strong>Read</strong>: Chapter 1 of <em>Applied Data Skills</em> to lock in what we learned today</p>
-<p>❓ <strong>Questions?</strong></p>
+<div class="fragment">
+<p>Tidying is a conceptual skill — practice with real datasets is the only way to get fluent.</p>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </div>
 </section></section>

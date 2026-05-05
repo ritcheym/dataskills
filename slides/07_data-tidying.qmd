@@ -1,0 +1,410 @@
+---
+title: "Data Tidying"
+subtitle: "Data Skills for Psychology — Module 7"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+execute:
+  echo: true
+  eval: false
+---
+
+# Welcome! {background-color="#2c3e50"}
+
+These slides are adapted from [Applied Data Skills Ch. 8: Data Tidying](https://psyteachr.github.io/ads-v3/08-tidy.html).
+
+## Today's Goals
+
+By the end of this class, you will be able to:
+
+-   Recognize what makes data "tidy" (and what makes it messy)
+-   Reshape data between **wide** and **long** formats
+-   Split a single column into multiple columns
+-   Chain tidying steps together with the pipe (`|>`)
+
+## Setup
+
+Make sure these packages are loaded:
+
+```{r}
+library(tidyverse)   # readr, dplyr, tidyr, stringr, etc.
+library(readxl)      # read .xlsx files
+library(janitor)     # clean_names()
+```
+
+::: callout-tip
+Grab the [Data tidying cheat sheet](https://rstudio.github.io/cheatsheets/html/tidyr.html) — it's a great reference for the `pivot_*` and `separate*()` functions.
+:::
+
+## Download Today's Data
+
+Save these into your `data/` folder:
+
+-   [tidy.csv](https://psyteachr.github.io/ads-v3/data/tidy.csv)
+-   [untidy.csv](https://psyteachr.github.io/ads-v3/data/untidy.csv)
+
+. . .
+
+Both contain the same information — proportion of women in parliaments across countries and years — but stored very differently.
+
+# Why Tidy? {background-color="#2c3e50"}
+
+## A Reality Check
+
+> "Every messy dataset is messy in its own way." — Hadley Wickham
+
+. . .
+
+Data tidying is often the **most time-consuming part** of an analysis.
+
+. . .
+
+Moving between formats that are easy for **humans to read** and formats that are easy for **computers to use** takes practice — that conceptual shift is the real skill of this chapter.
+
+## Three Words to Pin Down
+
+**Observation:** all the information about a single "thing" in a single condition (e.g., one country in one year).
+
+. . .
+
+**Variable:** one type of information about that observation (e.g., year, number of MPs).
+
+. . .
+
+**Value:** the data for one variable for one observation (e.g., `2025`).
+
+## The Three Rules of Tidy Data
+
+For data to be "tidy":
+
+1.  Each **observation** has its own **row**
+2.  Each **variable** has its own **column**
+3.  Each **value** has its own **cell**
+
+. . .
+
+When data is tidy, you can keep using the same code patterns even when the dataset grows or changes shape.
+
+# Untidy vs Tidy {background-color="#2c3e50"}
+
+## An Untidy Example
+
+```{r}
+untidy <- read_csv("data/untidy.csv", show_col_types = FALSE)
+untidy
+```
+
+. . .
+
+What's "off" about this table?
+
+-   The `country` column squeezes in two values (name and code)
+-   Each year has its own column (`1950`, `1975`, `2000`, `2025`)
+-   Each cell holds **two numbers**: women / members
+
+## Why That Hurts
+
+Suppose you want the average proportion of women per year. In Excel you would:
+
+1.  Split each year column into `women_*` and `members_*`
+2.  Compute proportion for each year (4 new columns)
+3.  Average each new column separately
+
+. . .
+
+If a new year of data arrives, you redo every step. Painful.
+
+## The Tidy Version
+
+```{r}
+tidy_data <- read_csv("data/tidy.csv", show_col_types = FALSE)
+tidy_data
+```
+
+. . .
+
+Each row is one country in one year. Five columns: `country_name`, `country_code`, `year`, `members`, `women`.
+
+## And the Calculation Becomes…
+
+```{r}
+tidy_data |>
+  mutate(prop_women = women / members) |>
+  summarise(
+    avg_prop_women = mean(prop_women),
+    .by = year
+  )
+```
+
+. . .
+
+The same code works whether you have 4 years or 40. That's the power of tidy.
+
+# Reshaping Data {background-color="#2c3e50"}
+
+## Wide vs Long
+
+**Wide format**: all measurements about one thing on the same row.
+
+**Long format**: each measurement on its own row.
+
+. . .
+
+You'll often need to convert between them. Think of it as the R version of a pivot table in Excel.
+
+## `pivot_longer()`: Wide → Long {background-color="#16a085"}
+
+## The Idea
+
+`pivot_longer()` takes several columns and stacks them into two new columns:
+
+-   one for the **old column names**
+-   one for the **values** that were in those columns
+
+. . .
+
+Three key arguments:
+
+-   `cols` — which columns to "fold up"
+-   `names_to` — name of the new column for the old headers
+-   `values_to` — name of the new column for the old values
+
+## In Code
+
+```{r}
+long <- pivot_longer(
+  data = untidy,
+  cols = `1950`:`2025`,
+  names_to = "year",
+  values_to = "women_members"
+)
+
+long
+```
+
+. . .
+
+Now there's one row per country-year, with `year` as a real variable.
+
+. . .
+
+::: callout-warning
+Because the column names are **numbers**, you must wrap them in backticks. Without them, R thinks `1950:2025` means "columns 1950 through 2025."
+
+```         
+Error in `pivot_longer()`:
+! Can't select columns past the end.
+ℹ Locations 1950, 1951, …, 2025 don't exist.
+```
+:::
+
+## Activity: Sketch a Long Version
+
+::: callout-tip
+## Try it!
+
+Convert this table to long format. You don't need to write code — just sketch it on paper or in a spreadsheet.
+
+| band               | twitter | instagram |
+|:-------------------|:--------|:----------|
+| The Beatles        | 3.8     | 3.8       |
+| The Rolling Stones | 3.4     | 3.1       |
+| One Direction      | 31.3    | 22.8      |
+
+1.  How many rows should the long version have?
+2.  What should the new column names be?
+3.  **Bonus:** What would the long version look like if we *also* had a `youtube` column?
+:::
+
+## `pivot_wider()`: Long → Wide {background-color="#16a085"}
+
+## The Idea
+
+`pivot_wider()` is the reverse — it spreads one column's **values** into new column **names**.
+
+. . .
+
+Three key arguments:
+
+-   `id_cols` — column(s) that uniquely identify each new row
+-   `names_from` — column whose values become the new headers
+-   `values_from` — column whose values fill the new cells
+
+## In Code
+
+```{r}
+wide <- pivot_wider(
+  data = long,
+  id_cols = year,
+  names_from = country,
+  values_from = women_members
+)
+
+wide
+```
+
+. . .
+
+Now each row is a year, and each country has its own column. Useful for some kinds of comparison or display.
+
+# One Value Per Cell {background-color="#2c3e50"}
+
+## The Problem
+
+Look back at our `long` data — the `women_members` column still holds **two values** in each cell, like `"3 / 257"`.
+
+. . .
+
+Tidy data needs **one value per cell**, so we need to split this column.
+
+## `separate()` to the Rescue
+
+```{r}
+split_data <- separate(
+  data = long,
+  col = women_members,        # the column to split
+  into = c("women", "members"),  # the new column names
+  sep = " / ",                # how to split
+  remove = TRUE,              # drop the original column?
+  convert = TRUE              # try to fix data types?
+)
+
+split_data
+```
+
+. . .
+
+`convert = TRUE` is handy — it'll turn `"3"` and `"257"` into actual numbers automatically.
+
+## Activity: Split the `country` Column
+
+::: callout-tip
+## Try it!
+
+The `country` column still combines two pieces of information (`"Argentina (ARG)"`).
+
+1.  Use `separate()` to split it into `country_name` and `country_code`
+2.  By default, `separate()` splits at any non-letter, non-number character
+3.  You may need the `extra = "drop"` argument to handle the trailing `)`
+
+```{r}
+#| eval: false
+tidy_data <- separate(
+  data = split_data,
+  col = country,
+  into = c("country_name", "country_code"),
+  extra = "drop"
+)
+```
+:::
+
+# Pipes in Action {background-color="#2c3e50"}
+
+## The Same Workflow, Without Pipes
+
+Here's everything we did, written as separate steps:
+
+```{r}
+untidy <- read_csv("data/untidy.csv", show_col_types = FALSE)
+
+long <- pivot_longer(untidy,
+                     cols = `1950`:`2025`,
+                     names_to = "year",
+                     values_to = "women_members")
+
+split_data <- separate(long,
+                       col = women_members,
+                       into = c("women", "members"),
+                       sep = " / ",
+                       convert = TRUE)
+
+tidy_data <- separate(split_data,
+                      col = country,
+                      into = c("country_name", "country_code"),
+                      extra = "drop")
+```
+
+. . .
+
+Four intermediate objects. Easy to lose track of which one is "current."
+
+## The Pipe Version
+
+```{r}
+tidy_data <- read_csv("data/untidy.csv", show_col_types = FALSE) |>
+  pivot_longer(
+    cols = `1950`:`2025`,
+    names_to = "year",
+    values_to = "women_members"
+  ) |>
+  separate(
+    col = women_members,
+    into = c("women", "members"),
+    sep = " / ",
+    convert = TRUE
+  ) |>
+  separate(
+    col = country,
+    into = c("country_name", "country_code"),
+    extra = "drop"
+  )
+```
+
+. . .
+
+One object, read top-to-bottom: read it, then pivot, then separate, then separate again.
+
+## How to Read a Pipe
+
+1.  Read in the data with `read_csv()` — **and then**
+2.  Reshape longer with `pivot_longer()` — **and then**
+3.  Split `women_members` into two columns — **and then**
+4.  Split `country` into two columns
+
+. . .
+
+::: callout-note
+You can debug a pipe by highlighting from the start to **just before** the pipe you want to stop at, and running it. The output is the data at that step.
+:::
+
+## When to Break the Chain
+
+Don't feel obligated to fit *every* step into one pipeline.
+
+. . .
+
+Break it up when:
+
+-   The chain gets so long it's hard to read
+-   You want to inspect or save an intermediate result
+-   You're debugging and need to isolate a step
+
+. . .
+
+Pipes are a tool for clarity, not a contest.
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## Key Takeaways
+
+-   **Tidy data**: one observation per row, one variable per column, one value per cell
+-   `pivot_longer()` stacks wide columns into a single column (great for plotting and summarising)
+-   `pivot_wider()` does the reverse (great for display)
+-   `separate()` splits a column with multiple values per cell into several columns
+-   Chain tidying steps with `|>` to keep your code readable
+
+. . .
+
+Tidying is a conceptual skill — practice with real datasets is the only way to get fluent.

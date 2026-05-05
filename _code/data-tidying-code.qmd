@@ -1,0 +1,178 @@
+---
+title: "Data Tidying — In-Class Code"
+author: "Data Skills for Psychology"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-overflow: wrap
+    df-print: kable
+---
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)   # readr, dplyr, tidyr, stringr, etc.
+library(readxl)      # read .xlsx files
+library(janitor)     # clean_names()
+```
+
+Download today's data into your `data/` folder:
+
+-   <https://psyteachr.github.io/ads-v3/data/tidy.csv>
+-   <https://psyteachr.github.io/ads-v3/data/untidy.csv>
+
+## Untidy vs Tidy
+
+### An untidy example
+
+```{r}
+#| message: true
+untidy <- read_csv("data/untidy.csv", show_col_types = FALSE)
+untidy
+```
+
+### The tidy version
+
+```{r}
+#| message: true
+tidy_data <- read_csv("data/tidy.csv", show_col_types = FALSE)
+tidy_data
+```
+
+### And the calculation becomes…
+
+```{r}
+tidy_data |>
+  mutate(prop_women = women / members) |>
+  summarise(
+    avg_prop_women = mean(prop_women),
+    .by = year
+  )
+```
+
+## Reshaping Data
+
+### `pivot_longer()`: wide → long
+
+```{r}
+long <- pivot_longer(
+  data = untidy,
+  cols = `1950`:`2025`,
+  names_to = "year",
+  values_to = "women_members"
+)
+
+long
+```
+
+### Activity: Sketch a long version
+
+Convert this table to long format. You don't need to write code — just sketch it on paper or in a spreadsheet.
+
+| band               | twitter | instagram |
+|:-------------------|:--------|:----------|
+| The Beatles        | 3.8     | 3.8       |
+| The Rolling Stones | 3.4     | 3.1       |
+| One Direction      | 31.3    | 22.8      |
+
+1.  How many rows should the long version have?
+2.  What should the new column names be?
+3.  **Bonus:** What would the long version look like if we *also* had a `youtube` column?
+
+```{r}
+# Your code here (or sketch in a notebook):
+
+```
+
+### `pivot_wider()`: long → wide
+
+```{r}
+wide <- pivot_wider(
+  data = long,
+  id_cols = year,
+  names_from = country,
+  values_from = women_members
+)
+
+wide
+```
+
+## One Value Per Cell
+
+### `separate()` to the rescue
+
+```{r}
+split_data <- separate(
+  data = long,
+  col = women_members,            # the column to split
+  into = c("women", "members"),   # the new column names
+  sep = " / ",                    # how to split
+  remove = TRUE,                  # drop the original column?
+  convert = TRUE                  # try to fix data types?
+)
+
+split_data
+```
+
+### Activity: Split the `country` column
+
+The `country` column still combines two pieces of information (`"Argentina (ARG)"`).
+
+1.  Use `separate()` to split it into `country_name` and `country_code`
+2.  By default, `separate()` splits at any non-letter, non-number character
+3.  You may need the `extra = "drop"` argument to handle the trailing `)`
+
+```{r}
+# Your code here:
+
+```
+
+## Pipes in Action
+
+### The same workflow, without pipes
+
+```{r}
+untidy <- read_csv("data/untidy.csv", show_col_types = FALSE)
+
+long <- pivot_longer(untidy,
+                     cols = `1950`:`2025`,
+                     names_to = "year",
+                     values_to = "women_members")
+
+split_data <- separate(long,
+                       col = women_members,
+                       into = c("women", "members"),
+                       sep = " / ",
+                       convert = TRUE)
+
+tidy_data <- separate(split_data,
+                      col = country,
+                      into = c("country_name", "country_code"),
+                      extra = "drop")
+```
+
+### The pipe version
+
+```{r}
+tidy_data <- read_csv("data/untidy.csv", show_col_types = FALSE) |>
+  pivot_longer(
+    cols = `1950`:`2025`,
+    names_to = "year",
+    values_to = "women_members"
+  ) |>
+  separate(
+    col = women_members,
+    into = c("women", "members"),
+    sep = " / ",
+    convert = TRUE
+  ) |>
+  separate(
+    col = country,
+    into = c("country_name", "country_code"),
+    extra = "drop"
+  )
+```
