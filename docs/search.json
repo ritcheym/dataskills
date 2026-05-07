@@ -449,7 +449,7 @@
     "href": "modules/07_data-tidying.html#slides",
     "title": "Data Tidying- with fMRI!",
     "section": "Slides",
-    "text": "Slides\nSlides have been adapted from the textbook readings using Claude AI.\n\nThis module’s lecture slides\nCompanion code",
+    "text": "Slides\nSlides have been adapted from the textbook readings using Claude AI.\n\nThis module’s lecture slides\nCompanion code\nCompanion code - fMRI",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -473,7 +473,7 @@
     "href": "modules/07_data-tidying.html#weekly-assignment",
     "title": "Data Tidying- with fMRI!",
     "section": "Weekly assignment",
-    "text": "Weekly assignment\nDownload the fmri-data-wrangling script here. Also, download this csv file that contains summary data for each subject.\nPut these two files in the same folder, and follow the instructions in the script. You will start from the section labeled Start running from here. Below that section, you will find several questions that you will answer using the data and the skills you have learned so far. Respond to the questions by filling in the chunks that say FILL IN HERE.\nFinal project preparation: Read the paper associated with your final project. Download the data and make sure you are able to load it in to R. Your Quarto document should include the code that you used to load it into R.\nWhen you zip your files to submit your assignment, please do not include the original data files. You should include only the qmd and html report files.",
+    "text": "Weekly assignment\nDownload the fmri-data-wrangling script here. Also, download this csv file that contains summary data for each subject.\nFollow the instructions in the script. You will start from the section labeled Start running from here. Below that section, you will find several questions that you will answer using the data and the skills you have learned so far. Respond to the questions by filling in the chunks that say FILL IN HERE.\nFinal project preparation: Read the paper associated with your final project. Download the data and make sure you are able to load it in to R. Your Quarto document should include the code that you used to load it into R.\nWhen you zip your files to submit your assignment, please do not include the original data files. You should include only the qmd and html report files.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
