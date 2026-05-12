@@ -1,0 +1,450 @@
+---
+title: "Data Relations"
+subtitle: "Data Skills for Psychology — Module 7"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+execute:
+  echo: true
+  eval: false
+---
+
+# Welcome! {background-color="#2c3e50"}
+
+These slides are adapted from [Applied Data Skills Ch. 5: Data Relations](https://psyteachr.github.io/ads-v3/05-joins.html).
+
+## Today's Goals
+
+By the end of this class, you will be able to:
+
+-   Match related data across multiple tables using **joins**
+-   Choose between `left_join()`, `right_join()`, `inner_join()`, and `full_join()`
+-   Stack tables together with `bind_rows()` and `bind_cols()`
+-   Use **set operations** to compare two tables
+-   Diagnose and fix common join problems (mismatched types)
+
+## Setup
+
+Make sure you have the tidyverse loaded:
+
+```{r}
+library(tidyverse)
+```
+
+::: callout-tip
+Grab the [Data transformation cheat sheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html) — it has a great visual summary of all the joins on the back page.
+:::
+
+# Why Combine Data? {background-color="#2c3e50"}
+
+## Real data lives in many places
+
+Almost every real-world analysis starts by combining data from multiple sources:
+
+. . .
+
+-   Patient records in one file, lab results in another
+-   Survey responses split across months or sites
+-   Student demographics in one sheet, grades in another
+-   Trial-level behavioral data plus participant-level questionnaires
+
+. . .
+
+The **`*_join()`** family lets you stitch tables together using a shared identifier (like a participant ID).
+
+## Two Example Tables
+
+We'll use two tiny demo tables. First, a `patients` table:
+
+```{r}
+patients <- tibble(
+  id = 1:5,
+  city = c("Port Ellen", "Dufftown", NA,
+           "Aberlour", "Tobermory"),
+  postcode = c("PA42 7DU", "AB55 4DH", NA,
+               "AB38 7RY", "PA75 6NR")
+)
+```
+
+. . .
+
+And a `visits` table — counts of GP visits per patient:
+
+```{r}
+visits <- tibble(
+  id = c(2, 3, 4, 4, 5, 5, 6, 6, 7),
+  visits = c(2, 1, 4, 0, 9, 11, 5, 0, 3)
+)
+```
+
+## What's in each table?
+
+::::: columns
+::: {.column width="50%"}
+**`patients`** (5 rows)
+
+| id  | city       | postcode |
+|-----|------------|----------|
+| 1   | Port Ellen | PA42 7DU |
+| 2   | Dufftown   | AB55 4DH |
+| 3   | NA         | NA       |
+| 4   | Aberlour   | AB38 7RY |
+| 5   | Tobermory  | PA75 6NR |
+:::
+
+::: {.column width="50%"}
+**`visits`** (9 rows)
+
+| id  | visits |
+|-----|--------|
+| 2   | 2      |
+| 3   | 1      |
+| 4   | 4      |
+| 4   | 0      |
+| 5   | 9      |
+| 5   | 11     |
+| 6   | 5      |
+| 6   | 0      |
+| 7   | 3      |
+:::
+:::::
+
+. . .
+
+Notice: some IDs appear in only one table, and some IDs appear **multiple times** in `visits`.
+
+# Mutating Joins {background-color="#2c3e50"}
+
+## What is a Mutating Join?
+
+A **mutating join** adds new columns from one table onto another, matching rows by a key.
+
+. . .
+
+The general syntax is the same for all four:
+
+```{r}
+#| eval: false
+left_join(x, y, by = "id")
+right_join(x, y, by = "id")
+inner_join(x, y, by = "id")
+full_join(x, y, by = "id")
+```
+
+. . .
+
+-   `x` = the first (left) table
+-   `y` = the second (right) table
+-   `by` = which column(s) to match on
+
+## `left_join()`
+
+Keeps **all rows from the left table** and adds matching info from the right.
+
+```{r}
+left_data <- left_join(patients, visits, by = "id")
+left_data
+```
+
+. . .
+
+Result: **all 5 patients are kept**. Patients with multiple visits get **duplicated rows**. Patient 1 (no visits) gets `NA` in the `visits` column.
+
+## `right_join()`
+
+Keeps **all rows from the right table** and adds matching info from the left.
+
+```{r}
+right_data <- right_join(patients, visits, by = "id")
+right_data
+```
+
+. . .
+
+Result: **all 9 visits are kept**. IDs in `visits` that don't appear in `patients` (ids 6, 7) get `NA` for city and postcode.
+
+. . .
+
+::: callout-note
+`right_join(x, y)` returns the same rows as `left_join(y, x)` — just with the columns in a different order.
+:::
+
+## `inner_join()`
+
+Keeps **only rows that appear in both tables**.
+
+```{r}
+inner_data <- inner_join(patients, visits, by = "id")
+inner_data
+```
+
+. . .
+
+Result: only IDs 2, 3, 4, 5 remain. Patient 1 (no visits) is dropped. Visits for IDs 6 and 7 (not in `patients`) are also dropped.
+
+## `full_join()`
+
+Keeps **everything from both tables**, filling in `NA` where there's no match.
+
+```{r}
+full_data <- full_join(patients, visits, by = "id")
+full_data
+```
+
+. . .
+
+Result: every ID from either table appears. Patient 1 has `NA` for visits. Visits 6 and 7 have `NA` for city and postcode.
+
+## Picking the Right Join {.smaller}
+
+| Join               | What you keep                            |
+|--------------------|------------------------------------------|
+| `left_join(x, y)`  | All rows from `x`; matched info from `y` |
+| `right_join(x, y)` | All rows from `y`; matched info from `x` |
+| `inner_join(x, y)` | Only rows in **both**                    |
+| `full_join(x, y)`  | Rows from **either**                     |
+
+. . .
+
+A good first question to ask: **which table is the "ground truth" I want to preserve?**
+
+## Activity: Which Join?
+
+::: callout-tip
+## Choose the right join for each scenario
+
+1.  You have `registrations` (everyone signed up with a doctor) and `jabs` (everyone who got a flu shot). You want to analyze outcomes for people who are **both** registered and vaccinated.
+
+2.  You have `boards` (all NHS regions and their populations) and `attendances` (clinic visits, only some boards). You want **every** NHS board, with attendance filled in where available.
+
+3.  You have `fuel_support` and `disability_adaptations`. You want **everyone** in either list, combining both sets of variables.
+
+Think about it — which join, and why?
+:::
+
+# Chaining Joins {background-color="#2c3e50"}
+
+## Joining More Than Two Tables
+
+Joins are **two-table verbs**. To combine three+ tables, just chain them.
+
+```{r}
+satisfaction <- tibble(
+  id = 1:5,
+  satisfaction = c(4, 3, 2, 3, 1)
+)
+```
+
+. . .
+
+```{r}
+# Using the pipe — read |> as "and then"
+pipe_join <- patients |>
+  left_join(visits, by = "id") |>
+  left_join(satisfaction, by = "id")
+```
+
+. . .
+
+Each `left_join` step adds new columns onto whatever came before.
+
+## Always Check Your Output!
+
+::: callout-warning
+Joins are easy to write but surprisingly easy to **get wrong**. Before moving on, ask:
+
+-   Does the result have **more or fewer rows** than expected?
+-   Does it have the **right number of columns**?
+-   Are there **NAs** where you didn't expect them?
+
+If you build up a multi-step pipe, **check the result at each step.**
+:::
+
+. . .
+
+Useful inspection functions: `glimpse()`, `summary()`, `nrow()`.
+
+# Binding Joins {background-color="#2c3e50"}
+
+## Binding ≠ Joining
+
+**Joins** match rows by a key column.
+
+**Binding** just stacks tables — rows on top of rows, or columns side by side. There's no matching logic.
+
+. . .
+
+-   `bind_rows()` → stack rows (must have same column names)
+-   `bind_cols()` → stack columns (must have same number of rows, in the same order)
+
+## `bind_rows()`
+
+Add more patients to the existing table:
+
+```{r}
+new_patients <- tibble(
+  id = 6:9,
+  city = c("Falkirk", "Ardbeg", "Doogal", "Kirkwall"),
+  postcode = c("FK1 4RS", "PA42 7EA",
+               "G81 4SJ", "KW15 1SE")
+)
+
+bindr_data <- bind_rows(patients, new_patients)
+bindr_data
+```
+
+. . .
+
+Columns don't have to be in the same **order** — they just need the same **names**. Missing columns get filled with `NA`.
+
+## `bind_cols()`
+
+When the tables are in the **same row order**, you can paste columns side by side:
+
+```{r}
+new_info <- tibble(
+  smoker = c("no", "no", "yes", "yes", "yes")
+)
+
+bindc_data <- bind_cols(patients, new_info)
+bindc_data
+```
+
+. . .
+
+::: callout-warning
+`bind_cols()` is dangerous! It assumes rows are aligned. If the order is off, your data will be silently misaligned. Whenever possible, use a **mutating join** with a shared ID instead.
+:::
+
+# Set Operations {background-color="#2c3e50"}
+
+## Comparing Whole Rows
+
+Set operations compare two tables and return rows that:
+
+-   appear in **both** → `intersect()`
+-   appear in **either** → `union()` (deduplicated)
+-   appear in one but **not the other** → `setdiff()`
+
+. . .
+
+Unlike joins, set operations compare **entire rows**, not just key columns. The tables need the same column names.
+
+## `intersect()` and `union()`
+
+```{r}
+new_patients <- tibble(
+  id = 5:9,
+  postcode = c("PA75 6NR", "FK1 4RS", "PA42 7EA",
+               "G81 4SJ", "KW15 1SE"),
+  city = c("Tobermory", "Falkirk", "Ardbeg",
+           "Doogal", "Kirkwall")
+)
+
+# rows that appear in BOTH tables
+intersect(patients, new_patients)
+
+# rows in EITHER table, with duplicates removed
+union(patients, new_patients)
+```
+
+. . .
+
+::: callout-note
+`union()` is like `bind_rows()` but it removes exact duplicate rows.
+:::
+
+## `setdiff()`
+
+Rows in the first table that are **not** in the second:
+
+```{r}
+setdiff(patients, new_patients)
+```
+
+. . .
+
+Order matters! `setdiff(A, B)` and `setdiff(B, A)` answer different questions.
+
+. . .
+
+::: callout-warning
+There are also `base::intersect()`, `base::union()`, and `base::setdiff()` that behave differently. Always load the tidyverse so the `dplyr::` versions are used.
+:::
+
+## Activity: Bind or Set Operation?
+
+::: callout-tip
+## Pick the right tool
+
+1.  Two yearly survey extracts (`survey_2023`, `survey_2024`) — you want one combined dataset, **keeping duplicates** if a respondent appears in both years.
+
+2.  Two extracts of an equality register — you want a combined dataset **with duplicates removed**.
+
+3.  A master staff list and an HR export — you want to find staff in the master list that are **missing** from the export.
+
+4.  A `patients` table and a `predictions` table with the same number of rows in the same order — you want to glue the prediction column on.
+:::
+
+# Putting It Together {background-color="#2c3e50"}
+
+## A Realistic Workflow
+
+Imagine you have:
+
+-   `grades1` — exam scores (one row per student, has an `id` and `Points`)
+-   `grades2` — essay scores (different students)
+-   `schedule` — lookup table mapping `Points` → letter `Grade`
+
+. . .
+
+You want:
+
+1.  Every student joined to their letter grade
+2.  A "completes" dataset of students with **both** an exam and an essay grade
+
+## The Pipeline {.smaller}
+
+```{r}
+# add letter grades to each table
+exam_all  <- left_join(grades1, schedule, by = "Points")
+essay_all <- left_join(grades2, schedule, by = "Points")
+
+# only students with a non-missing grade
+exam_grades  <- inner_join(grades1, schedule, by = "Points")
+essay_grades <- inner_join(grades2, schedule, by = "Points")
+
+# students with BOTH an exam and an essay grade
+completes <- inner_join(exam_grades, essay_grades,
+                        by = "id",
+                        suffix = c("_exam", "_essay")) |>
+  select(id, Grade_exam, Grade_essay)
+```
+
+. . .
+
+Notice how `suffix` lets you rename columns that share a name between the two tables.
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## Key Takeaways
+
+-   **Mutating joins** add columns: `left_join`, `right_join`, `inner_join`, `full_join`
+
+-   **Binding** stacks tables: `bind_rows` (more rows), `bind_cols` (more columns — be careful!)
+
+-   **Set operations** compare whole rows: `intersect`, `union`, `setdiff`
+
+-   **Always check** your result: did the row count change as expected? Any unexpected `NA`s?

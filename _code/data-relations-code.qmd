@@ -1,0 +1,241 @@
+---
+title: "Data Relations — In-Class Code"
+author: "Data Skills for Psychology"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-overflow: wrap
+    df-print: kable
+---
+
+## Setup
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+## Two Example Tables
+
+A `patients` table:
+
+```{r}
+patients <- tibble(
+  id = 1:5,
+  city = c("Port Ellen", "Dufftown", NA,
+           "Aberlour", "Tobermory"),
+  postcode = c("PA42 7DU", "AB55 4DH", NA,
+               "AB38 7RY", "PA75 6NR")
+)
+
+patients
+```
+
+A `visits` table — counts of GP visits per patient:
+
+```{r}
+visits <- tibble(
+  id = c(2, 3, 4, 4, 5, 5, 6, 6, 7),
+  visits = c(2, 1, 4, 0, 9, 11, 5, 0, 3)
+)
+
+visits
+```
+
+## Mutating Joins
+
+### What is a mutating join?
+
+The general syntax is the same for all four:
+
+```{r}
+#| eval: false
+left_join(x, y, by = "id")
+right_join(x, y, by = "id")
+inner_join(x, y, by = "id")
+full_join(x, y, by = "id")
+```
+
+### `left_join()`
+
+Keep all rows from the left table, add matching info from the right.
+
+```{r}
+left_data <- left_join(patients, visits, by = "id")
+left_data
+```
+
+### `right_join()`
+
+Keep all rows from the right table, add matching info from the left.
+
+```{r}
+right_data <- right_join(patients, visits, by = "id")
+right_data
+```
+
+### `inner_join()`
+
+Keep only rows that appear in both tables.
+
+```{r}
+inner_data <- inner_join(patients, visits, by = "id")
+inner_data
+```
+
+### `full_join()`
+
+Keep everything from both tables, filling in `NA` where there's no match.
+
+```{r}
+full_data <- full_join(patients, visits, by = "id")
+full_data
+```
+
+### Activity: Which join?
+
+Choose the right join for each scenario:
+
+1.  You have `registrations` (everyone signed up with a doctor) and `jabs` (everyone who got a flu shot). You want to analyze outcomes for people who are **both** registered and vaccinated.
+
+2.  You have `boards` (all NHS regions and their populations) and `attendances` (clinic visits, only some boards). You want **every** NHS board, with attendance filled in where available.
+
+3.  You have `fuel_support` and `disability_adaptations`. You want **everyone** in either list, combining both sets of variables.
+
+```{r}
+# Your code here:
+
+```
+
+## Chaining Joins
+
+### Joining more than two tables
+
+```{r}
+satisfaction <- tibble(
+  id = 1:5,
+  satisfaction = c(4, 3, 2, 3, 1)
+)
+```
+
+```{r}
+# Using the pipe — read |> as "and then"
+pipe_join <- patients |>
+  left_join(visits, by = "id") |>
+  left_join(satisfaction, by = "id")
+
+pipe_join
+```
+
+Useful inspection functions: `glimpse()`, `summary()`, `nrow()`.
+
+```{r}
+glimpse(pipe_join)
+nrow(pipe_join)
+```
+
+## Binding Joins
+
+### `bind_rows()`
+
+Add more patients to the existing table:
+
+```{r}
+new_patients <- tibble(
+  id = 6:9,
+  city = c("Falkirk", "Ardbeg", "Doogal", "Kirkwall"),
+  postcode = c("FK1 4RS", "PA42 7EA",
+               "G81 4SJ", "KW15 1SE")
+)
+
+bindr_data <- bind_rows(patients, new_patients)
+bindr_data
+```
+
+### `bind_cols()`
+
+When the tables are in the same row order, paste columns side by side:
+
+```{r}
+new_info <- tibble(
+  smoker = c("no", "no", "yes", "yes", "yes")
+)
+
+bindc_data <- bind_cols(patients, new_info)
+bindc_data
+```
+
+## Set Operations
+
+### `intersect()` and `union()`
+
+```{r}
+new_patients <- tibble(
+  id = 5:9,
+  postcode = c("PA75 6NR", "FK1 4RS", "PA42 7EA",
+               "G81 4SJ", "KW15 1SE"),
+  city = c("Tobermory", "Falkirk", "Ardbeg",
+           "Doogal", "Kirkwall")
+)
+
+# rows that appear in BOTH tables
+intersect(patients, new_patients)
+
+# rows in EITHER table, with duplicates removed
+union(patients, new_patients)
+```
+
+### `setdiff()`
+
+Rows in the first table that are not in the second:
+
+```{r}
+setdiff(patients, new_patients)
+```
+
+Order matters — reversing the inputs answers a different question:
+
+```{r}
+setdiff(new_patients, patients)
+```
+
+### Activity: Bind or set operation?
+
+Pick the right tool for each:
+
+1.  Two yearly survey extracts (`survey_2023`, `survey_2024`) — you want one combined dataset, **keeping duplicates** if a respondent appears in both years.
+
+2.  Two extracts of an equality register — you want a combined dataset **with duplicates removed**.
+
+3.  A master staff list and an HR export — you want to find staff in the master list that are **missing** from the export.
+
+4.  A `patients` table and a `predictions` table with the same number of rows in the same order — you want to glue the prediction column on.
+
+```{r}
+# Your code here:
+
+```
+
+## Putting It Together
+
+### The pipeline
+
+```{r}
+#| eval: false
+# add letter grades to each table
+exam_all  <- left_join(grades1, schedule, by = "Points")
+essay_all <- left_join(grades2, schedule, by = "Points")
+
+# only students with a non-missing grade
+exam_grades  <- inner_join(grades1, schedule, by = "Points")
+essay_grades <- inner_join(grades2, schedule, by = "Points")
+
+# students with BOTH an exam and an essay grade
+completes <- inner_join(exam_grades, essay_grades,
+                        by = "id",
+                        suffix = c("_exam", "_essay")) |>
+  select(id, Grade_exam, Grade_essay)
+```

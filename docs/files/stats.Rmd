@@ -136,8 +136,11 @@ head(df.avg)
 ```
 
 # Stats
+
 ## Example t-test
+
 Add your own annotations!
+
 ```{r}
 neg <- filter(df.avg,Emotion=="Negative") %>% arrange(Subject_ID)
 neu <- filter(df.avg,Emotion=="Neutral") %>% arrange(Subject_ID)
@@ -145,7 +148,9 @@ t.test(neg$meanAccuracy, neu$meanAccuracy, paired=TRUE)
 ```
 
 ## Example ANOVA
+
 Add your own annotations!
+
 ```{r}
 library('ez')
 

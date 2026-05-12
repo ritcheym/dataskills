@@ -18,6 +18,13 @@ You should read this chapter before you come to class:
 
 -   *Applied Data Skills -* [Chapter 5: Data Relations](https://psyteachr.github.io/ads-v3/05-joins.html)
 
+## Slides
+
+Slides have been adapted from the textbook readings using Claude AI.
+
+-   [This module's lecture slides](../slides/08_data-relations.qmd){target="_blank"}
+-   [Companion code](../_code/data-relations-code.qmd)
+
 ## In-class exercises
 
 We will follow along with the examples given in the textbook. Create an R project called `data-relations`, and save today's work in a Quarto report called `relations.qmd`.
@@ -26,7 +33,7 @@ We will follow along with the examples given in the textbook. Create an R projec
 
 Solve the following problems using the concepts you have learned in class. As always, your Quarto report should be organized with headings and comments explaining your work.
 
-1.  Complete the [exercise](https://psyteachr.github.io/ads-v3/05-joins.html#grade-data) described in the chapter from 7.10.1 through 7.10.4.
+1.  Complete the [exercise](https://psyteachr.github.io/ads-v3/05-joins.html#peer-coding-exercises) described in the chapter in section 5.11.
 
 2.  Using the `completes` dataframe that you have created, compute some summary statistics:
 

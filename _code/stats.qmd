@@ -1,19 +1,22 @@
 ---
 title: "Statistical Data Analysis"
-author: "Maureen Ritchey"
-date: "2025-03-20"
-output: 
-  html_document: 
-    toc: true
-    toc_float: true
+author: Your Name Here
+format:
+  html:
+    df-print: kable
     theme: cosmo
+    toc: true
+    toc-depth: 3
+    embed-resources: true
+execute:
+  echo: true
+  editor: source
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-options(scipen=999) # turn off scientific notation
-
+```{r setup}
 library(tidyverse)
+
+options(scipen=999) # turn off scientific notation
 
 ```
 
@@ -73,25 +76,28 @@ Let's select only a subset of the data to keep for further analysis. We'll keep 
 ## Select variables
 
 ```{r}
-df.tidy <- df %>%
-  # create new Accuracy variable
+df.tidy <- df |>
+  # rename some variables
+  rename(Old_or_New = Retrieval_Image_Type,
+         Vividness = Retrieval_Vividness_Response,
+         Error = Error_ColorSat_Reconstruction) |>
+  
+  # create new variables
   mutate(Accuracy = case_when(Old_New_Response_Type=="HIT" ~ 1,
                               Old_New_Response_Type=="MISS" ~ 0,
                               Old_New_Response_Type=="CR" ~ 1,
                               Old_New_Response_Type=="FA" ~ 0,
                               TRUE ~ NA),
-         # rename some of the variables; convert some to factors
-         Subject_ID = factor(Subject_ID),
-         Emotion = factor(Retrieval_Emotion_Category),
-         Old_or_New = Retrieval_Image_Type,
-         Vividness = Retrieval_Vividness_Response,
-         Error = Error_ColorSat_Reconstruction,
-         # create an absolute error variable
          ErrorAbs = abs(Error),
-         # create an age bracket variable
          Age_Group = case_when(Age<35 ~ 'Younger Age',
                                Age>=35 & Age < 65 ~ 'Middle Age',
-                               Age>65 ~ 'Older Age')) %>%
+                               Age>65 ~ 'Older Age'),
+         
+         # convert some to factors
+         Subject_ID = factor(Subject_ID),
+         Emotion = factor(Retrieval_Emotion_Category)
+         ) |>
+  
   # select a subset of variables
   select(Subject_ID, Age, Age_Group, Gender, BDI_Sum,    # subject information
          Emotion, Old_or_New,                 # trial information
@@ -109,12 +115,12 @@ We will also create another dataframe that averages across trials in the same co
 
 ```{r}
 # Get the average data
-df.avg <- df.tidy %>%
-  group_by(Subject_ID, Emotion) %>%
+df.avg <- df.tidy |>
+  group_by(Subject_ID, Emotion) |>
   summarize(meanVivid = mean(Vividness, na.rm=TRUE),
             meanAccuracy = mean(Accuracy, na.rm = TRUE),
             meanError = mean(Error, na.rm=TRUE),
-            meanErrorAbs = mean(ErrorAbs, na.rm=TRUE)) %>%
+            meanErrorAbs = mean(ErrorAbs, na.rm=TRUE)) |>
   ungroup() 
 
 ```
@@ -123,12 +129,12 @@ df.avg <- df.tidy %>%
 
 ```{r}
 # Get the subject information
-df.sub_info <- df.tidy %>%
-  select(Subject_ID, Age, Age_Group, Gender, BDI_Sum) %>%
+df.sub_info <- df.tidy |>
+  select(Subject_ID, Age, Age_Group, Gender, BDI_Sum) |>
   unique()
 
 # Join the subject information to the average data
-df.avg <- df.avg %>%
+df.avg <- df.avg |>
   left_join(df.sub_info,by=c("Subject_ID"))
 
 head(df.avg)
@@ -142,8 +148,8 @@ head(df.avg)
 Add your own annotations!
 
 ```{r}
-neg <- filter(df.avg,Emotion=="Negative") %>% arrange(Subject_ID)
-neu <- filter(df.avg,Emotion=="Neutral") %>% arrange(Subject_ID)
+neg <- filter(df.avg,Emotion=="Negative") |> arrange(Subject_ID)
+neu <- filter(df.avg,Emotion=="Neutral") |> arrange(Subject_ID)
 t.test(neg$meanAccuracy, neu$meanAccuracy, paired=TRUE)
 ```
 
@@ -152,11 +158,20 @@ t.test(neg$meanAccuracy, neu$meanAccuracy, paired=TRUE)
 Add your own annotations!
 
 ```{r}
-library('ez')
+# ANOVA
+library(afex)
+results <- aov_ez(id = "Subject_ID",
+                  dv = "meanAccuracy",
+                  within = "Emotion",
+                  data = df.avg)
+print(results)
 
-results <- ezANOVA(data=df.avg,
-        dv=meanAccuracy,
-        wid=Subject_ID,
-        within=Emotion)
-print(results$ANOVA)
+# Follow-up tests
+library(emmeans)
+emmeans(results, pairwise ~ Emotion)
 ```
+
+Notes:
+
+-   The default output for `aov_ez` applies Greenhouse-Geisser correction automatically (when appropriate) and reports generalized eta-squared (ges), which is the effect size most appropriate for within-subjects designs.
+-   The `emmeans` function gives estimated marginal means plus pairwise contrasts with Tukey-adjusted p-values, which is the common next step after a significant ANOVA result.

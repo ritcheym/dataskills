@@ -10,7 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <title>Data Skills for Psychology – Introduction to R and RStudio</title>
+  <title>Data Skills for Psychology – Data Relations</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -392,8 +392,8 @@
     <div class="slides">
 
 <section data-background-color="#2c3e50" class="quarto-title-block center">
-  <h1 class="title">Introduction to R and RStudio</h1>
-  <p class="subtitle">Data Skills for Psychology — Module 1</p>
+  <h1 class="title">Data Relations</h1>
+  <p class="subtitle">Data Skills for Psychology — Module 7</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -402,146 +402,220 @@
 <section>
 <section class="title-slide slide level1 center" data-background-color="#2c3e50">
 <h1>Welcome!</h1>
-<p>These slides are adapted from <a href="https://psyteachr.github.io/ads-v3/01-intro.html">Applied Data Skills Ch. 1</a>.</p>
+<p>These slides are adapted from <a href="https://psyteachr.github.io/ads-v3/05-joins.html">Applied Data Skills Ch. 5: Data Relations</a>.</p>
 </section>
 <section class="slide level2">
 <h2>Today’s Goals</h2>
 <p>By the end of this class, you will be able to:</p>
 <ul>
-<li>Install R and RStudio</li>
-<li>Install add-on packages</li>
-<li>Get help for packages and functions</li>
-<li>Create objects by writing and running code in the console</li>
+<li>Match related data across multiple tables using <strong>joins</strong></li>
+<li>Choose between <code>left_join()</code>, <code>right_join()</code>, <code>inner_join()</code>, and <code>full_join()</code></li>
+<li>Stack tables together with <code>bind_rows()</code> and <code>bind_cols()</code></li>
+<li>Use <strong>set operations</strong> to compare two tables</li>
+<li>Diagnose and fix common join problems (mismatched types)</li>
 </ul>
 </section>
 <section class="slide level2">
-<h2>What is R?</h2>
-<p>R is a <strong>programming language</strong> designed for statistics and data analysis.</p>
-<div class="fragment">
-<p>Think of R as the <strong>engine</strong> of a car — it does all the work under the hood.</p>
+<h2>Setup</h2>
+<p>Make sure you have the tidyverse loaded:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Why R?</strong></p>
+<p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<ul>
-<li>Free and open-source</li>
-<li>Thousands of add-on packages</li>
-<li>Massive community (especially in psychology!)</li>
-<li>Makes your work <strong>reproducible</strong></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>What is RStudio?</h2>
-<p>RStudio is an <strong>Integrated Development Environment</strong> (IDE) — it makes working with R much easier.</p>
-<div class="fragment">
-<p>If R is the engine, RStudio is the <strong>dashboard, steering wheel, and GPS</strong> all in one.</p>
-</div>
-<div class="fragment">
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Warning</strong></p>
-</div>
-<div class="callout-content">
-<p>Always launch <strong>RStudio</strong>, not R directly!</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#16a085">
-<h1>🛠️ Setup Check</h1>
-
-</section>
-<section class="slide level2">
-<h2>Activity: Installation Check</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Do this now!</strong></p>
-</div>
-<div class="callout-content">
-<ol type="1">
-<li>Open <strong>RStudio</strong> on your computer</li>
-<li>Check: do you see four panes?</li>
-<li>Give a thumbs up when you’re ready!</li>
-</ol>
-<p>If you haven’t installed R and RStudio yet, follow the <a href="https://psyteachr.github.io/RSetGo/">installation guide</a>.</p>
+<p>Grab the <a href="https://rstudio.github.io/cheatsheets/html/data-transformation.html">Data transformation cheat sheet</a> — it has a great visual summary of all the joins on the back page.</p>
 </div>
 </div>
 </div>
 </section></section>
 <section>
 <section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>The RStudio IDE</h1>
+<h1>Why Combine Data?</h1>
 
 </section>
 <section class="slide level2">
-<h2>The Four Panes</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Upper Left: Source</strong></p>
+<h2>Real data lives in many places</h2>
+<p>Almost every real-world analysis starts by combining data from multiple sources:</p>
+<div class="fragment">
 <ul>
-<li>Write and edit code</li>
-<li>View data tables</li>
+<li>Patient records in one file, lab results in another</li>
+<li>Survey responses split across months or sites</li>
+<li>Student demographics in one sheet, grades in another</li>
+<li>Trial-level behavioral data plus participant-level questionnaires</li>
 </ul>
-<p><strong>Lower Left: Console</strong></p>
-<ul>
-<li>Type commands directly</li>
-<li>See output</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Upper Right: Environment</strong></p>
-<ul>
-<li>See your objects</li>
-<li>View your data</li>
-</ul>
-<p><strong>Lower Right: Files/Plots/Help</strong></p>
-<ul>
-<li>File browser</li>
-<li>Plot viewer</li>
-<li>Help documentation</li>
-<li>Package manager</li>
-</ul>
-</div></div>
+</div>
+<div class="fragment">
+<p>The <strong><code>*_join()</code></strong> family lets you stitch tables together using a shared identifier (like a participant ID).</p>
+</div>
 </section>
 <section class="slide level2">
-<h2>Activity: Explore the Panes</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<h2>Two Example Tables</h2>
+<p>We’ll use two tiny demo tables. First, a <code>patients</code> table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">city =</span> <span class="fu">c</span>(<span class="st">"Port Ellen"</span>, <span class="st">"Dufftown"</span>, <span class="cn">NA</span>,</span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>           <span class="st">"Aberlour"</span>, <span class="st">"Tobermory"</span>),</span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">postcode =</span> <span class="fu">c</span>(<span class="st">"PA42 7DU"</span>, <span class="st">"AB55 4DH"</span>, <span class="cn">NA</span>,</span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a>               <span class="st">"AB38 7RY"</span>, <span class="st">"PA75 6NR"</span>)</span>
+<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Try it!</strong></p>
-</div>
-<div class="callout-content">
-<ol type="1">
-<li>Find the <strong>Console</strong> pane — type <code>1 + 1</code> and press Enter</li>
-<li>Find the <strong>Environment</strong> pane — is it empty?</li>
-<li>Find the <strong>Help</strong> pane — type <code>?mean</code> in the console</li>
-<li>Where did the help appear?</li>
-</ol>
+<div class="fragment">
+<p>And a <code>visits</code> table — counts of GP visits per patient:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>visits <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">visits =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>)</span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+</section>
+<section class="slide level2">
+<h2>What’s in each table?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong><code>patients</code></strong> (5 rows)</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>city</th>
+<th>postcode</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Port Ellen</td>
+<td>PA42 7DU</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Dufftown</td>
+<td>AB55 4DH</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>NA</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Aberlour</td>
+<td>AB38 7RY</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Tobermory</td>
+<td>PA75 6NR</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<p><strong><code>visits</code></strong> (9 rows)</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div class="fragment">
+<p>Notice: some IDs appear in only one table, and some IDs appear <strong>multiple times</strong> in <code>visits</code>.</p>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>Mutating Joins</h1>
+
+</section>
+<section class="slide level2">
+<h2>What is a Mutating Join?</h2>
+<p>A <strong>mutating join</strong> adds new columns from one table onto another, matching rows by a key.</p>
+<div class="fragment">
+<p>The general syntax is the same for all four:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(x, y, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(x, y, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(x, y, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(x, y, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>x</code> = the first (left) table</li>
+<li><code>y</code> = the second (right) table</li>
+<li><code>by</code> = which column(s) to match on</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2><code>left_join()</code></h2>
+<p>Keeps <strong>all rows from the left table</strong> and adds matching info from the right.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>left_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(patients, visits, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>left_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Result: <strong>all 5 patients are kept</strong>. Patients with multiple visits get <strong>duplicated rows</strong>. Patient 1 (no visits) gets <code>NA</code> in the <code>visits</code> column.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2><code>right_join()</code></h2>
+<p>Keeps <strong>all rows from the right table</strong> and adds matching info from the left.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>right_data <span class="ot">&lt;-</span> <span class="fu">right_join</span>(patients, visits, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>right_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Result: <strong>all 9 visits are kept</strong>. IDs in <code>visits</code> that don’t appear in <code>patients</code> (ids 6, 7) get <code>NA</code> for city and postcode.</p>
 </div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -553,38 +627,182 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>You can rearrange panes under <strong>Tools &gt; Global Options &gt; Pane Layout</strong></p>
+<p><code>right_join(x, y)</code> returns the same rows as <code>left_join(y, x)</code> — just with the columns in a different order.</p>
 </div>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#16a085">
-<h1>⚙️ RStudio Settings</h1>
-
 </section>
 <section class="slide level2">
-<h2>Critical Settings to Change</h2>
-<p>You should <strong>always start with a clean workspace</strong> — no leftover objects from last time!</p>
+<h2><code>inner_join()</code></h2>
+<p>Keeps <strong>only rows that appear in both tables</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>inner_data <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(patients, visits, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>inner_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="fragment">
+<p>Result: only IDs 2, 3, 4, 5 remain. Patient 1 (no visits) is dropped. Visits for IDs 6 and 7 (not in <code>patients</code>) are also dropped.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2><code>full_join()</code></h2>
+<p>Keeps <strong>everything from both tables</strong>, filling in <code>NA</code> where there’s no match.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>full_data <span class="ot">&lt;-</span> <span class="fu">full_join</span>(patients, visits, <span class="at">by =</span> <span class="st">"id"</span>)</span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>full_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Result: every ID from either table appears. Patient 1 has <code>NA</code> for visits. Visits 6 and 7 have <code>NA</code> for city and postcode.</p>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2>Picking the Right Join</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Join</th>
+<th>What you keep</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>left_join(x, y)</code></td>
+<td>All rows from <code>x</code>; matched info from <code>y</code></td>
+</tr>
+<tr class="even">
+<td><code>right_join(x, y)</code></td>
+<td>All rows from <code>y</code>; matched info from <code>x</code></td>
+</tr>
+<tr class="odd">
+<td><code>inner_join(x, y)</code></td>
+<td>Only rows in <strong>both</strong></td>
+</tr>
+<tr class="even">
+<td><code>full_join(x, y)</code></td>
+<td>Rows from <strong>either</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>A good first question to ask: <strong>which table is the “ground truth” I want to preserve?</strong></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Activity: Which Join?</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Do this now!</strong></p>
+<p><strong>Choose the right join for each scenario</strong></p>
 </div>
 <div class="callout-content">
-<p>Go to <strong>Tools &gt; Global Options &gt; General</strong>:</p>
 <ol type="1">
-<li><label><input type="checkbox"><strong>Uncheck</strong> “Restore .RData into workspace at start-up”</label></li>
-<li>Set “Save workspace to .RData on exit” to <strong>Never</strong></li>
+<li><p>You have <code>registrations</code> (everyone signed up with a doctor) and <code>jabs</code> (everyone who got a flu shot). You want to analyze outcomes for people who are <strong>both</strong> registered and vaccinated.</p></li>
+<li><p>You have <code>boards</code> (all NHS regions and their populations) and <code>attendances</code> (clinic visits, only some boards). You want <strong>every</strong> NHS board, with attendance filled in where available.</p></li>
+<li><p>You have <code>fuel_support</code> and <code>disability_adaptations</code>. You want <strong>everyone</strong> in either list, combining both sets of variables.</p></li>
 </ol>
+<p>Think about it — which join, and why?</p>
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>Chaining Joins</h1>
+
+</section>
+<section class="slide level2">
+<h2>Joining More Than Two Tables</h2>
+<p>Joins are <strong>two-table verbs</strong>. To combine three+ tables, just chain them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>satisfaction <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">satisfaction =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Using the pipe — read |&gt; as "and then"</span></span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>pipe_join <span class="ot">&lt;-</span> patients <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(visits, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(satisfaction, <span class="at">by =</span> <span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p>Each <code>left_join</code> step adds new columns onto whatever came before.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Always Check Your Output!</h2>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Joins are easy to write but surprisingly easy to <strong>get wrong</strong>. Before moving on, ask:</p>
+<ul>
+<li>Does the result have <strong>more or fewer rows</strong> than expected?</li>
+<li>Does it have the <strong>right number of columns</strong>?</li>
+<li>Are there <strong>NAs</strong> where you didn’t expect them?</li>
+</ul>
+<p>If you build up a multi-step pipe, <strong>check the result at each step.</strong></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Useful inspection functions: <code>glimpse()</code>, <code>summary()</code>, <code>nrow()</code>.</p>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center" data-background-color="#2c3e50">
+<h1>Binding Joins</h1>
+
+</section>
+<section class="slide level2">
+<h2>Binding ≠ Joining</h2>
+<p><strong>Joins</strong> match rows by a key column.</p>
+<p><strong>Binding</strong> just stacks tables — rows on top of rows, or columns side by side. There’s no matching logic.</p>
+<div class="fragment">
+<ul>
+<li><code>bind_rows()</code> → stack rows (must have same column names)</li>
+<li><code>bind_cols()</code> → stack columns (must have same number of rows, in the same order)</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+<h2><code>bind_rows()</code></h2>
+<p>Add more patients to the existing table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>new_patients <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">city =</span> <span class="fu">c</span>(<span class="st">"Falkirk"</span>, <span class="st">"Ardbeg"</span>, <span class="st">"Doogal"</span>, <span class="st">"Kirkwall"</span>),</span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">postcode =</span> <span class="fu">c</span>(<span class="st">"FK1 4RS"</span>, <span class="st">"PA42 7EA"</span>,</span>
+<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a>               <span class="st">"G81 4SJ"</span>, <span class="st">"KW15 1SE"</span>)</span>
+<span id="cb11-6"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a aria-hidden="true" tabindex="-1"></a>bindr_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(patients, new_patients)</span>
+<span id="cb11-9"><a aria-hidden="true" tabindex="-1"></a>bindr_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Columns don’t have to be in the same <strong>order</strong> — they just need the same <strong>names</strong>. Missing columns get filled with <code>NA</code>.</p>
+</div>
+</section>
+<section class="slide level2">
+<h2><code>bind_cols()</code></h2>
+<p>When the tables are in the <strong>same row order</strong>, you can paste columns side by side:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>new_info <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">smoker =</span> <span class="fu">c</span>(<span class="st">"no"</span>, <span class="st">"no"</span>, <span class="st">"yes"</span>, <span class="st">"yes"</span>, <span class="st">"yes"</span>)</span>
+<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a aria-hidden="true" tabindex="-1"></a>bindc_data <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(patients, new_info)</span>
+<span id="cb12-6"><a aria-hidden="true" tabindex="-1"></a>bindc_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -596,7 +814,7 @@
 <p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>You’ll need to change these settings every time you update RStudio.</p>
+<p><code>bind_cols()</code> is dangerous! It assumes rows are aligned. If the order is off, your data will be silently misaligned. Whenever possible, use a <strong>mutating join</strong> with a shared ID instead.</p>
 </div>
 </div>
 </div>
@@ -604,265 +822,37 @@
 </section></section>
 <section>
 <section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>📦 Packages</h1>
+<h1>Set Operations</h1>
 
 </section>
 <section class="slide level2">
-<h2>What are Packages?</h2>
-<p>R comes with built-in functions (“base R”) — like the default apps on your phone.</p>
-<div class="fragment">
-<p><strong>Packages</strong> are add-ons created by the R community — like apps you download from the App Store.</p>
-</div>
-<div class="fragment">
-<p>There are thousands of packages for:</p>
+<h2>Comparing Whole Rows</h2>
+<p>Set operations compare two tables and return rows that:</p>
 <ul>
-<li>Data visualization 📊</li>
-<li>Machine learning 🤖</li>
-<li>Web scraping 🌐</li>
-<li>Interactive dashboards 📱</li>
-<li>Even playing Sudoku! 🧩</li>
-</ul>
-</div>
-</section>
-<section class="slide level2">
-<h2>Install vs.&nbsp;Load: A Key Distinction</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3><code>install.packages()</code></h3>
-<p>📲 Like <strong>downloading</strong> an app</p>
-<ul>
-<li>Do it <strong>once</strong></li>
-<li>Only from the <strong>console</strong></li>
-<li>Stays until you remove it</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<h3><code>library()</code></h3>
-<p>🚀 Like <strong>launching</strong> an app</p>
-<ul>
-<li>Do it <strong>every session</strong></li>
-<li>Put it in your <strong>script</strong></li>
-<li>Only lasts until you close R</li>
-</ul>
-</div></div>
-</section>
-<section class="slide level2">
-<h2>Activity: Install Your First Packages</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Run these in the console (not a script!)</strong></p>
-</div>
-<div class="callout-content">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"beepr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-caution callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Important!</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Never</strong> put <code>install.packages()</code> inside a script — only run it from the console. Why? You might accidentally reinstall and update a package, which could break your code.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>Activity: Load and Use a Package</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Try it!</strong></p>
-</div>
-<div class="callout-content">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Load the package</span></span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(beepr)</span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Use a function from the package</span></span>
-<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>🔊 Make sure your sound is on! What did you hear?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Now try this:</strong></p>
-</div>
-<div class="callout-content">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>(<span class="at">sound =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>What changed? Try values 1 through 11!</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Functions</h1>
-
-</section>
-<section class="slide level2">
-<h2>Anatomy of a Function</h2>
-<p>A <strong>function</strong> is a named piece of reusable code. It takes <strong>arguments</strong> (inputs) and produces output.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">function_name</span>(<span class="at">argument1 =</span> value1, <span class="at">argument2 =</span> value2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>For example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>(<span class="at">sound =</span> <span class="dv">8</span>)</span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#     ^         ^</span></span>
-<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#     |         |</span></span>
-<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a><span class="co">#  argument   value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>The Tidyverse</h2>
-<p><code>tidyverse</code> is a “meta-package” — a bundle of packages we’ll use throughout this course:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Package</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>ggplot2</code></td>
-<td>Data visualization</td>
-</tr>
-<tr class="even">
-<td><code>dplyr</code></td>
-<td>Data manipulation</td>
-</tr>
-<tr class="odd">
-<td><code>tidyr</code></td>
-<td>Data tidying</td>
-</tr>
-<tr class="even">
-<td><code>readr</code></td>
-<td>Reading data files</td>
-</tr>
-<tr class="odd">
-<td><code>stringr</code></td>
-<td>Working with text</td>
-</tr>
-<tr class="even">
-<td><code>forcats</code></td>
-<td>Working with categories</td>
-</tr>
-<tr class="odd">
-<td><code>lubridate</code></td>
-<td>Working with dates</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="slide level2">
-<h2>Getting Help</h2>
-<p>There are several ways to get help with a function:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># If the package is loaded</span></span>
-<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>?beep</span>
-<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># If you're not sure about the package</span></span>
-<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>??beep</span>
-<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a aria-hidden="true" tabindex="-1"></a><span class="co"># The full specification</span></span>
-<span id="cb6-8"><a aria-hidden="true" tabindex="-1"></a>?beepr<span class="sc">::</span>beep</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>Every help page has the same structure: <strong>Description → Usage → Arguments → Details → Examples</strong></p>
-</div>
-</section>
-<section class="slide level2">
-<h2>Tab Auto-Complete</h2>
-<p>One of RStudio’s best features! Start typing a function name and press <strong>Tab</strong>:</p>
-<ul>
-<li>RStudio will show you matching functions</li>
-<li>Select a function and press Tab again to see its arguments</li>
-<li>Each argument comes with a brief description</li>
+<li>appear in <strong>both</strong> → <code>intersect()</code></li>
+<li>appear in <strong>either</strong> → <code>union()</code> (deduplicated)</li>
+<li>appear in one but <strong>not the other</strong> → <code>setdiff()</code></li>
 </ul>
 <div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Try it!</strong></p>
-</div>
-<div class="callout-content">
-<p>Type <code>sam</code> in the console and press Tab. Select <code>sample(</code> and press Tab again to see the arguments.</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Arguments In Practice</h1>
-
-</section>
-<section class="slide level2">
-<h2>Example: <code>sample()</code></h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly pick 5 letters</span></span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> letters, <span class="at">size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "s" "k" "e" "t" "v"</code></pre>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Allow duplicates</span></span>
-<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> letters, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "p" "r" "p" "o" "z"</code></pre>
-</div>
-</div>
+<p>Unlike joins, set operations compare <strong>entire rows</strong>, not just key columns. The tables need the same column names.</p>
 </div>
 </section>
 <section class="slide level2">
-<h2>Named vs.&nbsp;Positional Arguments</h2>
-<p>These two lines do the <strong>same thing</strong>:</p>
+<h2><code>intersect()</code> and <code>union()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Named arguments (explicit)</span></span>
-<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> letters, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Positional arguments (implicit)</span></span>
-<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(letters, <span class="dv">5</span>, <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p>With named arguments, <strong>order doesn’t matter</strong>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">x =</span> letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>new_patients <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">postcode =</span> <span class="fu">c</span>(<span class="st">"PA75 6NR"</span>, <span class="st">"FK1 4RS"</span>, <span class="st">"PA42 7EA"</span>,</span>
+<span id="cb13-4"><a aria-hidden="true" tabindex="-1"></a>               <span class="st">"G81 4SJ"</span>, <span class="st">"KW15 1SE"</span>),</span>
+<span id="cb13-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">city =</span> <span class="fu">c</span>(<span class="st">"Tobermory"</span>, <span class="st">"Falkirk"</span>, <span class="st">"Ardbeg"</span>,</span>
+<span id="cb13-6"><a aria-hidden="true" tabindex="-1"></a>           <span class="st">"Doogal"</span>, <span class="st">"Kirkwall"</span>)</span>
+<span id="cb13-7"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a aria-hidden="true" tabindex="-1"></a><span class="co"># rows that appear in BOTH tables</span></span>
+<span id="cb13-10"><a aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(patients, new_patients)</span>
+<span id="cb13-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a aria-hidden="true" tabindex="-1"></a><span class="co"># rows in EITHER table, with duplicates removed</span></span>
+<span id="cb13-13"><a aria-hidden="true" tabindex="-1"></a><span class="fu">union</span>(patients, new_patients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -874,193 +864,98 @@
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>When learning, use named arguments — they make your code easier to read!</p>
+<p><code>union()</code> is like <code>bind_rows()</code> but it removes exact duplicate rows.</p>
 </div>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Objects</h1>
-
 </section>
 <section class="slide level2">
-<h2>Creating Objects</h2>
-<p>Objects <strong>store things</strong> — numbers, text, dates, results. Use <code>&lt;-</code> to assign values:</p>
+<h2><code>setdiff()</code></h2>
+<p>Rows in the first table that are <strong>not</strong> in the second:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Maureen"</span></span>
-<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
-<span id="cb13-4"><a aria-hidden="true" tabindex="-1"></a>halloween <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-10-31"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(patients, new_patients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>To see what’s inside an object, type its name:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Maureen"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>today</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2026-05-11"</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-<h2>Types of Data</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Object</th>
-<th>Type</th>
-<th>Key Rule</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>name &lt;- "Maureen"</code></td>
-<td>Character (text)</td>
-<td>Must use quotes <code>" "</code></td>
-</tr>
-<tr class="even">
-<td><code>age &lt;- 42</code></td>
-<td>Numeric (number)</td>
-<td>No quotes</td>
-</tr>
-<tr class="odd">
-<td><code>today &lt;- Sys.Date()</code></td>
-<td>Date (dynamic)</td>
-<td>Changes each day!</td>
-</tr>
-<tr class="even">
-<td><code>halloween &lt;- as.Date("2026-10-31")</code></td>
-<td>Date (fixed)</td>
-<td>Wrapped in <code>as.Date()</code></td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
-<p>Check the <strong>Environment pane</strong> — your objects should appear there!</p>
-</div>
-</section>
-<section class="slide level2">
-<h2>Objects Can Interact</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Maureen"</span></span>
-<span id="cb18-2"><a aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb18-3"><a aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
-<span id="cb18-4"><a aria-hidden="true" tabindex="-1"></a>halloween <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-10-31"</span>)</span>
-<span id="cb18-5"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a aria-hidden="true" tabindex="-1"></a>decade <span class="ot">&lt;-</span> age <span class="sc">+</span> <span class="dv">10</span></span>
-<span id="cb18-7"><a aria-hidden="true" tabindex="-1"></a>full_name <span class="ot">&lt;-</span> <span class="fu">paste</span>(name, <span class="st">"Ritchey"</span>)</span>
-<span id="cb18-8"><a aria-hidden="true" tabindex="-1"></a>how_long <span class="ot">&lt;-</span> halloween <span class="sc">-</span> today</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Order matters! <code>setdiff(A, B)</code> and <code>setdiff(B, A)</code> answer different questions.</p>
 </div>
 <div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>decade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 52</code></pre>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>full_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Maureen Ritchey"</code></pre>
+<p><strong>Warning</strong></p>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a>how_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 173 days</code></pre>
+<div class="callout-content">
+<p>There are also <code>base::intersect()</code>, <code>base::union()</code>, and <code>base::setdiff()</code> that behave differently. Always load the tidyverse so the <code>dplyr::</code> versions are used.</p>
+</div>
 </div>
 </div>
 </div>
 </section>
 <section class="slide level2">
-<h2>Activity: Create Your Own Objects</h2>
+<h2>Activity: Bind or Set Operation?</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Type this into your console</strong></p>
+<p><strong>Pick the right tool</strong></p>
 </div>
 <div class="callout-content">
 <ol type="1">
-<li>Create objects for <strong>your</strong> name, age, and a date you’re looking forward to</li>
-<li>Calculate how many days until that date</li>
-<li>Use <code>paste()</code> to create a sentence like: <em>“Hi [name] — there are [X] days until [event]!”</em></li>
+<li><p>Two yearly survey extracts (<code>survey_2023</code>, <code>survey_2024</code>) — you want one combined dataset, <strong>keeping duplicates</strong> if a respondent appears in both years.</p></li>
+<li><p>Two extracts of an equality register — you want a combined dataset <strong>with duplicates removed</strong>.</p></li>
+<li><p>A master staff list and an HR export — you want to find staff in the master list that are <strong>missing</strong> from the export.</p></li>
+<li><p>A <code>patients</code> table and a <code>predictions</code> table with the same number of rows in the same order — you want to glue the prediction column on.</p></li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Example structure</span></span>
-<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Your Name"</span></span>
-<span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>()</span>
-<span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a>my_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2026-12-25"</span>)</span>
-<span id="cb25-5"><a aria-hidden="true" tabindex="-1"></a>days_left <span class="ot">&lt;-</span> my_date <span class="sc">-</span> today</span>
-<span id="cb25-6"><a aria-hidden="true" tabindex="-1"></a>message <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Hi"</span>, name, <span class="st">"— there are"</span>,</span>
-<span id="cb25-7"><a aria-hidden="true" tabindex="-1"></a>                 days_left, <span class="st">"days to go!"</span>)</span>
-<span id="cb25-8"><a aria-hidden="true" tabindex="-1"></a>message</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </div>
 </div>
 </div>
 </section></section>
 <section>
 <section class="title-slide slide level1 center" data-background-color="#2c3e50">
-<h1>Getting Help</h1>
+<h1>Putting It Together</h1>
 
 </section>
 <section class="slide level2">
-<h2>Your Help Toolkit</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Resource</th>
-<th>When to Use</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>?function_name</code></td>
-<td>Know the function, need details</td>
-</tr>
-<tr class="even">
-<td><code>??search_term</code></td>
-<td>Not sure which function to use</td>
-</tr>
-<tr class="odd">
-<td>Google + “R” or “tidyverse”</td>
-<td>Stuck on a concept</td>
-</tr>
-<tr class="even">
-<td>AI tools (responsibly!)</td>
-<td>Need examples or explanations</td>
-</tr>
-<tr class="odd">
-<td>Package vignettes</td>
-<td>Want a tutorial-style guide</td>
-</tr>
-<tr class="even">
-<td>Your classmates!</td>
-<td>Always a good idea</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="slide level2">
-<h2>A Note on AI</h2>
-<p>AI tools can help with coding — but be careful while you’re building foundational skills.</p>
+<h2>A Realistic Workflow</h2>
+<p>Imagine you have:</p>
+<ul>
+<li><code>grades1</code> — exam scores (one row per student, has an <code>id</code> and <code>Points</code>)</li>
+<li><code>grades2</code> — essay scores (different students)</li>
+<li><code>schedule</code> — lookup table mapping <code>Points</code> → letter <code>Grade</code></li>
+</ul>
 <div class="fragment">
-<blockquote>
-<p>Using AI to do your exercises is like getting a forklift to lift weights at the gym for you. It defeats the purpose!</p>
-</blockquote>
+<p>You want:</p>
+<ol type="1">
+<li>Every student joined to their letter grade</li>
+<li>A “completes” dataset of students with <strong>both</strong> an exam and an essay grade</li>
+</ol>
+</div>
+</section>
+<section class="slide level2 smaller">
+<h2>The Pipeline</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># add letter grades to each table</span></span>
+<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a>exam_all  <span class="ot">&lt;-</span> <span class="fu">left_join</span>(grades1, schedule, <span class="at">by =</span> <span class="st">"Points"</span>)</span>
+<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>essay_all <span class="ot">&lt;-</span> <span class="fu">left_join</span>(grades2, schedule, <span class="at">by =</span> <span class="st">"Points"</span>)</span>
+<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a aria-hidden="true" tabindex="-1"></a><span class="co"># only students with a non-missing grade</span></span>
+<span id="cb15-6"><a aria-hidden="true" tabindex="-1"></a>exam_grades  <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(grades1, schedule, <span class="at">by =</span> <span class="st">"Points"</span>)</span>
+<span id="cb15-7"><a aria-hidden="true" tabindex="-1"></a>essay_grades <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(grades2, schedule, <span class="at">by =</span> <span class="st">"Points"</span>)</span>
+<span id="cb15-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a aria-hidden="true" tabindex="-1"></a><span class="co"># students with BOTH an exam and an essay grade</span></span>
+<span id="cb15-10"><a aria-hidden="true" tabindex="-1"></a>completes <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(exam_grades, essay_grades,</span>
+<span id="cb15-11"><a aria-hidden="true" tabindex="-1"></a>                        <span class="at">by =</span> <span class="st">"id"</span>,</span>
+<span id="cb15-12"><a aria-hidden="true" tabindex="-1"></a>                        <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">"_exam"</span>, <span class="st">"_essay"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, Grade_exam, Grade_essay)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>Build your skills first, then use AI to <strong>accelerate</strong> your work — not replace your learning.</p>
+<p>Notice how <code>suffix</code> lets you rename columns that share a name between the two tables.</p>
 </div>
 </section></section>
 <section>
@@ -1071,18 +966,11 @@
 <section class="slide level2">
 <h2>Key Takeaways</h2>
 <ul>
-<li><strong>R</strong> is the language; <strong>RStudio</strong> is the tool that makes it easier</li>
-<li>Always start with a <strong>clean workspace</strong></li>
-<li><code>install.packages()</code> = download once; <code>library()</code> = load each session</li>
-<li><strong>Functions</strong> take arguments; use <code>?</code> to learn about them</li>
-<li><strong>Objects</strong> store your data; use <code>&lt;-</code> to create them</li>
-<li>When stuck: restart R, check help, Google it, ask a friend!</li>
+<li><p><strong>Mutating joins</strong> add columns: <code>left_join</code>, <code>right_join</code>, <code>inner_join</code>, <code>full_join</code></p></li>
+<li><p><strong>Binding</strong> stacks tables: <code>bind_rows</code> (more rows), <code>bind_cols</code> (more columns — be careful!)</p></li>
+<li><p><strong>Set operations</strong> compare whole rows: <code>intersect</code>, <code>union</code>, <code>setdiff</code></p></li>
+<li><p><strong>Always check</strong> your result: did the row count change as expected? Any unexpected <code>NA</code>s?</p></li>
 </ul>
-</section>
-<section class="slide level2">
-<h2>Before Next Time</h2>
-<p>📖 <strong>Read</strong>: Chapter 1 of <em>Applied Data Skills</em> to lock in what we learned today</p>
-<p>❓ <strong>Questions?</strong></p>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">

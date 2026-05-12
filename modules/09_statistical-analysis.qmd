@@ -12,17 +12,17 @@ We've made a lot of progress on working with data in R. Now what? In scientific 
 descriptive statistics, inferential statistics, null hypothesis, effect size, dependent variable, independent variable, p-value, t-test, ANOVA, within-subjects, between-subjects, main effect, interaction
 :::
 
-## Readings
+## Slides
 
-There are no readings, but you can look at the [slides](../files/stats_slides.pdf) ahead of time.
+-   This module's lecture [slides](../files/stats_slides.pdf)
 
 ## In-class exercises
 
-We will review basic statistical concepts and learn how to implement statistical tests in R. We will then apply these skills to an open-access psychology dataset. [Download](../files/stats.Rmd) the `stats.Rmd` file to get started.
+We will review basic statistical concepts and learn how to implement statistical tests in R. We will then apply these skills to an open-access psychology dataset. [Download](../_code/stats.qmd) the `stats.qmd` file to get started.
 
 ## Weekly assignment
 
-Using the `stats.Rmd` file we used in class, complete the following:
+Using the `stats.qmd` file we used in class, complete the following:
 
 1.  Using the `df.avg` dataframe, determine whether there was a significant difference in mean vividness for negative and neutral trials. Run the appropriate statistical test and interpret the results. Use `ggplot` to visualize the results.
 2.  Using the `df.avg` dataframe, determine whether there was a significant interaction between emotion and age group on mean vividness. Run the appropriate statistical test and interpret the results. Use `ggplot` to visualize results.
