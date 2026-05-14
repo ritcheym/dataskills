@@ -63,15 +63,13 @@ var_key <- read.csv('data/Key.csv')
 glimpse(df)
 
 # How many participants are there?
-n_subs # <- 
+n_subs <- length(unique(df$Subject_ID))
 
 # How many trials are there per participant?
-n_trials # <- 
+n_trials <- length(unique(df$Retrieval_Trial))
 ```
 
 There are `r n_subs` participants and `r n_trials` trials per participant, for a total of `r nrow(df)` rows of data.
-
-Before you continue on: What kind of data wrangling and data tidying do you need to do? Make a list of everything you might want to do to make this dataset easier to work with. 
 
 # Data wrangling
 
@@ -79,23 +77,21 @@ Let's select only a subset of the data to keep for further analysis. We'll keep 
 
 ## Create and select variables
 
-You must replace `function_name` with the correct function to use here!
-
 ```{r}
 df.tidy <- df |>
   # rename some variables
-  function_name(Old_or_New = Retrieval_Image_Type,
+  rename(Old_or_New = Retrieval_Image_Type,
          Vividness = Retrieval_Vividness_Response,
          Error = Error_ColorSat_Reconstruction) |>
   
   # create new variables
-  function_name(Accuracy = function_name(Old_New_Response_Type=="HIT" ~ 1,
+  mutate(Accuracy = case_when(Old_New_Response_Type=="HIT" ~ 1,
                               Old_New_Response_Type=="MISS" ~ 0,
                               Old_New_Response_Type=="CR" ~ 1,
                               Old_New_Response_Type=="FA" ~ 0,
                               TRUE ~ NA),
          ErrorAbs = abs(Error),
-         Age_Group = function_name(Age<35 ~ 'Younger Age',
+         Age_Group = case_when(Age<35 ~ 'Younger Age',
                                Age>=35 & Age < 65 ~ 'Middle Age',
                                Age>65 ~ 'Older Age'),
          
@@ -105,7 +101,7 @@ df.tidy <- df |>
          ) |>
   
   # select a subset of variables
-  function_name(Subject_ID, Age, Age_Group, Gender, BDI_Sum,    # subject information
+  select(Subject_ID, Age, Age_Group, Gender, BDI_Sum,    # subject information
          Emotion, Old_or_New,                 # trial information
          Vividness, Accuracy, Error, ErrorAbs # response information
          ) 
@@ -121,10 +117,13 @@ We will also create another dataframe that averages across trials in the same co
 
 ```{r}
 # Get the average data
-# First, group by subject number and emotion category
-# then calculate meanVivid, meanAccuracy, meanError, meanErrorAbs
 df.avg <- df.tidy |>
-  # FILL IN HERE
+  group_by(Subject_ID, Emotion) |>
+  summarize(meanVivid = mean(Vividness, na.rm=TRUE),
+            meanAccuracy = mean(Accuracy, na.rm = TRUE),
+            meanError = mean(Error, na.rm=TRUE),
+            meanErrorAbs = mean(ErrorAbs, na.rm=TRUE)) |>
+  ungroup() 
 
 ```
 
@@ -137,7 +136,8 @@ df.sub_info <- df.tidy |>
   unique()
 
 # Join the subject information to the average data
-df.avg <- # FILL IN HERE
+df.avg <- df.avg |>
+  left_join(df.sub_info,by=c("Subject_ID"))
 
 glimpse(df.avg)
 
