@@ -12,13 +12,13 @@ Multiple regression is a statistical technique used to understand how multiple p
 machine learning, multiple regression, predictors, outcomes, residuals, training set, testing set, cross-validation, generalizability
 :::
 
-## Readings
+## Slides
 
-No readings this week!
+-   This module's lecture [slides](../files/ml_slides.pdf)
 
 ## In-class exercises
 
-We will review the concept of regression and how we can use regression to make predictions in a new set of data. We will then apply these skills to an open-access psychology dataset. [Download](../files/prediction.Rmd) the `prediction.Rmd` file to get started. You will also want to download this [csv file](../files/vivid_df_avg.csv), which contains summary data from the `vivid` dataset.
+We will review the concept of regression and how we can use regression to make predictions in a new set of data. We will then apply these skills to an open-access psychology dataset. [Download](../_code/prediction.qmd) the `prediction.qmd` file to get started. You will also want to download this [csv file](../files/vivid_df_avg.csv), which contains summary data from the `vivid` dataset.
 
 ## Weekly assignment
 

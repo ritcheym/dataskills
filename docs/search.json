@@ -253,11 +253,11 @@
     ]
   },
   {
-    "objectID": "modules/10_machine-learning.html#readings",
-    "href": "modules/10_machine-learning.html#readings",
+    "objectID": "modules/10_machine-learning.html#slides",
+    "href": "modules/10_machine-learning.html#slides",
     "title": "Machine Learning",
-    "section": "Readings",
-    "text": "Readings\nNo readings this week!",
+    "section": "Slides",
+    "text": "Slides\n\nThis module’s lecture slides",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
@@ -269,7 +269,7 @@
     "href": "modules/10_machine-learning.html#in-class-exercises",
     "title": "Machine Learning",
     "section": "In-class exercises",
-    "text": "In-class exercises\nWe will review the concept of regression and how we can use regression to make predictions in a new set of data. We will then apply these skills to an open-access psychology dataset. Download the prediction.Rmd file to get started. You will also want to download this csv file, which contains summary data from the vivid dataset.",
+    "text": "In-class exercises\nWe will review the concept of regression and how we can use regression to make predictions in a new set of data. We will then apply these skills to an open-access psychology dataset. Download the prediction.qmd file to get started. You will also want to download this csv file, which contains summary data from the vivid dataset.",
     "crumbs": [
       "Home",
       "<b>Modules</b>",
