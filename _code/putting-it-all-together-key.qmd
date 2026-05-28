@@ -1,0 +1,304 @@
+---
+title: "Putting It All Together — In-Class Workshop (KEY)"
+author: "Maureen Ritchey"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-overflow: wrap
+    df-print: kable
+---
+
+## Overview
+
+Today's workshop puts together everything you've learned this quarter: importing and
+exploring data, wrangling it into shape, visualizing patterns, and building a predictive
+model. We'll work with the **Big Five Inventory (BFI)**, a real dataset included in the
+`psych` package. It contains personality item responses from 2,800 participants, along
+with demographic information.
+
+The Big Five personality traits are:
+
+- Agreeableness
+- Conscientiousness
+- Extraversion
+- Neuroticism
+- Openness
+
+---
+
+## Setup
+
+Install any packages you don't have yet, then load them.
+
+```{r}
+#| message: false
+# install.packages(c("psych", "caret"))  # run if needed
+
+library(tidyverse)
+library(psych)
+library(caret)
+```
+
+---
+
+## Part 1: Get to Know the Data
+
+Load the dataset and convert it to a tibble. The `bfi` object is a data frame built into
+the `psych` package — it contains 25 personality items (5 per trait), plus age, gender,
+and education level. Here is a website with more detailed information: https://www.personality-project.org/r/html/bfi.html
+
+```{r}
+data(bfi)
+bfi_df <- as_tibble(bfi, rownames = "id")
+```
+
+Take a first look:
+
+```{r}
+glimpse(bfi_df)
+```
+
+**Understanding the columns:**
+
+- `A1`–`A5`: Agreeableness items (each rated 1–6)
+- `C1`–`C5`: Conscientiousness items
+- `E1`–`E5`: Extraversion items
+- `N1`–`N5`: Neuroticism items
+- `O1`–`O5`: Openness items
+- `gender`: 1 = Male, 2 = Female
+- `education`: 1 (some high school) to 5 (graduate degree)
+- `age`: age in years
+
+How much missing data is there?
+What functions do you know that would be useful for checking whether there is missing data?
+
+```{r}
+# Count NAs per column
+colSums(is.na(bfi_df))
+
+# Or use summary() to see min/max/NA counts for every column
+summary(bfi_df)
+```
+
+
+### Activity: Explore the data
+
+1. How many rows and columns are in `bfi_df`?
+2. What is the average age of participants? What is the range?
+3. How many participants are male vs. female?
+
+```{r}
+# 1. Dimensions
+nrow(bfi_df)       
+ncol(bfi_df)
+
+# 2. Age summary
+mean(bfi_df$age, na.rm = TRUE)
+range(bfi_df$age, na.rm = TRUE)
+
+# 3. Gender counts
+count(bfi_df, gender)
+# gender 1 = Male, 2 = Female
+```
+
+---
+
+## Part 2: Wrangle
+
+Right now the data has individual item scores. We need to compute a **mean score** for
+each of the five traits. We'll use `rowMeans()` inside `mutate()` to average across the
+five items for each trait.
+
+Careful! Some of the items are reverse-coded, meaning that low ratings mean a higher score for that trait. This is coded in `bfi.keys`:
+
+```{r}
+print(bfi.keys)
+```
+
+Now that you know how to score the data, how would you create a new variable for each trait?
+
+```{r}
+# Items flagged with a minus sign in bfi.keys are reverse-coded.
+# On a 1–6 scale, the reverse of a score x is: 7 - x
+#
+# Reverse-coded items:
+#   Agreeableness:    A1
+#   Conscientiousness: C4, C5
+#   Extraversion:     E1, E2
+#   Neuroticism:      (none)
+#   Openness:         O2, O5
+
+bfi_df <- bfi_df |>
+  mutate(
+    # Step 1: reverse-code the flagged items
+    A1r = 7 - A1,
+    C4r = 7 - C4,
+    C5r = 7 - C5,
+    E1r = 7 - E1,
+    E2r = 7 - E2,
+    O2r = 7 - O2,
+    O5r = 7 - O5
+  ) |>
+  mutate(
+    # Step 2: compute mean scale scores using corrected items
+    Agreeableness     = rowMeans(cbind(A1r, A2, A3, A4, A5), na.rm = TRUE),
+    Conscientiousness = rowMeans(cbind(C1, C2, C3, C4r, C5r), na.rm = TRUE),
+    Extraversion      = rowMeans(cbind(E1r, E2r, E3, E4, E5), na.rm = TRUE),
+    Neuroticism       = rowMeans(cbind(N1, N2, N3, N4, N5), na.rm = TRUE),
+    Openness          = rowMeans(cbind(O1, O2r, O3, O4, O5r), na.rm = TRUE)
+  )
+```
+
+Once you have all five scores, recode `gender` from 1/2 to labeled categories. Hint: use the factor command.
+
+```{r}
+bfi_df <- bfi_df |>
+  mutate(gender = factor(gender, levels = c(1, 2), labels = c("Male", "Female")))
+```
+
+Finally, remove rows with missing values on any of the five scale scores. We need
+complete cases for modeling later.
+
+```{r}
+bfi_complete <- bfi_df |>
+  filter(
+    !is.na(Agreeableness),
+    !is.na(Conscientiousness),
+    !is.na(Extraversion),
+    !is.na(Neuroticism),
+    !is.na(Openness)
+  )
+
+nrow(bfi_complete)   # should be ~2436
+```
+
+---
+
+## Part 3: Visualize
+
+### Distribution of Neuroticism
+
+We'll start with Neuroticism since that's what we'll predict later. Use `ggplot` to visualize the distribution across the sample.
+
+```{r}
+ggplot(bfi_complete, aes(x = Neuroticism)) +
+  geom_histogram(binwidth = 0.25, fill = "steelblue", color = "white") +
+  labs(title = "Distribution of Neuroticism scores",
+       x = "Mean Neuroticism (1–6)",
+       y = "Count") +
+  theme_minimal()
+```
+
+### Neuroticism by gender
+
+Now split by gender.
+
+```{r}
+ggplot(bfi_complete, aes(x = gender, y = Neuroticism, fill = gender)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(title = "Neuroticism scores by gender",
+       x = NULL, y = "Mean Neuroticism (1–6)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### Activity: Visualize a relationship
+
+Choose one of the other Big Five traits and explore its relationship with Neuroticism.
+Make a scatterplot with a smoothed trend line using `geom_smooth()`.
+
+1. Do higher scores on your chosen trait tend to go along with higher or lower Neuroticism?
+2. Does the relationship look linear?
+3. **Bonus:** Color the points by gender. Does the pattern differ?
+
+```{r}
+# Example using Agreeableness — expect a negative relationship with Neuroticism
+ggplot(bfi_complete, aes(x = Agreeableness, y = Neuroticism)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", color = "steelblue") +
+  labs(title = "Agreeableness vs. Neuroticism",
+       x = "Mean Agreeableness (1–6)",
+       y = "Mean Neuroticism (1–6)") +
+  theme_minimal()
+
+# Bonus: color by gender
+ggplot(bfi_complete, aes(x = Agreeableness, y = Neuroticism, color = gender)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm") +
+  labs(title = "Agreeableness vs. Neuroticism by gender") +
+  theme_minimal()
+```
+
+---
+
+## Part 4: Build a Predictive Model
+
+Now let's use what you learned in the machine learning module. We'll predict **Neuroticism**
+from the other four traits.
+
+### Split into training and testing sets
+
+```{r}
+set.seed(42)
+
+train_index <- createDataPartition(bfi_complete$Neuroticism, p = 0.8, list = FALSE)
+
+train_data <- bfi_complete[train_index, ]
+test_data  <- bfi_complete[-train_index, ]
+
+nrow(train_data)
+nrow(test_data)
+```
+
+### Fit a linear regression model with cross-validation
+
+```{r}
+ctrl <- trainControl(method = "cv", number = 5)
+
+model <- train(
+  Neuroticism ~ Agreeableness + Conscientiousness + Extraversion + Openness,
+  data      = train_data,
+  method    = "lm",
+  trControl = ctrl
+)
+
+model
+```
+
+What does the cross-validated R² tell you? How much of the variation in Neuroticism can
+the other four traits explain?
+
+### Evaluate on the test set
+
+```{r}
+predictions <- predict(model, newdata = test_data)
+
+postResample(pred = predictions, obs = test_data$Neuroticism)
+```
+
+### Look at the coefficients
+
+```{r}
+summary(model$finalModel)
+```
+
+Which trait is the strongest predictor of Neuroticism? Does the direction of the effect
+make sense to you?
+
+### Activity: Improve the model
+
+Try at least one of the following:
+
+1. **Add demographic predictors.** Include `age` and/or `education` alongside the four
+   personality traits. Does R² go up?
+2. **Try a different outcome.** Instead of predicting Neuroticism, predict Extraversion
+   or Conscientiousness. Which one is easier to predict from the other traits?
+3. **Bonus:** Try `method = "ridge"` instead of `"lm"` in the `train()` call (you may
+   need `install.packages("glmnet")`). Does regularization help?
+
+```{r}
+
+```
