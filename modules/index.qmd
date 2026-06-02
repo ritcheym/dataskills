@@ -39,5 +39,5 @@ See [BruinLearn](http://bruinlearn.ucla.edu) for the complete **course syllabus*
 +----------+--------------+------------------------------------------------------------------+-----------------------------------------------------------------------+
 | 9        | May 26, 28   | [Intro to Machine Learning](10_machine-learning.html)            | Simple machine learning models for classifying psychological outcomes |
 +----------+--------------+------------------------------------------------------------------+-----------------------------------------------------------------------+
-| 10       | June 2, 4    | Review; Project highlights                                       | [**Final projects** **due**](projects/final-project.html)             |
+| 10       | June 2, 4    | [Review](../slides/review.qmd); Project highlights               | [**Final projects** **due**](projects/final-project.html)             |
 +----------+--------------+------------------------------------------------------------------+-----------------------------------------------------------------------+

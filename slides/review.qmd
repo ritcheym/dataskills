@@ -1,0 +1,746 @@
+---
+title: "Quarter Review"
+subtitle: "Data Skills for Psychology — Spring 2026"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    hash-type: number
+    chalkboard: true
+    menu: true
+    progress: true
+    controls: true
+    navigation-mode: vertical
+    code-line-numbers: false 
+    code-overflow: wrap
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+execute:
+  echo: true
+  eval: false
+---
+
+# Welcome! {background-color="#2c3e50"}
+
+Ten weeks of data skills — let's see how far we've come.
+
+## What We'll Cover Today
+
+A tour through every module this quarter:
+
+1.  Programming Foundations
+2.  Data Summaries
+3.  Data Visualization
+4.  Data Wrangling
+5.  Data Tidying
+6.  Data Relations
+7.  Statistical Analysis
+8.  Machine Learning
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(afex)
+library(emmeans)
+library(caret)
+```
+
+We'll use the **Faul et al. (2025)** emotional memory dataset throughout.
+
+[Download `vivid_df_avg.csv`](../files/vivid_df_avg.csv)
+
+# Programming Foundations {background-color="#2c3e50"}
+
+## The Building Blocks
+
+Every R program is built from five things:
+
+. . .
+
+| Concept       | What it does          | Example                         |
+|---------------|-----------------------|---------------------------------|
+| **Variables** | Name a value          | `n_participants <- 307`         |
+| **Vectors**   | Store multiple values | `c(19, 23, 45, 67)`             |
+| **Loops**     | Repeat code           | `for (s in subjects) { ... }`   |
+| **Branches**  | Make decisions        | `if (age > 35) { ... }`         |
+| **Functions** | Package reusable code | `my_fun <- function(x) { ... }` |
+
+## Variables and Vectors
+
+```{r}
+# Single values
+n_participants <- 307
+task <- "emotional memory"
+
+# Vectors — multiple values of the same type
+ages <- c(19, 23, 45, 67, 34)
+conditions <- c("Negative", "Positive", "Neutral")
+
+# Selecting from a vector
+ages[1]          # first value
+ages[ages > 30]  # values matching a condition
+```
+
+. . .
+
+::: callout-warning
+Mixing types in a vector causes **coercion** — everything becomes a character.
+:::
+
+## Data Types
+
+```{r}
+typeof(307)        # double (numeric)
+typeof("Negative") # character
+typeof(TRUE)       # logical
+
+is.numeric(307)    # TRUE
+is.numeric("307")  # FALSE — quotes make it text!
+```
+
+. . .
+
+**Factors** are a special type for ordered categories:
+
+```{r}
+age_group <- factor("Younger Age",
+                    levels = c("Younger Age", "Middle Age", "Older Age"))
+```
+
+## Branches: `if` / `else`
+
+```{r}
+age <- 28
+
+if (age < 35) {
+  print("Younger Age group")
+} else if (age < 65) {
+  print("Middle Age group")
+} else {
+  print("Older Age group")
+}
+```
+
+. . .
+
+The condition inside `if ()` must evaluate to `TRUE` or `FALSE`. Only the matching block runs.
+
+## Loops: `for`
+
+```{r}
+conditions <- c("Negative", "Positive", "Neutral")
+
+for (cond in conditions) {
+  subset <- df |> filter(Emotion == cond)
+  cat(cond, "— mean vividness:", mean(subset$meanVivid), "\n")
+}
+```
+
+. . .
+
+For each value in `conditions`, the code inside `{ }` runs with `cond` set to that value.
+
+. . .
+
+::: callout-note
+In practice, tidyverse functions like `group_by()` + `summarise()` often replace explicit loops — but loops are essential when you need more custom control.
+:::
+
+## Functions
+
+```{r}
+# Using a built-in function
+mean(c(5.2, 4.8, 6.1, 3.9))
+
+# Writing your own
+sem <- function(x) {
+  sd(x) / sqrt(length(x))
+}
+
+sem(ages)
+```
+
+. . .
+
+Functions take **inputs** (arguments) and return an **output**. They're how you avoid copy-pasting the same code repeatedly.
+
+## Activity: Write a Function
+
+::: callout-tip
+## Try it!
+
+1.  Write a function called `zscore` that standardizes a vector: `(x - mean(x)) / sd(x)`
+2.  Test it on BDI (depression) scores: `c(12, 5, 22, 8, 17, 3, 30)`
+3.  **Bonus**: Add an `na.rm` argument that passes through to `mean()` and `sd()`
+:::
+
+# Data Summaries {background-color="#2c3e50"}
+
+## Importing Data
+
+```{r}
+df <- read_csv("vivid_df_avg.csv")
+```
+
+. . .
+
+Always check what you loaded:
+
+```{r}
+glimpse(df)   # column names, types, first values
+nrow(df)      # number of rows
+names(df)     # column names
+```
+
+. . .
+
+This dataset has one row per participant per emotion condition — `Subject_ID`, `Emotion`, `meanVivid`, `meanAccuracy`, `Age`, `Age_Group`, `Gender`, `BDI_Sum`.
+
+## The Pipe `|>`
+
+The pipe sends the output of one function as the input to the next. Read it as **"and then."**
+
+```{r}
+# Without pipes — hard to follow
+summarise(group_by(filter(df, Emotion == "Negative"),
+                   Subject_ID), m = mean(meanVivid))
+
+# With pipes — reads like instructions
+df |>
+  filter(Emotion == "Negative") |>
+  group_by(Subject_ID) |>
+  summarise(m = mean(meanVivid))
+```
+
+## Counting and Summarizing
+
+```{r}
+# Count rows per group
+df |> count(Emotion)
+df |> count(Age_Group, Emotion)
+
+# Compute summary statistics
+df |>
+  group_by(Emotion) |>
+  summarise(
+    n        = n(),
+    m_vivid  = mean(meanVivid, na.rm = TRUE),
+    sd_vivid = sd(meanVivid, na.rm = TRUE)
+  ) |>
+  ungroup()
+```
+
+. . .
+
+::: callout-warning
+Always `ungroup()` when you're done — forgetting causes mysterious bugs later.
+:::
+
+## Activity: Summarize the Memory Data
+
+::: callout-tip
+## Try it!
+
+1.  How many participants are in each `Age_Group`? Use `count()`
+2.  What is the mean vividness (`meanVivid`) for each `Emotion` condition?
+3.  What is the mean accuracy (`meanAccuracy`) for each combination of `Emotion` and `Age_Group`?
+4.  **Bonus**: Which participant (`Subject_ID`) had the highest mean vividness across all conditions?
+:::
+
+# Data Visualization {background-color="#2c3e50"}
+
+## The Grammar of Graphics
+
+`{ggplot2}` builds plots in **layers**:
+
+```{r}
+ggplot(df, aes(x = Emotion, y = meanVivid)) +  # canvas + mapping
+  geom_boxplot() +                               # geometry
+  labs(title = "Vividness by Emotion") +         # labels
+  theme_bw()                                     # theme
+```
+
+. . .
+
+Every plot needs: **data**, **aesthetic mapping** (`aes()`), and at least one **geom**.
+
+## Choosing the Right Geom
+
+| Data                     | Good geoms                           |
+|--------------------------|--------------------------------------|
+| One continuous variable  | `geom_histogram()`, `geom_density()` |
+| One categorical variable | `geom_bar()`                         |
+| Continuous × categorical | `geom_boxplot()`, `geom_violin()`    |
+| Continuous × continuous  | `geom_point()`, `geom_smooth()`      |
+
+## Building Up Layers
+
+```{r}
+# Start simple
+ggplot(df, aes(x = Emotion, y = meanVivid)) +
+  geom_violin()
+```
+
+. . .
+
+```{r}
+# Add jittered points on top
+ggplot(df, aes(x = Emotion, y = meanVivid)) +
+  geom_violin() +
+  geom_jitter(width = 0.1, alpha = 0.3)
+```
+
+. . .
+
+```{r}
+# Add color, labels, and facets
+ggplot(df, aes(x = Emotion, y = meanVivid, fill = Emotion)) +
+  geom_violin() +
+  facet_wrap(~ Age_Group) +
+  labs(x = "Emotion", y = "Mean Vividness Rating") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+## Customizing Plots 
+
+```{r}
+# Scatterplot with trendline
+ggplot(df, aes(x = BDI_Sum, y = meanVivid)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", formula = y ~ x) +
+  labs(x = "Depression Score (BDI)", y = "Mean Vividness")
+
+# Save your plot
+ggsave("vividness_by_emotion.png", width = 8, height = 5)
+```
+
+## Activity: Visualize Vividness
+
+::: callout-tip
+## Try it!
+
+1.  Plot the distribution of `meanVivid` as a histogram, colored by `Emotion`
+2.  Add `facet_wrap(~ Emotion)` — does the shape differ across conditions?
+3.  Make a scatterplot of `Age` (x) vs. `meanVivid` (y)
+4.  **Bonus**: Add `geom_smooth(method = "lm")` — is there a relationship with age?
+:::
+
+# Data Wrangling {background-color="#2c3e50"}
+
+## The Six Core  Verbs
+
+| Verb          | What it does                       |
+|---------------|------------------------------------|
+| `select()`    | Keep or drop **columns**           |
+| `filter()`    | Keep rows matching a **condition** |
+| `arrange()`   | **Sort** rows                      |
+| `mutate()`    | Create or transform **columns**    |
+| `summarise()` | Collapse to **summary statistics** |
+| `group_by()`  | Apply operations **within groups** |
+
+## `select()` and `filter()`
+
+```{r}
+# Keep useful columns
+df |> select(Subject_ID, Age, Age_Group, Emotion, meanVivid, meanAccuracy)
+
+# Drop a column
+df |> select(-meanErrorAbs)
+
+# Filter rows
+df |> filter(Age_Group == "Younger Age")
+df |> filter(Emotion %in% c("Negative", "Neutral"))
+df |> filter(!is.na(meanVivid))
+```
+
+## `mutate()` and `arrange()`
+
+```{r}
+# Create new columns
+df |>
+  mutate(
+    vivid_z      = (meanVivid - mean(meanVivid)) / sd(meanVivid),
+    accuracy_pct = meanAccuracy * 100
+  )
+
+# Sort
+df |> arrange(desc(meanVivid))
+df |> arrange(Subject_ID, Emotion)
+```
+
+## `case_when()` — Multiple Conditions
+
+```{r}
+df |>
+  mutate(
+    bdi_category = case_when(
+      BDI_Sum < 14  ~ "Minimal",
+      BDI_Sum < 20  ~ "Mild",
+      BDI_Sum < 29  ~ "Moderate",
+      BDI_Sum >= 29 ~ "Severe"
+    )
+  )
+```
+
+. . .
+
+`case_when()` is `if/else` for whole columns — much cleaner than nesting `ifelse()` calls.
+
+## Activity: Wrangle the Memory Data
+
+::: callout-tip
+## Try it!
+
+1.  Keep only rows where `Age_Group == "Younger Age"` and `meanVivid` is not missing
+2.  Create a new column `vivid_z` that z-scores `meanVivid`
+3.  Compute mean z-scored vividness by `Emotion`
+4.  **Bonus**: Use `arrange(desc(...))` — which emotion condition has the highest vividness?
+:::
+
+# Data Tidying {background-color="#2c3e50"}
+
+## What is Tidy Data?
+
+Data is **tidy** when:
+
+1.  Each **variable** has its own column
+2.  Each **observation** has its own row
+3.  Each **value** has its own cell
+
+. . .
+
+`vivid_df_avg.csv` is already tidy — one row per participant per emotion condition.
+
+## Wide vs. Long Format
+
+::::: columns
+::: {.column width="50%"}
+**Wide** (one row per participant)
+
+| Subject_ID | Negative | Neutral | Positive |
+|------------|----------|---------|----------|
+| P001       | 5.2      | 4.1     | 3.8      |
+| P002       | 6.1      | 3.9     | 5.0      |
+:::
+
+::: {.column width="50%"}
+**Long** (one row per observation)
+
+| Subject_ID | Emotion  | meanVivid |
+|------------|----------|-----------|
+| P001       | Negative | 5.2       |
+| P001       | Neutral  | 4.1       |
+| P001       | Positive | 3.8       |
+| P002       | Negative | 6.1       |
+:::
+:::::
+
+. . .
+
+`ggplot2` and `dplyr` generally want **long** format.
+
+## `pivot_longer()` and `pivot_wider()`
+
+```{r}
+# Long → Wide (e.g., one column per emotion condition)
+df_wide <- df |>
+  select(Subject_ID, Emotion, meanVivid) |>
+  pivot_wider(
+    names_from  = Emotion,
+    values_from = meanVivid
+  )
+
+# Wide → Long (back to original shape)
+df_long <- df_wide |>
+  pivot_longer(
+    cols      = c(Negative, Neutral, Positive),
+    names_to  = "Emotion",
+    values_to = "meanVivid"
+  )
+```
+
+## `separate()`
+
+```{r}
+# Split "Younger Age" into "Younger" and "Age"
+df |>
+  separate(
+    col  = Age_Group,
+    into = c("group", "label"),
+    sep  = " "
+  )
+```
+
+. . .
+
+Useful when one column contains two pieces of information mashed together.
+
+# Data Relations {background-color="#2c3e50"}
+
+## Joining Tables
+
+When data about the same participants lives in separate files, we **join** them.
+
+```{r}
+# All four joins — the key is which rows to keep
+inner_join(df_trials, df_demo, by = "Subject_ID")  # only matched rows
+left_join(df_trials, df_demo, by = "Subject_ID")   # all trials, matched demographics
+right_join(df_trials, df_demo, by = "Subject_ID")  # all demographics, matched trials
+full_join(df_trials, df_demo, by = "Subject_ID")   # everything from both
+```
+
+. . .
+
+::: callout-note
+Use `by = c("subj" = "id")` when the key column has different names in each table.
+:::
+
+## Which Join to Use?
+
+| Situation                                            | Join         |
+|------------------------------------------------------|--------------|
+| Only participants with complete data from both files | `inner_join` |
+| All trials; add demographics where available         | `left_join`  |
+| Combine all records, fill gaps with NA               | `full_join`  |
+
+. . .
+
+`left_join` is the most common in practice.
+
+## Stacking Data
+
+```{r}
+# Combine datasets from multiple sessions or sites
+bind_rows(df_session1, df_session2)
+
+# Combine multiple participants' files into one
+all_files <- list.files("data/", pattern = ".csv", full.names = TRUE)
+df_all <- map(all_files, read_csv) |> bind_rows()
+```
+
+# Statistical Analysis {background-color="#2c3e50"}
+
+## Descriptive vs. Inferential Statistics
+
+**Descriptive** statistics summarize what's in your sample: means, SDs, counts.
+
+. . .
+
+**Inferential** statistics ask: *could this pattern have occurred by chance?*
+
+-   We compute a **test statistic** and a **p-value**
+-   p \< .05 means we reject the null hypothesis (by convention)
+-   **Effect sizes** tell us *how big* the difference is
+
+## t-tests
+
+```{r}
+# Separate conditions for a paired t-test
+neg <- df |> filter(Emotion == "Negative")
+neu <- df |> filter(Emotion == "Neutral")
+
+# Paired t-test (same participants, two conditions)
+t.test(neg$meanAccuracy, neu$meanAccuracy, paired = TRUE)
+```
+
+. . .
+
+Report: t(df), p-value, and Cohen's d as the effect size.
+
+## ANOVA with `afex`
+
+```{r}
+library(afex)
+library(emmeans)
+
+# One-way repeated-measures ANOVA
+results <- aov_ez(
+  id     = "Subject_ID",
+  dv     = "meanVivid",
+  within = "Emotion",
+  data   = df
+)
+print(results)
+
+# Follow-up pairwise comparisons
+emmeans(results, pairwise ~ Emotion)
+```
+
+. . .
+
+`aov_ez` automatically applies Greenhouse-Geisser correction and reports **generalized eta-squared** (ges) as the effect size.
+
+## Regression
+
+```{r}
+# Does depression score predict memory vividness?
+model <- lm(meanVivid ~ BDI_Sum + Age + Gender, data = df)
+summary(model)
+```
+
+. . .
+
+Look at: **coefficient estimates** (direction and size), **p-values** (significance), **R²** (variance explained).
+
+## Activity: Test It
+
+::: callout-tip
+## Try it!
+
+1.  Run a paired t-test comparing `meanAccuracy` between `Negative` and `Neutral` conditions
+2.  Interpret: is the difference statistically significant? What's the direction?
+3.  Visualize the result with `geom_boxplot()` + `geom_jitter()`
+4.  **Bonus**: Run a repeated-measures ANOVA across all three emotion conditions with `aov_ez()`
+:::
+
+# Machine Learning {background-color="#2c3e50"}
+
+## From Statistics to Prediction
+
+Statistics asks: *is there a relationship?*
+
+Machine learning asks: *can I predict new outcomes?*
+
+. . .
+
+Both use **regression** — but ML focuses on **generalizability**: does the model work on data it has never seen?
+
+## Fit a Regression Model
+
+```{r}
+# Build a model predicting vividness from depression and age
+model <- lm(meanVivid ~ BDI_Sum + Age, data = df)
+summary(model)
+
+# Generate predictions
+df$predicted <- predict(model, newdata = df)
+```
+
+. . .
+
+::: callout-warning
+Evaluating a model on the same data it was trained on is **overly optimistic**. We need held-out data for a fair test.
+:::
+
+## Cross-Validation with `caret`
+
+```{r}
+library(caret)
+
+# Set up 5-fold cross-validation
+train_control <- trainControl(method = "cv", number = 5)
+
+# Fit model with cross-validation
+cv_model <- train(
+  meanVivid ~ BDI_Sum + Age,
+  data      = df,
+  method    = "lm",
+  trControl = train_control
+)
+
+cv_model   # R², RMSE, MAE averaged across folds
+```
+
+## Model Evaluation
+
+| Metric   | Meaning                                                     |
+|----------|-------------------------------------------------------------|
+| **R²**   | Proportion of variance explained (0–1, higher = better)     |
+| **RMSE** | Average prediction error in original units (lower = better) |
+| **MAE**  | Mean absolute error (lower = better)                        |
+
+. . .
+
+Cross-validation gives a **more honest** estimate than fitting and testing on the same data.
+
+# Putting It All Together {background-color="#2c3e50"}
+
+## The Full Data Science Pipeline
+
+Every project this quarter followed the same arc:
+
+. . .
+
+```         
+Import → Inspect → Tidy → Wrangle → Visualize → Analyze → Communicate
+```
+
+. . .
+
+These aren't separate skills — they're one continuous workflow.
+
+## The Tidyverse Ecosystem
+
+| Package            | What you used it for                      |
+|--------------------|-------------------------------------------|
+| `readr`            | `read_csv()` — import data                |
+| `dplyr`            | `filter`, `mutate`, `summarise`, joins    |
+| `tidyr`            | `pivot_longer`, `pivot_wider`, `separate` |
+| `ggplot2`          | All visualization                         |
+| `afex` / `emmeans` | ANOVA and follow-up tests                 |
+| `caret`            | Cross-validated model fitting             |
+
+## A Complete Example
+
+```{r}
+# Wrangle
+df_neg <- df |>
+  filter(Emotion == "Negative") |>
+  mutate(bdi_category = case_when(
+    BDI_Sum < 14  ~ "Minimal",
+    BDI_Sum < 20  ~ "Mild",
+    BDI_Sum >= 20 ~ "Moderate/Severe"
+  ))
+
+# Visualize
+ggplot(df_neg, aes(x = bdi_category, y = meanVivid)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1, alpha = 0.4) +
+  labs(title = "Negative Memory Vividness by Depression Level",
+       x = "BDI Category", y = "Mean Vividness") +
+  theme_bw()
+
+# Analyze
+model <- lm(meanVivid ~ BDI_Sum + Age, data = df_neg)
+summary(model)
+```
+
+
+# Wrapping Up {background-color="#2c3e50"}
+
+## What You Can Now Do
+
+-   **Import and inspect** real datasets in R
+-   **Wrangle** messy data into analysis-ready shape
+-   **Visualize** distributions, comparisons, and relationships
+-   **Test hypotheses** with t-tests, ANOVA, and regression
+-   **Build predictive models** and evaluate them with cross-validation
+-   Write **reproducible** analyses in Quarto
+
+. . .
+
+That's a full research workflow. All in one quarter!
+
+## Other Key Concepts
+
+-   **`|>`** makes complex operations readable — read it as "and then"
+-   **Tidy data** (one variable per column, one observation per row) makes everything else easier
+-   **Visualization** is not just for communication — it's for understanding your data
+-   **p-values** answer "could this be chance?"; effect sizes answer "does it matter?"
+-   **Cross-validation** is how you know whether your model actually generalizes
+
+## What's Next
+
+You now have the foundations to:
+
+-   Finish your **final projects** (this week!)
+-   Apply these skills in research settings — lab work, thesis, RA positions
+-   Pick up **Python** faster — the concepts transfer directly
+-   Go deeper: Bayesian stats, neuroimaging pipelines, more complex models
+
+. . .
+
