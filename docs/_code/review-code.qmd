@@ -1,0 +1,461 @@
+---
+title: "Quarter Review — In-Class Code"
+author: "Data Skills for Psychology"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: cosmo
+    code-overflow: wrap
+    df-print: kable
+---
+
+```{r setup}
+#| message: false
+library(tidyverse)
+library(janitor)
+library(afex)
+library(emmeans)
+library(caret)
+```
+
+Download the dataset: [vivid_df_avg.csv](../files/vivid_df_avg.csv)
+
+## Programming Foundations
+
+### Variables and vectors
+
+```{r}
+# Single values
+n_participants <- 307
+task <- "emotional memory"
+
+# Vectors — multiple values of the same type
+ages <- c(19, 23, 45, 67, 34)
+conditions <- c("Negative", "Positive", "Neutral")
+
+# Selecting from a vector
+ages[1]          # first value
+ages[ages > 30]  # values matching a condition
+```
+
+### Data types
+
+```{r}
+typeof(307)        # double (numeric)
+typeof("Negative") # character
+typeof(TRUE)       # logical
+
+is.numeric(307)    # TRUE
+is.numeric("307")  # FALSE — quotes make it text!
+```
+
+```{r}
+age_group <- factor("Younger Age",
+                    levels = c("Younger Age", "Middle Age", "Older Age"))
+```
+
+### Branches: `if` / `else`
+
+```{r}
+age <- 28
+
+if (age < 35) {
+  print("Younger Age group")
+} else if (age < 65) {
+  print("Middle Age group")
+} else {
+  print("Older Age group")
+}
+```
+
+### Loops: `for`
+
+```{r}
+conditions <- c("Negative", "Positive", "Neutral")
+
+for (cond in conditions) {
+  subset <- df |> filter(Emotion == cond)
+  cat(cond, "— mean vividness:", mean(subset$meanVivid), "\n")
+}
+```
+
+### Functions
+
+```{r}
+# Using a built-in function
+mean(c(5.2, 4.8, 6.1, 3.9))
+
+# Writing your own
+sem <- function(x) {
+  sd(x) / sqrt(length(x))
+}
+
+sem(ages)
+```
+
+### Activity: Write a function
+
+1. Write a function called `zscore` that standardizes a vector: `(x - mean(x)) / sd(x)`
+2. Test it on BDI (depression) scores: `c(12, 5, 22, 8, 17, 3, 30)`
+3. **Bonus**: Add an `na.rm` argument that passes through to `mean()` and `sd()`
+
+```{r}
+# Your code here:
+```
+
+## Data Summaries
+
+### Importing data
+
+```{r}
+#| message: true
+df <- read_csv("vivid_df_avg.csv")
+```
+
+```{r}
+glimpse(df)   # column names, types, first values
+nrow(df)      # number of rows
+names(df)     # column names
+```
+
+### The pipe `|>`
+
+```{r}
+# Without pipes — hard to follow
+summarise(group_by(filter(df, Emotion == "Negative"),
+                   Subject_ID), m = mean(meanVivid))
+
+# With pipes — reads like instructions
+df |>
+  filter(Emotion == "Negative") |>
+  group_by(Subject_ID) |>
+  summarise(m = mean(meanVivid))
+```
+
+### Counting and summarizing
+
+```{r}
+# Count rows per group
+df |> count(Emotion)
+df |> count(Age_Group, Emotion)
+
+# Compute summary statistics
+df |>
+  group_by(Emotion) |>
+  summarise(
+    n        = n(),
+    m_vivid  = mean(meanVivid, na.rm = TRUE),
+    sd_vivid = sd(meanVivid, na.rm = TRUE)
+  ) |>
+  ungroup()
+```
+
+### Activity: Summarize the memory data
+
+1. How many participants are in each `Age_Group`? Use `count()`
+2. What is the mean vividness (`meanVivid`) for each `Emotion` condition?
+3. What is the mean accuracy (`meanAccuracy`) for each combination of `Emotion` and `Age_Group`?
+4. **Bonus**: Which participant (`Subject_ID`) had the highest mean vividness across all conditions?
+
+```{r}
+# Your code here:
+```
+
+## Data Visualization
+
+### The grammar of graphics
+
+```{r}
+ggplot(df, aes(x = Emotion, y = meanVivid)) +  # canvas + mapping
+  geom_boxplot() +                               # geometry
+  labs(title = "Vividness by Emotion") +         # labels
+  theme_bw()                                     # theme
+```
+
+### Building up layers
+
+```{r}
+# Start simple
+ggplot(df, aes(x = Emotion, y = meanVivid)) +
+  geom_violin()
+```
+
+```{r}
+# Add jittered points on top
+ggplot(df, aes(x = Emotion, y = meanVivid)) +
+  geom_violin() +
+  geom_jitter(width = 0.1, alpha = 0.3)
+```
+
+```{r}
+# Add color, labels, and facets
+ggplot(df, aes(x = Emotion, y = meanVivid, fill = Emotion)) +
+  geom_violin() +
+  facet_wrap(~ Age_Group) +
+  labs(x = "Emotion", y = "Mean Vividness Rating") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Customizing plots
+
+```{r}
+# Scatterplot with trendline
+ggplot(df, aes(x = BDI_Sum, y = meanVivid)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", formula = y ~ x) +
+  labs(x = "Depression Score (BDI)", y = "Mean Vividness")
+
+# Save your plot
+ggsave("vividness_by_emotion.png", width = 8, height = 5)
+```
+
+### Activity: Visualize vividness
+
+1. Plot the distribution of `meanVivid` as a histogram, colored by `Emotion`
+2. Add `facet_wrap(~ Emotion)` — does the shape differ across conditions?
+3. Make a scatterplot of `Age` (x) vs. `meanVivid` (y)
+4. **Bonus**: Add `geom_smooth(method = "lm")` — is there a relationship with age?
+
+```{r}
+# Your code here:
+```
+
+## Data Wrangling
+
+### `select()` and `filter()`
+
+```{r}
+# Keep useful columns
+df |> select(Subject_ID, Age, Age_Group, Emotion, meanVivid, meanAccuracy)
+
+# Drop a column
+df |> select(-meanErrorAbs)
+
+# Filter rows
+df |> filter(Age_Group == "Younger Age")
+df |> filter(Emotion %in% c("Negative", "Neutral"))
+df |> filter(!is.na(meanVivid))
+```
+
+### `mutate()` and `arrange()`
+
+```{r}
+# Create new columns
+df |>
+  mutate(
+    vivid_z      = (meanVivid - mean(meanVivid)) / sd(meanVivid),
+    accuracy_pct = meanAccuracy * 100
+  )
+
+# Sort
+df |> arrange(desc(meanVivid))
+df |> arrange(Subject_ID, Emotion)
+```
+
+### `case_when()` — Multiple conditions
+
+```{r}
+df |>
+  mutate(
+    bdi_category = case_when(
+      BDI_Sum < 14  ~ "Minimal",
+      BDI_Sum < 20  ~ "Mild",
+      BDI_Sum < 29  ~ "Moderate",
+      BDI_Sum >= 29 ~ "Severe"
+    )
+  )
+```
+
+### Activity: Wrangle the memory data
+
+1. Keep only rows where `Age_Group == "Younger Age"` and `meanVivid` is not missing
+2. Create a new column `vivid_z` that z-scores `meanVivid`
+3. Compute mean z-scored vividness by `Emotion`
+4. **Bonus**: Use `arrange(desc(...))` — which emotion condition has the highest vividness?
+
+```{r}
+# Your code here:
+```
+
+## Data Tidying
+
+### `pivot_longer()` and `pivot_wider()`
+
+```{r}
+# Long → Wide (e.g., one column per emotion condition)
+df_wide <- df |>
+  select(Subject_ID, Emotion, meanVivid) |>
+  pivot_wider(
+    names_from  = Emotion,
+    values_from = meanVivid
+  )
+
+# Wide → Long (back to original shape)
+df_long <- df_wide |>
+  pivot_longer(
+    cols      = c(Negative, Neutral, Positive),
+    names_to  = "Emotion",
+    values_to = "meanVivid"
+  )
+```
+
+### `separate()`
+
+```{r}
+# Split "Younger Age" into "Younger" and "Age"
+df |>
+  separate(
+    col  = Age_Group,
+    into = c("group", "label"),
+    sep  = " "
+  )
+```
+
+## Data Relations
+
+### Joining tables
+
+```{r}
+# All four joins — the key is which rows to keep
+inner_join(df_trials, df_demo, by = "Subject_ID")  # only matched rows
+left_join(df_trials, df_demo, by = "Subject_ID")   # all trials, matched demographics
+right_join(df_trials, df_demo, by = "Subject_ID")  # all demographics, matched trials
+full_join(df_trials, df_demo, by = "Subject_ID")   # everything from both
+```
+
+### Stacking data
+
+```{r}
+# Combine datasets from multiple sessions or sites
+bind_rows(df_session1, df_session2)
+
+# Combine multiple participants' files into one
+all_files <- list.files("data/", pattern = ".csv", full.names = TRUE)
+df_all <- map(all_files, read_csv) |> bind_rows()
+```
+
+## Statistical Analysis
+
+### t-tests
+
+```{r}
+# Separate conditions for a paired t-test
+neg <- df |> filter(Emotion == "Negative")
+neu <- df |> filter(Emotion == "Neutral")
+
+# Paired t-test (same participants, two conditions)
+t.test(neg$meanAccuracy, neu$meanAccuracy, paired = TRUE)
+```
+
+### ANOVA with `afex`
+
+```{r}
+library(afex)
+library(emmeans)
+
+# One-way repeated-measures ANOVA
+results <- aov_ez(
+  id     = "Subject_ID",
+  dv     = "meanVivid",
+  within = "Emotion",
+  data   = df
+)
+print(results)
+
+# Follow-up pairwise comparisons
+emmeans(results, pairwise ~ Emotion)
+```
+
+### Regression
+
+```{r}
+# Does depression score predict memory vividness?
+model <- lm(meanVivid ~ BDI_Sum + Age + Gender, data = df)
+summary(model)
+```
+
+### Activity: Test it
+
+1. Run a paired t-test comparing `meanAccuracy` between `Negative` and `Neutral` conditions
+2. Interpret: is the difference statistically significant? What's the direction?
+3. Visualize the result with `geom_boxplot()` + `geom_jitter()`
+4. **Bonus**: Run a repeated-measures ANOVA across all three emotion conditions with `aov_ez()`
+
+```{r}
+# Your code here:
+```
+
+## Machine Learning
+
+### Fit a regression model
+
+```{r}
+# Build a model predicting vividness from depression and age
+model <- lm(meanVivid ~ BDI_Sum + Age, data = df)
+summary(model)
+
+# Generate predictions
+df$predicted <- predict(model, newdata = df)
+```
+
+### Cross-validation with `caret`
+
+```{r}
+library(caret)
+
+# Set up 5-fold cross-validation
+train_control <- trainControl(method = "cv", number = 5)
+
+# Fit model with cross-validation
+cv_model <- train(
+  meanVivid ~ BDI_Sum + Age,
+  data      = df,
+  method    = "lm",
+  trControl = train_control
+)
+
+cv_model   # R², RMSE, MAE averaged across folds
+```
+
+## Putting It All Together
+
+### A complete example
+
+```{r}
+# Wrangle
+df_neg <- df |>
+  filter(Emotion == "Negative") |>
+  mutate(bdi_category = case_when(
+    BDI_Sum < 14  ~ "Minimal",
+    BDI_Sum < 20  ~ "Mild",
+    BDI_Sum >= 20 ~ "Moderate/Severe"
+  ))
+
+# Visualize
+ggplot(df_neg, aes(x = bdi_category, y = meanVivid)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1, alpha = 0.4) +
+  labs(title = "Negative Memory Vividness by Depression Level",
+       x = "BDI Category", y = "Mean Vividness") +
+  theme_bw()
+
+# Analyze
+model <- lm(meanVivid ~ BDI_Sum + Age, data = df_neg)
+summary(model)
+```
+
+### Activity: End-to-end
+
+Pick a research question you can answer with `vivid_df_avg.csv`:
+
+1. Wrangle the data to the shape you need
+2. Visualize the pattern
+3. Run the appropriate statistical test
+4. Interpret the result in plain language
+
+```{r}
+# Your code here:
+```
